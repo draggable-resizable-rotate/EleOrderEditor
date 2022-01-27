@@ -19,3 +19,13 @@
 - portfinder 帮助识别配置默认端口是否有效
 - package.json 在 script 添加 webpack执行代码的时候 配置 --env mode=property，就会加载 appDir/config/webpack.property.config.js 配置
 - appDir/config/.eslintrc.js 能够对 config 下的所有文件进行格式校验（默认为node），如果需要开启，请自动的安装好 vscode 的 eslint 插件
+
+## log
+- 环境变量文件加载成功
+- 根据mode参数变量加载不同的 config 配置
+- webpack-merge 合并 webpack 配置，只有预设环境变量值才能 合并 common 配置
+- 添加 .eslintrc 到 config 目录下，统一代码风格
+- 重写文件是否存在的判断逻辑，fs.accessSync
+- 集成 webpack-dev-server ，添加在 development 环境的配置
+- 集成portfinder，即使用户配置环境变量的PORT被占用，也能递增返回新的port
+- webpack.config.js 导出的函数变成 async 函数，允许返回 config
