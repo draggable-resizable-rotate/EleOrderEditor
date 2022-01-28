@@ -1,5 +1,5 @@
 ## 外层 eslint 不扫描 config 文件夹
-/config
+# /config
 # vscode-eslint-plugin 默认会去 扫描 并 加载 eslintrc 和 package.json 的 eslintConfig
 /dist
 /build

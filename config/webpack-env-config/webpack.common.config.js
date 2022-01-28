@@ -53,6 +53,34 @@ module.exports = (env, args) => {
     },
   };
 
+  // 分割代码
+  const optimization = {
+    splitChunks: {
+      cacheGroups: {
+        // 把 node_modules 的代码放到一起，每次构建有缓存
+        vendors: {
+          name: 'chunk-vendors',
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          chunks: 'initial',
+        },
+        // 同步加载代码凡是使用到两次的，都分割
+        common: {
+          name: 'chunk-common',
+          minChunks: 2,
+          priority: -20,
+          chunks: 'initial',
+          // 和其它的不冲突
+          reuseExistingChunk: true,
+        },
+      },
+    },
+    // 把 runtimeChunk 代码分离出来
+    runtimeChunk: {
+      name: (entrypoint) => `runtimechunk~${entrypoint.name}`,
+    },
+  };
+
   return {
     // 开启browserslist 之后需要在 package.json 也开启
     target: ['browserslist'],
@@ -62,10 +90,11 @@ module.exports = (env, args) => {
     cache,
     // create-react-app 把这个关了，换了自己的内置的插件显示内容
     infrastructureLogging: { // 主要显示webpack的各种交互日志，包括运行时的打印信息，浏览器的打印日志
-      level: 'info'
+      level: 'info',
     },
     resolve,
     module: WebpackModule,
     plugins: WebpackPlugins,
+    optimization,
   };
 };
