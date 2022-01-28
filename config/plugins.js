@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const webpack = require('webpack');
+const WebpackBar = require('webpackbar')
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -14,7 +15,7 @@ const { getEnvironment, DependEnvConfig } = require('./utils/env');
 const PathConfig = require('./utils/path');
 const moduleFileExtensions = require('./extensions');
 
-const SrcEffectiveEnv = getEnvironment(PathConfig.publicPath);
+const SrcEffectiveEnv = getEnvironment(PathConfig.publicPath.slice(0, -1));
 
 const {
   hasJsxRuntime,
@@ -128,6 +129,8 @@ const plugins = [
       },
     ],
   }),
+  // 进度条，替代方案 progress-bar-webpack-plugin
+  new WebpackBar()
 ].filter(Boolean);
 
 module.exports = plugins;

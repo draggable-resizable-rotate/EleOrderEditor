@@ -108,5 +108,7 @@ module.exports = {
     sockHost: EnvConfig.WDS_SOCKET_HOST,
     sockPath: EnvConfig.WDS_SOCKET_PATH,
     sockPort: EnvConfig.WDS_SOCKET_PORT,
+    // 浏览器是否自动启动
+    browserOpen: EnvConfig.BROWSER_OPEN === 'true',
   },
 };

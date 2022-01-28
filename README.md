@@ -33,17 +33,16 @@
 - 完成eslint在生产环境下的接入，预计开发环境不接入而是使用 husky + vscode-eslint-plugin
 
 ## todo
-- 验证 jsx是否没有问题，把之前的代码复制过来看看
-- 验证所有代码
-- 验证webpack的所有功能是否有效
-- 验证各个loader是否生效
 - babel(怎么去做 polfiy)
 - 代码拆分 chunk
 - mock 怎么做
 - husky
 - ts 怎么接入，怎么解析tsx
 - 还未接入 proxy
-
+- eslint 怎么分 config 和全局内部的
+- 什么时候总结一下eslint 到底怎么用
+- 总结一下ts 怎么用，和继承
+- html-loader 是否需要集成
 
 ## 成功
 - 实测 在生产环境下 初次打包速度略快于 Create-React-App，在有缓存下更快
@@ -51,4 +50,5 @@
 - 实测 css-loader module 模式生成 代码一致、post-css 确切有效
 - 实测 路径别名 alias 已经生效
 - postcss 外部 可以通过  | package.json 的 .. 修改
+- DefinePlugin 提供环境变量成功
 - 

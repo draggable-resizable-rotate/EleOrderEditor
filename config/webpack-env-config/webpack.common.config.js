@@ -61,9 +61,9 @@ module.exports = (env, args) => {
     devtool,
     cache,
     // create-react-app 把这个关了，换了自己的内置的插件显示内容
-    // infrastructureLogging: { // 主要显示webpack的各种交互日志，包括运行时的打印信息，浏览器的打印日志
-    //   level: 'none'
-    // },
+    infrastructureLogging: { // 主要显示webpack的各种交互日志，包括运行时的打印信息，浏览器的打印日志
+      level: 'info'
+    },
     resolve,
     module: WebpackModule,
     plugins: WebpackPlugins,

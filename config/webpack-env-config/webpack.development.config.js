@@ -6,6 +6,7 @@ const PathConfig = require('../utils/path');
 const {
   port, host = '0.0.0.0',
   sockHost, sockPath, sockPort,
+  browserOpen
 } = DependEnvConfig;
 
 // eslint-disable-next-line no-unused-vars
@@ -20,7 +21,7 @@ module.exports = (env, args) => {
 
   const devServer = {
     host,
-    open: true,
+    open: browserOpen,
     compress: true,
     static: {
       directory: PathConfig.appPublic,
