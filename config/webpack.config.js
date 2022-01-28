@@ -16,6 +16,7 @@ module.exports = async (env, args) => {
   if (!fsExist(realPath)) return
   // 开始注册环境
   process.env.NODE_ENV = environment
+  process.env.BABEL_ENV = environment;
   // 加载环境变量文件配置
   const { EnvConfig } = require('./utils/env')
   // 获取有效端口

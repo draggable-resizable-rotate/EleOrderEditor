@@ -9,5 +9,5 @@ module.exports = [
   'tsx',
   'json',
   // 'web.jsx',
-  'jsx'
-]
+  'jsx',
+];

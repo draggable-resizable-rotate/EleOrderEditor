@@ -29,3 +29,20 @@
 - 集成 webpack-dev-server ，添加在 development 环境的配置
 - 集成portfinder，即使用户配置环境变量的PORT被占用，也能递增返回新的port
 - webpack.config.js 导出的函数变成 async 函数，允许返回 config
+- 接入 less 和 各种 css loader的 （post-css、style、extract）
+- 完成jsx语法的识别
+- 完成eslint在生产环境下的接入，预计开发环境不接入而是使用 husky + vscode-eslint-plugin
+
+## todo
+- 验证 post-css 是否确切有效
+- 验证 jsx是否没有问题，把之前的代码复制过来看看
+- 验证 路径别名
+- 验证所有代码
+- 验证webpack的所有功能是否有效
+- 验证在外部配置文件是否能够合并
+- 验证各个参见是否生效
+
+
+## 成功
+- 实测 在生产环境下 初次打包速度略快于 Create-React-App，在有缓存下更快
+- 

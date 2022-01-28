@@ -1,14 +1,16 @@
 module.exports = {
   env: {
-    commonjs: true
+    commonjs: true,
   },
   extends: [
-    'standard'
+    'airbnb-base',
   ],
   parserOptions: {
-    ecmaVersion: 'latest'
+    ecmaVersion: 'latest',
   },
   rules: {
-    'no-console': 1
-  }
-}
+    'no-console': 1,
+    'global-require': 0,
+    'import/no-dynamic-require': 0,
+  },
+};

@@ -1,0 +1,6 @@
+body {
+  display: flex;  /* 这是注释 */
+  flex-direction: column;
+  justify-content: center;
+  background-image: url(./asset/image/home_bg.png);
+}

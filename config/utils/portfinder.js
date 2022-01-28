@@ -1,18 +1,19 @@
-const portfinder = require('portfinder')
+/* eslint-disable import/no-extraneous-dependencies */
+const portfinder = require('portfinder');
 
-portfinder.highestPort = 65535
+portfinder.highestPort = 65535;
 
-module.exports = function getEffectivePort (port) {
+module.exports = function getEffectivePort(expectPort) {
   // default: 8000
-  portfinder.basePort = parseInt(port)
+  portfinder.basePort = parseInt(expectPort, 10);
   return new Promise((resolve, reject) => {
     // 查找端口号
     portfinder.getPort((err, port) => {
       if (err) {
-        reject(err)
-        return
+        reject(err);
+        return;
       }
-      resolve(port)
-    })
-  })
-}
+      resolve(port);
+    });
+  });
+};

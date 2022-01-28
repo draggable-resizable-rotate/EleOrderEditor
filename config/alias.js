@@ -1,8 +1,6 @@
 // const { EnvConfig } = require('./utils/env')
-const PathConfig = require('./utils/path')
-
-const { resolve } = require('path')
+const PathConfig = require('./utils/path');
 
 module.exports = {
-  '@': resolve(PathConfig.appPath, 'src')
-}
+  '@': PathConfig.appSrc,
+};

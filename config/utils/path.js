@@ -1,29 +1,28 @@
 // 获取根路径，并且导出输出路径，导出
-const fs = require('fs')
-const path = require('path')
-const { EnvConfig } = require('./env')
+const fs = require('fs');
+const path = require('path');
+const { EnvConfig } = require('./env');
 
 // 获取当前项目的根路径
-const appDirectory = fs.realpathSync(process.cwd())
+const appDirectory = fs.realpathSync(process.cwd());
 // 获取相对项目的路径
-const resolveApp = relativePath => path.resolve(appDirectory, relativePath)
+const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
 
 // 获取 publicPath，默认是 '/'
-function getPublicPath (string) {
-  const packageJSON = require(`${string}`)
+function getPublicPath(string) {
+  const packageJSON = require(`${string}`);
   // 默认返回相对路径
-  let publicPath = EnvConfig.HOME_PAGE || packageJSON?.homepage
+  let publicPath = EnvConfig.HOME_PAGE || packageJSON?.homepage;
 
   if (publicPath) {
     publicPath = publicPath.endsWith('/')
       ? publicPath
-      : publicPath + '/'
+      : `${publicPath}/`;
 
-    return publicPath
+    return publicPath;
   }
 
-  // 开发环境默认是 /
-  return EnvConfig.NODE_ENV === 'development' ? '/' : publicPath
+  return '/';
 }
 
 module.exports = {
@@ -39,5 +38,5 @@ module.exports = {
   proxySetup: resolveApp('src/setupProxy.js'),
   appNodeModules: resolveApp('node_modules'),
   appWebpackCache: resolveApp('node_modules/.cache'),
-  publicPath: getPublicPath(resolveApp('package.json'))
-}
+  publicPath: getPublicPath(resolveApp('package.json')),
+};
