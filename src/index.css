@@ -4,3 +4,7 @@ body {
   justify-content: center;
   background-image: url(./asset/image/home_bg.png);
 }
+
+::placeholder {
+  color: gray;
+}

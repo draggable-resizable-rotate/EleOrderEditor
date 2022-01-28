@@ -8,7 +8,6 @@
 - 去除无用配置，能加快webpack启动的速度
 - 虽然是叫REACT CLI，但是只需要添加一些配置，立马能跑Vue的代码
 
-
 ## 拓展和修改Create-React-App
 - 环境变量 PORT、HOST、BUILD_PATH、GENERATE_SOURCEMAP、IMAGE_INLINE_SIZE_LIMIT 保持原来的用法
 - 环境变量 PUBLIC_PATH => HOME_PAGE，不过在html模板文件仍然是 %PUBLIC_PATH%
@@ -40,9 +39,10 @@
 - 验证所有代码
 - 验证webpack的所有功能是否有效
 - 验证在外部配置文件是否能够合并
-- 验证各个参见是否生效
+- 验证各个loader是否生效
 
 
 ## 成功
 - 实测 在生产环境下 初次打包速度略快于 Create-React-App，在有缓存下更快
-- 
+- 实测 eslint 运行和 Create-React-App 表现一致
+- 实测 css-loader module 模式生成 代码一致

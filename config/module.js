@@ -44,10 +44,15 @@ function getStyleLoaders(cssOptions) {
           config: false,
           plugins: [
             'postcss-flexbugs-fixes',
-            // postcss-preset-env 直接的支持 autoprefixer能力
+            // postcss-preset-env 直接的支持 autoprefixer能力 
+            /** post-css配置文件(https://github.com/browserslist/browserslist#browserslistrc)：
+             *  1. .browserslistrc
+             *  2. browserslist
+             */
             [
               'postcss-preset-env',
               {
+                // autoprefixer-options(https://github.com/postcss/autoprefixer#options)
                 autoprefixer: {
                   flexbox: 'no-2009',
                 },

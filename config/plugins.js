@@ -101,6 +101,7 @@ const plugins = [
           ),
           cwd: PathConfig.appPath,
           resolvePluginsRelativeTo: __dirname,
+          // 注意，这个配置能和外部的 eslintrc 文件 以及 package.json 的 eslintConfig 合并
           baseConfig: {
             extends: [require.resolve('eslint-config-react-app/base')],
             rules: {
