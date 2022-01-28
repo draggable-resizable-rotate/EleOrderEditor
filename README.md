@@ -41,6 +41,7 @@
 - 什么时候总结一下eslint 到底怎么用
 - 总结一下ts 怎么用，和继承
 - 集成stylelint
+- 总结一下到底怎么去编译jsx 和 post-css各种插件的用法，还有babel
 
 ## 成功
 - 实测 在生产环境下 初次打包速度略快于 Create-React-App，在有缓存下更快
