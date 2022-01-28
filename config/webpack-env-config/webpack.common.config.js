@@ -7,6 +7,7 @@ const WebpackModule = require('../module');
 const { DependEnvConfig } = require('../utils/env');
 const PathConfig = require('../utils/path');
 const WebpackPlugins = require('../plugins');
+const WebpackOptimization = require('../splitChunks');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (env, args) => {
@@ -53,34 +54,6 @@ module.exports = (env, args) => {
     },
   };
 
-  // 分割代码
-  const optimization = {
-    splitChunks: {
-      cacheGroups: {
-        // 把 node_modules 的代码放到一起，每次构建有缓存
-        vendors: {
-          name: 'chunk-vendors',
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10,
-          chunks: 'initial',
-        },
-        // 同步加载代码凡是使用到两次的，都分割
-        common: {
-          name: 'chunk-common',
-          minChunks: 2,
-          priority: -20,
-          chunks: 'initial',
-          // 和其它的不冲突
-          reuseExistingChunk: true,
-        },
-      },
-    },
-    // 把 runtimeChunk 代码分离出来
-    runtimeChunk: {
-      name: (entrypoint) => `runtimechunk~${entrypoint.name}`,
-    },
-  };
-
   return {
     // 开启browserslist 之后需要在 package.json 也开启
     target: ['browserslist'],
@@ -95,6 +68,6 @@ module.exports = (env, args) => {
     resolve,
     module: WebpackModule,
     plugins: WebpackPlugins,
-    optimization,
+    optimization: WebpackOptimization,
   };
 };

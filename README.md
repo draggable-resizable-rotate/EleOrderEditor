@@ -33,22 +33,23 @@
 - 完成eslint在生产环境下的接入，预计开发环境不接入而是使用 husky + vscode-eslint-plugin
 
 ## todo
-- babel(怎么去做 polfiy)
-- 代码拆分 chunk
+- babel(怎么去做 polfiy)，按需加载
 - mock 怎么做
 - husky
 - ts 怎么接入，怎么解析tsx
-- 还未接入 proxy
 - eslint 怎么分 config 和全局内部的
 - 什么时候总结一下eslint 到底怎么用
 - 总结一下ts 怎么用，和继承
-- html-loader 是否需要集成
+- 集成stylelint
 
 ## 成功
 - 实测 在生产环境下 初次打包速度略快于 Create-React-App，在有缓存下更快
 - 实测 eslint 运行和 Create-React-App 表现一致，eslint 可以通过 外部 eslintrc 和 package.json 的 eslintConfig
 - 实测 css-loader module 模式生成 代码一致、post-css 确切有效
 - 实测 路径别名 alias 已经生效
-- postcss 外部 可以通过  | package.json 的 .. 修改
-- DefinePlugin 提供环境变量成功
+- postcss 外部 可以通过 .browserslistrc文件 | package.json 的 browserslist 修改
+- 实测 DefinePlugin 提供环境变量成功
 - 添加 webpackbar 进度条插件
+- 添加 webpack-bundle-analyzer 分析代码
+- 常用代码配置已经拆分 proxy代理，splitChunk 代码分割
+- CopyWebpackPlugin 将 public 代码复制到 打包目录下， html-loader 无需集成

@@ -2,11 +2,12 @@
 const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const { DependEnvConfig } = require('../utils/env');
 const PathConfig = require('../utils/path');
+const proxy = require('../proxy');
 
 const {
   port, host = '0.0.0.0',
   sockHost, sockPath, sockPort,
-  browserOpen
+  browserOpen,
 } = DependEnvConfig;
 
 // eslint-disable-next-line no-unused-vars
@@ -51,6 +52,7 @@ module.exports = (env, args) => {
       'Access-Control-Allow-Methods': '*',
       'Access-Control-Allow-Headers': '*',
     },
+    proxy,
     // onBeforeSetupMiddleware (devServer) {
     //   // 在内置中间件执行之前做些什么
     // },
