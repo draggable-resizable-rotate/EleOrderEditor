@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
-const { EnvConfig, DependEnvConfig } = require('./utils/env');
+const { DependEnvConfig } = require('./utils/env');
 const PathConfig = require('./utils/path');
 
 const cssRegex = /\.css$/;
@@ -17,12 +17,11 @@ const {
   isEnvProduction,
   isEnvDevelopment,
   imageInlineSizeLimit,
+  shouldUseSourceMap,
 } = DependEnvConfig;
 
-function getStyleLoaders(cssOptions) {
-  const { GENERATE_SOURCEMAP } = EnvConfig;
-  const shouldUseSourceMap = GENERATE_SOURCEMAP === 'true';
-
+function getStyleLoaders(cssOptions, preProcessor) {
+  const proUseSourceMap = isEnvProduction ? shouldUseSourceMap : isEnvDevelopment;
   const loaders = [
     isEnvDevelopment && require.resolve('style-loader'),
     isEnvProduction && {
@@ -33,7 +32,7 @@ function getStyleLoaders(cssOptions) {
     {
       loader: require.resolve('css-loader'),
       options: {
-        sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+        sourceMap: proUseSourceMap,
         ...cssOptions,
       },
     },
@@ -45,7 +44,7 @@ function getStyleLoaders(cssOptions) {
           config: false,
           plugins: [
             'postcss-flexbugs-fixes',
-            // postcss-preset-env 直接的支持 autoprefixer能力 
+            // postcss-preset-env 直接的支持 autoprefixer能力
             /** post-css配置文件(https://github.com/browserslist/browserslist#browserslistrc)：
              *  1. .browserslistrc
              *  2. browserslist
@@ -63,10 +62,30 @@ function getStyleLoaders(cssOptions) {
             'postcss-normalize',
           ],
         },
-        sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+        sourceMap: proUseSourceMap,
       },
     },
   ].filter(Boolean);
+
+  if (preProcessor) {
+    if (preProcessor === 'sass-loader') {
+      loaders.push({
+        loader: require.resolve('resolve-url-loader'),
+        options: {
+          sourceMap: proUseSourceMap,
+          root: PathConfig.appSrc,
+        },
+      });
+    }
+    loaders.push(
+      {
+        loader: require.resolve(preProcessor),
+        options: {
+          sourceMap: proUseSourceMap,
+        },
+      },
+    );
+  }
 
   return loaders;
 }
@@ -139,6 +158,7 @@ module.exports = {
         {
           test: /\.(js|mjs|jsx|ts|tsx)$/,
           include: PathConfig.appSrc,
+          exclude: /node_modules/,
           loader: require.resolve('babel-loader'),
           options: {
             // 其实只是用到了一个 babel-preset-react-app 插件
@@ -196,7 +216,7 @@ module.exports = {
             modules: {
               mode: 'icss',
             },
-          }), 'less-loader'],
+          }, 'less-loader')],
           // 指定无法 tree shaking
           sideEffects: true,
         },
@@ -208,7 +228,7 @@ module.exports = {
               mode: 'local',
               getLocalIdent: getCSSModuleLocalIdent,
             },
-          }), 'less-loader'],
+          }, 'less-loader')],
         },
         {
           exclude: [/^$/, /\.(js|jsx|ts|tsx)$/, /\.html$/, /\.json$/],

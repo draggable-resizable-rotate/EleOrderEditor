@@ -1,7 +1,7 @@
 // 获取根路径，并且导出输出路径，导出
 const fs = require('fs');
 const path = require('path');
-const { EnvConfig } = require('./env');
+const { DependEnvConfig } = require('./env');
 
 // 获取当前项目的根路径
 const appDirectory = fs.realpathSync(process.cwd());
@@ -12,7 +12,7 @@ const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
 function getPublicPath(string) {
   const packageJSON = require(`${string}`);
   // 默认返回相对路径
-  let publicPath = EnvConfig.HOME_PAGE || packageJSON?.homepage;
+  let publicPath = DependEnvConfig.homepage || packageJSON?.homepage;
 
   if (publicPath) {
     publicPath = publicPath.endsWith('/')
@@ -27,7 +27,7 @@ function getPublicPath(string) {
 
 module.exports = {
   appPath: resolveApp('.'),
-  appBuild: resolveApp(EnvConfig.BUILD_PATH || 'build'),
+  appBuild: resolveApp(DependEnvConfig.buildPath || 'build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveApp('src/index'),

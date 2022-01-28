@@ -4,7 +4,7 @@ const moduleFileExtensions = require('../extensions');
 const fsExist = require('../utils/fs/fs-exist');
 const Alias = require('../alias');
 const WebpackModule = require('../module');
-const { EnvConfig } = require('../utils/env');
+const { DependEnvConfig } = require('../utils/env');
 const PathConfig = require('../utils/path');
 const WebpackPlugins = require('../plugins');
 
@@ -27,7 +27,7 @@ module.exports = (env, args) => {
   // 全局缓存自动控制
   const cache = {
     type: 'filesystem',
-    version: createEnvironmentHash(EnvConfig),
+    version: createEnvironmentHash(DependEnvConfig),
     cacheDirectory: PathConfig.appWebpackCache,
     store: 'pack',
     buildDependencies: {

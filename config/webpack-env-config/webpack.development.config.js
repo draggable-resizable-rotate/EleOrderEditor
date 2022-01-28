@@ -1,12 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const ignoredFiles = require('react-dev-utils/ignoredFiles');
-const { EnvConfig } = require('../utils/env');
+const { DependEnvConfig } = require('../utils/env');
 const PathConfig = require('../utils/path');
 
-const host = EnvConfig.HOST || '0.0.0.0';
-const sockHost = EnvConfig.WDS_SOCKET_HOST;
-const sockPath = EnvConfig.WDS_SOCKET_PATH;
-const sockPort = EnvConfig.WDS_SOCKET_PORT;
+const {
+  port, host = '0.0.0.0',
+  sockHost, sockPath, sockPort,
+} = DependEnvConfig;
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (env, args) => {
@@ -29,7 +29,7 @@ module.exports = (env, args) => {
         ignored: ignoredFiles(PathConfig.appSrc),
       },
     },
-    port: EnvConfig.PORT,
+    port,
     client: {
       webSocketURL: {
         hostname: sockHost,

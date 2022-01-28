@@ -23,33 +23,34 @@ const dotenvFiles = [
   `${dotenvPath}.${NODE_ENV}.local`,
 ].filter(Boolean);
 
-// 收集最终有效环境配置
-const allEnvConfig = {
-  NODE_ENV: process.env.NODE_ENV || 'development',
+// 收集 - 最终有效环境配置
+const EnvConfig = {
+  NODE_ENV: process.env.NODE_ENV,
+  BABEL_ENV: process.env.BABEL_ENV,
 };
 
 // 加载 - 当前环境下的环境配置文件
 dotenvFiles.forEach((dotenvFile) => {
   if (!fsExist(dotenvFile)) return;
-  const config = dotenv.config({
+  const config = dotenvExpand.expand(dotenv.config({
     path: dotenvFile,
-  });
-  Object.assign(allEnvConfig, config.parsed);
-  dotenvExpand.expand(config);
+  }));
+  Object.assign(EnvConfig, config.parsed);
 });
 
 function getEnvironment(publicPath) {
   const RUNTIME = /^RUNTIME_/i;
-  const processEnv = Object.keys(process.env)
+  // 不希望遍历 process.env ，它有很多其它的附着遍历，遍历非常耗时
+  const processEnv = Object.keys(EnvConfig)
     .filter((key) => RUNTIME.test(key))
     .reduce(
       (env, key) => {
         // eslint-disable-next-line no-param-reassign
-        env[key] = process.env[key];
+        env[key] = EnvConfig[key];
         return env;
       },
       {
-        NODE_ENV: process.env.NODE_ENV || 'development',
+        NODE_ENV: EnvConfig.NODE_ENV,
         HOME_PAGE: publicPath,
       },
     );
@@ -68,21 +69,20 @@ function getEnvironment(publicPath) {
 
 module.exports = {
   getEnvironment,
-  EnvConfig: allEnvConfig,
   // 根据环境生成的webpack选择配置
   DependEnvConfig: {
     // 图片转换为 DataURL 的限制大小
     imageInlineSizeLimit: parseInt(
-      allEnvConfig.IMAGE_INLINE_SIZE_LIMIT || '10000',
+      EnvConfig.IMAGE_INLINE_SIZE_LIMIT || '10000',
       10,
     ),
-    isEnvDevelopment: allEnvConfig.NODE_ENV === 'development',
-    isEnvProduction: allEnvConfig.NODE_ENV === 'production',
+    isEnvDevelopment: EnvConfig.NODE_ENV === 'development',
+    isEnvProduction: EnvConfig.NODE_ENV === 'production',
     // 是否开启react文件热更新
-    shouldUseReactRefresh: allEnvConfig.FAST_REFRESH,
+    shouldUseReactRefresh: EnvConfig.FAST_REFRESH,
     // 把转换JSX函数的代码一起打包，除非特殊需求请不要这么做
     hasJsxRuntime: (() => {
-      if (allEnvConfig.DISABLE_NEW_JSX_TRANSFORM === 'true') {
+      if (EnvConfig.DISABLE_NEW_JSX_TRANSFORM === 'true') {
         return false;
       }
       try {
@@ -93,8 +93,20 @@ module.exports = {
       }
     })(),
     // 生产环境下 是否不开启  eslint 检测
-    disableESLintPlugin: allEnvConfig.DISABLE_ESLINT_PLUGIN === 'true',
+    disableESLintPlugin: EnvConfig.DISABLE_ESLINT_PLUGIN === 'true',
     // 生产环境下 是否开启 source-map
-    shouldUseSourceMap: allEnvConfig.GENERATE_SOURCEMAP === 'true',
+    shouldUseSourceMap: EnvConfig.GENERATE_SOURCEMAP === 'true',
+    homepage: EnvConfig.HOME_PAGE,
+    buildPath: EnvConfig.BUILD_PATH,
+    get port() {
+      return EnvConfig.PORT;
+    },
+    set port(newPort) {
+      EnvConfig.PORT = newPort;
+    },
+    host: EnvConfig.HOST,
+    sockHost: EnvConfig.WDS_SOCKET_HOST,
+    sockPath: EnvConfig.WDS_SOCKET_PATH,
+    sockPort: EnvConfig.WDS_SOCKET_PORT,
   },
 };

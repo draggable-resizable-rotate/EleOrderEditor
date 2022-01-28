@@ -10,11 +10,11 @@ const CopyPlugin = require('copy-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
-const { EnvConfig, getEnvironment, DependEnvConfig } = require('./utils/env');
+const { getEnvironment, DependEnvConfig } = require('./utils/env');
 const PathConfig = require('./utils/path');
 const moduleFileExtensions = require('./extensions');
 
-const EnvStringified = getEnvironment(PathConfig.publicPath.slice(0, -1));
+const SrcEffectiveEnv = getEnvironment(PathConfig.publicPath);
 
 const {
   hasJsxRuntime,
@@ -26,7 +26,7 @@ const {
 
 const plugins = [
   new HtmlWebpackPlugin({
-
+    title: 'React CLI',
     inject: true, // 插入到body中
     template: PathConfig.appHtml,
     ...(isEnvProduction
@@ -59,9 +59,9 @@ const plugins = [
   }),
   new ModuleNotFoundPlugin(PathConfig.appPath),
   // 向 html-webpack-plugin 插件 的 templateParameters 注入属性·
-  new InterpolateHtmlPlugin(HtmlWebpackPlugin, EnvConfig),
+  new InterpolateHtmlPlugin(HtmlWebpackPlugin, SrcEffectiveEnv.env),
   // 为源代码注册 process.env 变量
-  new webpack.DefinePlugin(EnvStringified),
+  new webpack.DefinePlugin(SrcEffectiveEnv.stringified),
   new webpack.IgnorePlugin({
     resourceRegExp: /^\.\/locale$/,
     contextRegExp: /moment$/,
@@ -103,7 +103,7 @@ const plugins = [
           resolvePluginsRelativeTo: __dirname,
           // 注意，这个配置能和外部的 eslintrc 文件 以及 package.json 的 eslintConfig 合并
           baseConfig: {
-            extends: [require.resolve('eslint-config-react-app/base')],
+            extends: [require.resolve('eslint-config-react-app/base'), 'react-app'],
             rules: {
               // 每个有jsx语法的js文件必须引入 import React from 'react'
               ...(!hasJsxRuntime && {
