@@ -27,6 +27,7 @@ function getStyleLoaders(cssOptions) {
     isEnvDevelopment && require.resolve('style-loader'),
     isEnvProduction && {
       loader: MiniCssExtractPlugin.loader,
+      // MiniCssExtractPlugin 能够为 css-loader 处理过得 各种引入文件，添加 publicPath
       options: { publicPath: '../../' },
     },
     {
