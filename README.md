@@ -33,6 +33,7 @@
 - 完成eslint在生产环境下的接入，预计开发环境不接入而是使用 husky + vscode-eslint-plugin
 
 ## todo
+- eslint没做好
 - ts 怎么接入，怎么解析tsx
 - mock 怎么做
 - husky
@@ -53,3 +54,6 @@
 - 添加 webpack-bundle-analyzer 分析代码
 - 常用代码配置已经拆分 proxy代理，splitChunk 代码分割
 - CopyWebpackPlugin 将 public 代码复制到 打包目录下， html-loader 无需集成
+- 更新编译JSX的loader，从 Create-React-App 官方提供的 转到 @babel/preset-react，并添加babel插件和webpack plugin 提供热更新服务
+- 接入 @babel/preset-env + core-js@3 + regenerator-runtime 设置 按需加载 polyfill
+- 配置svg的loader 为 file-loader => @svgr/webpack，能够实现 import { ReactComponent as SvgCom } from 'xx.svg'，自动组件化svg

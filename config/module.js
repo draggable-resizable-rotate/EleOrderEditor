@@ -44,15 +44,9 @@ function getStyleLoaders(cssOptions, preProcessor) {
           config: false,
           plugins: [
             'postcss-flexbugs-fixes',
-            // postcss-preset-env 直接的支持 autoprefixer能力
-            /** post-css配置文件(https://github.com/browserslist/browserslist#browserslistrc)：
-             *  1. .browserslistrc
-             *  2. browserslist
-             */
             [
               'postcss-preset-env',
               {
-                // autoprefixer-options(https://github.com/postcss/autoprefixer#options)
                 autoprefixer: {
                   flexbox: 'no-2009',
                 },
@@ -127,54 +121,49 @@ module.exports = {
             filename: 'static/media/image/[name].[hash].[ext]',
           },
         },
-        // {
-        //   test: /\.svg$/,
-        //   use: [
-        //     {
-        //       loader: require.resolve('@svgr/webpack'),
-        //       options: {
-        //         prettier: false,
-        //         svgo: false,
-        //         svgoConfig: {
-        //           plugins: [{ removeViewBox: false }]
-        //         },
-        //         titleProp: true,
-        //         ref: true
-        //       }
-        //     },
-        //     {
-        //       loader: require.resolve('file-loader'),
-        //       options: {
-        //         name: 'static/media/[name].[hash].[ext]'
-        //       }
-        //     }
-        //   ],
-        //   issuer: {
-        //     and: [/\.(ts|tsx|js|jsx|md|mdx)$/]
-        //   }
-        // },
-        // 这里得装很多插件  添加package.json
-        // @babel/core, babel-loader babel-preset-react-app babel-plugin-named-asset-import
         {
-          test: /\.(js|mjs|jsx|ts|tsx)$/,
+          test: /\.svg$/,
+          use: [
+            {
+              loader: require.resolve('@svgr/webpack'),
+              options: {
+                prettier: false,
+                svgo: false,
+                svgoConfig: {
+                  plugins: [{ removeViewBox: false }],
+                },
+                titleProp: true,
+                ref: true,
+              },
+            },
+            {
+              loader: require.resolve('file-loader'),
+              options: {
+                name: 'static/media/[name].[hash].[ext]',
+              },
+            },
+          ],
+          issuer: {
+            and: [/\.(ts|tsx|js|jsx)$/],
+          },
+        },
+        {
+          test: /\.(js|jsx|ts|tsx)$/,
           include: PathConfig.appSrc,
           exclude: /node_modules/,
           loader: require.resolve('babel-loader'),
           options: {
-            // 其实只是用到了一个 babel-preset-react-app 插件
-            // 需要注意，这是官方维护的一个插件，并没有使用 babel 官网的 preset-react
-            customize: require.resolve(
-              'babel-preset-react-app/webpack-overrides',
-            ),
             presets: [
-              // [ 这两个配置是一致的，但是下面的指定了路径，优化了解析的时间
-              //   'react-app',
-              //   {
-              //     runtime: hasJsxRuntime ? 'automatic' : 'classic',
-              //   },
-              // ],
               [
-                require.resolve('babel-preset-react-app'),
+                '@babel/preset-env',
+                // 按需加载
+                {
+                  useBuiltIns: 'usage',
+                  corejs: 3,
+                },
+              ],
+              [
+                '@babel/preset-react',
                 {
                   runtime: hasJsxRuntime ? 'automatic' : 'classic',
                 },

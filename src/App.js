@@ -1,8 +1,8 @@
+import { ReactComponent as ProSvg } from './asset/svg/pro_icon.svg'
+
 export default function App() {
   const state = 4
-  console.log('加载polyfill')
-  console.log(Array.from('123'))
   return (
-    <span>App2 组件 {state}</span>
+    <span>App2 组件 {state} <ProSvg width="18" height="18" /></span>
   )
 }
