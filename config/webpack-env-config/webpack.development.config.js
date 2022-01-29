@@ -14,7 +14,7 @@ const {
 module.exports = (env, args) => {
   const output = {
     path: PathConfig.appBuild,
-    filename: 'static/js/bundle.js',
+    filename: 'static/js/[name].js',
     chunkFilename: 'static/js/[name].chunk.js',
   };
 

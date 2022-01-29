@@ -33,15 +33,15 @@
 - 完成eslint在生产环境下的接入，预计开发环境不接入而是使用 husky + vscode-eslint-plugin
 
 ## todo
-- babel(怎么去做 polfiy)，按需加载
+- ts 怎么接入，怎么解析tsx
+
 - mock 怎么做
 - husky
-- ts 怎么接入，怎么解析tsx
 - eslint 怎么分 config 和全局内部的
-- 什么时候总结一下eslint 到底怎么用
-- 总结一下ts 怎么用，和继承
 - 集成stylelint
-- 总结一下到底怎么去编译jsx 和 post-css各种插件的用法，还有babel
+- history 路由模式下怎么配置devServer
+- 总结一下ts 怎么用，和继承
+- 什么时候总结一下eslint 到底怎么用
 
 ## 成功
 - 实测 在生产环境下 初次打包速度略快于 Create-React-App，在有缓存下更快

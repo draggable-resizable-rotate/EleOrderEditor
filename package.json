@@ -2,16 +2,39 @@
   "name": "react-cli",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "analyze": "webpack --config ./config/webpack.config.js --env mode=production --analyze",
-    "build:pro": "webpack --config ./config/webpack.config.js --env mode=production",
-    "build:dev": "webpack --config ./config/webpack.config.js --env mode=development",
-    "server": "webpack server --config ./config/webpack.config.js --env mode=development"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "main": "index.js",
+  "scripts": {
+    "analyze": "webpack --config ./config/webpack.config.js --env mode=production --analyze",
+    "build": "npm run build:pro",
+    "build:pro": "webpack --config ./config/webpack.config.js --env mode=production",
+    "build:dev": "webpack --config ./config/webpack.config.js --env mode=development",
+    "start": "npm run server",
+    "server": "webpack server --config ./config/webpack.config.js --env mode=development"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
   "devDependencies": {
     "@babel/core": "^7.16.12",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
@@ -53,26 +76,5 @@
     "webpack-manifest-plugin": "^4.1.1",
     "webpack-merge": "^5.8.0",
     "webpackbar": "^5.0.2"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
-  },
-  "dependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
   }
 }
