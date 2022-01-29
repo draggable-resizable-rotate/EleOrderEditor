@@ -66,6 +66,11 @@ function getEnvironment(publicPath) {
 
   return { env: processEnv, stringified };
 }
+function cvrStringToBoolean(booleanString, defaultValue) {
+  if (booleanString === 'false') return false;
+  if (booleanString === 'true') return true;
+  return defaultValue;
+}
 
 module.exports = {
   getEnvironment,
@@ -79,7 +84,7 @@ module.exports = {
     isEnvDevelopment: EnvConfig.NODE_ENV === 'development',
     isEnvProduction: EnvConfig.NODE_ENV === 'production',
     // 是否开启react文件热更新
-    shouldUseReactRefresh: EnvConfig.FAST_REFRESH,
+    shouldUseReactRefresh: cvrStringToBoolean(EnvConfig.FAST_REFRESH, true),
     // 把转换JSX函数的代码一起打包，除非特殊需求请不要这么做
     hasJsxRuntime: (() => {
       if (EnvConfig.DISABLE_NEW_JSX_TRANSFORM === 'true') {
@@ -93,9 +98,9 @@ module.exports = {
       }
     })(),
     // 生产环境下 是否不开启  eslint 检测
-    disableESLintPlugin: EnvConfig.DISABLE_ESLINT_PLUGIN === 'true',
+    disableESLintPlugin: cvrStringToBoolean(EnvConfig.DISABLE_ESLINT_PLUGIN, true),
     // 生产环境下 是否开启 source-map
-    shouldUseSourceMap: EnvConfig.GENERATE_SOURCEMAP === 'true',
+    shouldUseSourceMap: cvrStringToBoolean(EnvConfig.GENERATE_SOURCEMAP, true),
     homepage: EnvConfig.HOME_PAGE,
     buildPath: EnvConfig.BUILD_PATH,
     get port() {
@@ -109,6 +114,6 @@ module.exports = {
     sockPath: EnvConfig.WDS_SOCKET_PATH,
     sockPort: EnvConfig.WDS_SOCKET_PORT,
     // 浏览器是否自动启动
-    browserOpen: EnvConfig.BROWSER_OPEN === 'true',
+    browserOpen: cvrStringToBoolean(EnvConfig.BROWSER_OPEN, true),
   },
 };

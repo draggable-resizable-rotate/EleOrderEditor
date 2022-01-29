@@ -33,8 +33,9 @@
 - 完成eslint在生产环境下的接入，预计开发环境不接入而是使用 husky + vscode-eslint-plugin
 
 ## todo
+- jsx 热更新
 - ts 怎么接入，怎么解析tsx
-
+- babel
 - mock 怎么做
 - husky
 - eslint 怎么分 config 和全局内部的

@@ -7,7 +7,7 @@ const WebpackModule = require('../module');
 const { DependEnvConfig } = require('../utils/env');
 const PathConfig = require('../utils/path');
 const WebpackPlugins = require('../plugins');
-const WebpackOptimization = require('../splitChunks');
+const WebpackSplitChunks = require('../splitChunks');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (env, args) => {
@@ -68,6 +68,12 @@ module.exports = (env, args) => {
     resolve,
     module: WebpackModule,
     plugins: WebpackPlugins,
-    optimization: WebpackOptimization,
+    optimization: {
+      splitChunks: WebpackSplitChunks,
+      // 把 runtimeChunk 代码分离出来
+      runtimeChunk: {
+        name: (entrypoint) => `runtimechunk~${entrypoint.name}`,
+      },
+    },
   };
 };

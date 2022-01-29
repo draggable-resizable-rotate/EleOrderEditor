@@ -167,6 +167,12 @@ module.exports = {
               'babel-preset-react-app/webpack-overrides',
             ),
             presets: [
+              // [ 这两个配置是一致的，但是下面的指定了路径，优化了解析的时间
+              //   'react-app',
+              //   {
+              //     runtime: hasJsxRuntime ? 'automatic' : 'classic',
+              //   },
+              // ],
               [
                 require.resolve('babel-preset-react-app'),
                 {
