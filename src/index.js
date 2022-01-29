@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './index.css'
+import App from './App'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -8,9 +10,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-
-function App() {
-  return (
-    <span>App 组件</span>
-  )
-}
+Promise.resolve().finally();
