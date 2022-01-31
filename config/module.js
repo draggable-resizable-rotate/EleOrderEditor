@@ -168,6 +168,7 @@ module.exports = {
                   runtime: hasJsxRuntime ? 'automatic' : 'classic',
                 },
               ],
+              '@babel/preset-typescript',
             ],
 
             plugins: [
