@@ -23,8 +23,14 @@ module.exports = {
     'react',
     '@typescript-eslint'
   ],
+  // 解决报错 => 需要设置react的版本
+  settings: {
+    react: {
+      version: 'detect'
+    }
+  },
   // 接入 ts 的解析器
-  // parser: '@typescript-eslint/parser',
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     tsconfigRootDir: __dirname,
     project: ['./tsconfig.json'],
@@ -41,7 +47,7 @@ module.exports = {
   },
   // 自定义 rules
   rules: {
-    'no-console': 'warn',
+    'no-console': 'error',
     // 这条配置其实是默认的，但是写出来提醒一下，jsx-runtime 默认没有引入
     'react/react-in-jsx-scope': 'error'
   },
