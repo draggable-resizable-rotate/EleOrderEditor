@@ -8,8 +8,8 @@ const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const lessRegex = /\.(less)$/;
 const lessModuleRegex = /\.module\.(less)$/;
-// const sassRegex = /\.(scss|sass)$/
-// const sassModuleRegex = /\.module\.(scss|sass)$/
+const sassRegex = /\.(scss|sass)$/;
+const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 const {
   hasJsxRuntime,
@@ -225,6 +225,28 @@ module.exports = {
               getLocalIdent: getCSSModuleLocalIdent,
             },
           }, 'less-loader')],
+        },
+        {
+          test: sassRegex,
+          exclude: sassModuleRegex,
+          use: [...getStyleLoaders({
+            importLoaders: 2,
+            modules: {
+              mode: 'icss',
+            },
+          }, 'sass-loader')],
+          // 指定无法 tree shaking
+          sideEffects: true,
+        },
+        {
+          test: sassModuleRegex,
+          use: [...getStyleLoaders({
+            importLoaders: 2,
+            modules: {
+              mode: 'local',
+              getLocalIdent: getCSSModuleLocalIdent,
+            },
+          }, 'sass-loader')],
         },
         {
           exclude: [/^$/, /\.(js|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
