@@ -13,7 +13,6 @@
 - 环境变量 PUBLIC_PATH => HOME_PAGE，不过在html模板文件仍然是 %PUBLIC_PATH%
 - 保留了 Create-React-App 通过加载环境变量文件 设置环境变量，在 appDir/config/env-config
 
-
 ## 有哪些内置的功能
 - portfinder 帮助识别配置默认端口是否有效
 - package.json 在 script 添加 webpack执行代码的时候 配置 --env mode=property，就会加载 appDir/config/webpack.property.config.js 配置
@@ -33,13 +32,11 @@
 - 完成eslint在生产环境下的接入，预计开发环境不接入而是使用 husky + vscode-eslint-plugin
 
 ## todo
-- ts 怎么接入，怎么解析tsx
 - mock 怎么做
 - husky
-- eslint 怎么分 config 和全局内部的
 - 集成stylelint
 - history 路由模式下怎么配置devServer
-- 总结一下ts 怎么用，和继承
+- 配置一下sass
 
 ## 成功
 - 实测 在生产环境下 初次打包速度略快于 Create-React-App，在有缓存下更快
@@ -56,3 +53,4 @@
 - 接入 @babel/preset-env + core-js@3 + regenerator-runtime 设置 按需加载 polyfill
 - 配置svg的loader 为 file-loader => @svgr/webpack，能够实现 import { ReactComponent as SvgCom } from 'xx.svg'，自动组件化svg
 - 外部eslint接入成功，并且自定义配置
+- 接入 ts 成功，配置项目路径别名
