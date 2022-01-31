@@ -33,7 +33,6 @@
 - 完成eslint在生产环境下的接入，预计开发环境不接入而是使用 husky + vscode-eslint-plugin
 
 ## todo
-- eslint没做好
 - ts 怎么接入，怎么解析tsx
 - mock 怎么做
 - husky
@@ -41,7 +40,6 @@
 - 集成stylelint
 - history 路由模式下怎么配置devServer
 - 总结一下ts 怎么用，和继承
-- 什么时候总结一下eslint 到底怎么用
 
 ## 成功
 - 实测 在生产环境下 初次打包速度略快于 Create-React-App，在有缓存下更快
@@ -57,3 +55,4 @@
 - 更新编译JSX的loader，从 Create-React-App 官方提供的 转到 @babel/preset-react，并添加babel插件和webpack plugin 提供热更新服务
 - 接入 @babel/preset-env + core-js@3 + regenerator-runtime 设置 按需加载 polyfill
 - 配置svg的loader 为 file-loader => @svgr/webpack，能够实现 import { ReactComponent as SvgCom } from 'xx.svg'，自动组件化svg
+- 外部eslint接入成功，并且自定义配置

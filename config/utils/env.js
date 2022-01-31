@@ -87,7 +87,7 @@ module.exports = {
     shouldUseReactRefresh: cvrStringToBoolean(EnvConfig.FAST_REFRESH, true),
     // 把转换JSX函数的代码一起打包，除非特殊需求请不要这么做
     hasJsxRuntime: (() => {
-      if (EnvConfig.DISABLE_NEW_JSX_TRANSFORM === 'true') {
+      if (EnvConfig.JSX_RUNTIME !== 'true') {
         return false;
       }
       try {

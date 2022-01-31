@@ -1,3 +1,4 @@
+import React from 'react';
 import { ReactComponent as ProSvg } from './asset/svg/pro_icon.svg'
 
 export default function App() {

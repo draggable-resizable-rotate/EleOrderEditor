@@ -7,6 +7,7 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 'latest',
+    sourceType: 'module',
   },
   rules: {
     'no-console': 1,
@@ -14,4 +15,5 @@ module.exports = {
     'import/no-dynamic-require': 0,
     'consistent-return': 0,
   },
+  root: true,
 };
