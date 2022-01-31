@@ -106,7 +106,7 @@ module.exports = {
             },
           },
           generator: {
-            filename: 'static/media/avif/[name].[hash].[ext]',
+            filename: 'static/asset/avif/[name].[hash].[ext]',
           },
         },
         {
@@ -118,7 +118,19 @@ module.exports = {
             },
           },
           generator: {
-            filename: 'static/media/image/[name].[hash].[ext]',
+            filename: 'static/asset/image/[name].[hash].[ext]',
+          },
+        },
+        {
+          test: [/\.woff2$/, /\.eot$/, /\.ttf$/, /\.otf$/],
+          type: 'asset',
+          parser: {
+            dataUrlCondition: {
+              maxSize: imageInlineSizeLimit,
+            },
+          },
+          generator: {
+            filename: 'static/asset/font/[name].[hash].[ext]',
           },
         },
         {
@@ -139,7 +151,7 @@ module.exports = {
             {
               loader: require.resolve('file-loader'),
               options: {
-                name: 'static/media/[name].[hash].[ext]',
+                name: 'static/asset/svg/[name].[hash].[ext]',
               },
             },
           ],
@@ -154,7 +166,8 @@ module.exports = {
           loader: require.resolve('babel-loader'),
           options: {
             presets: [
-              [
+              // 生产环境下才使用 polyfill
+              isEnvProduction && [
                 '@babel/preset-env',
                 // 按需加载
                 {
@@ -169,7 +182,7 @@ module.exports = {
                 },
               ],
               '@babel/preset-typescript',
-            ],
+            ].filter(Boolean),
 
             plugins: [
               isEnvDevelopment
@@ -251,6 +264,9 @@ module.exports = {
         {
           exclude: [/^$/, /\.(js|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
           type: 'asset/resource',
+          generator: {
+            filename: 'static/other/[name].[hash].[ext]',
+          },
         },
       ],
     },
