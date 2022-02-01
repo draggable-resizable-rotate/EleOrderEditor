@@ -7,12 +7,14 @@
   "license": "ISC",
   "main": "index.js",
   "scripts": {
+    "prepare": "husky install",
     "analyze": "webpack --config ./config/webpack.config.js --env mode=production --analyze",
     "build": "npm run build:pro",
     "build:pro": "webpack --config ./config/webpack.config.js --env mode=production",
     "build:dev": "webpack --config ./config/webpack.config.js --env mode=development",
     "start": "npm run server",
-    "server": "webpack server --config ./config/webpack.config.js --env mode=development"
+    "server": "webpack server --config ./config/webpack.config.js --env mode=development",
+    "lint": "eslint ./"
   },
   "browserslist": {
     "production": [
@@ -56,6 +58,7 @@
     "eslint-webpack-plugin": "^3.1.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^7.0.4",
     "is-wsl": "^2.2.0",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
