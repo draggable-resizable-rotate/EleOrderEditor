@@ -33,10 +33,8 @@
 
 ## todo
 - mock 怎么做
-- husky
 - 集成stylelint
 - history 路由模式下怎么配置devServer
-- 配置一下sass
 
 ## 成功
 - 实测 在生产环境下 初次打包速度略快于 Create-React-App，在有缓存下更快

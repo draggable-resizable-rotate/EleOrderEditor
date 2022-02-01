@@ -53,6 +53,8 @@ module.exports = (env, args) => {
       'Access-Control-Allow-Headers': '*',
     },
     proxy,
+    // 如果是History API那么没有找到文件需要退回带 index.html
+    historyApiFallback: true,
     // onBeforeSetupMiddleware (devServer) {
     //   // 在内置中间件执行之前做些什么
     // },
