@@ -4,7 +4,8 @@
     "config",
     "public",
     "dist",
-    "build"
+    "build",
+    "mock"
   ],
   // 注意 需要把 .eslintrc.js 添加进去
   "include": [

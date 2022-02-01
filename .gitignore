@@ -15,3 +15,6 @@ build
 
 # log
 *.log
+
+# mock 下的非 eslint 文件
+mock/[^.]*.js

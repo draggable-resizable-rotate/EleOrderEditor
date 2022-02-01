@@ -32,9 +32,7 @@
 - 完成eslint在生产环境下的接入，预计开发环境不接入而是使用 husky + vscode-eslint-plugin
 
 ## todo
-- mock 怎么做
 - 集成stylelint
-- history 路由模式下怎么配置devServer
 
 ## 成功
 - 实测 在生产环境下 初次打包速度略快于 Create-React-App，在有缓存下更快
@@ -52,3 +50,4 @@
 - 配置svg的loader 为 file-loader => @svgr/webpack，能够实现 import { ReactComponent as SvgCom } from 'xx.svg'，自动组件化svg
 - 外部eslint接入成功，并且自定义配置
 - 接入 ts 成功，配置项目路径别名
+- mock接入成功，请求的时候 API 携带 /mock/xxx 路径，你需要在 mock 文件夹下，创建 xxx.js文件

@@ -11,7 +11,9 @@ module.exports = {
     'node_modules',
     'public',
     'dist',
-    'build'
+    'build',
+    'config',
+    'mock'
   ],
   extends: [
     'eslint:recommended', 

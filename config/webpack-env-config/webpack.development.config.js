@@ -1,14 +1,18 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const ignoredFiles = require('react-dev-utils/ignoredFiles');
+const { resolve } = require('path');
 const { DependEnvConfig } = require('../utils/env');
 const PathConfig = require('../utils/path');
 const proxy = require('../proxy');
+const fsExist = require('../utils/fs/fs-exist');
 
 const {
   port, host = '0.0.0.0',
   sockHost, sockPath, sockPort,
   browserOpen,
 } = DependEnvConfig;
+
+const MOCK_REGEXP = /\/mock\/[\s|\S]+/;
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (env, args) => {
@@ -55,10 +59,26 @@ module.exports = (env, args) => {
     proxy,
     // 如果是History API那么没有找到文件需要退回带 index.html
     historyApiFallback: true,
-    // onBeforeSetupMiddleware (devServer) {
-    //   // 在内置中间件执行之前做些什么
-    // },
-    // onAfterSetupMiddleware (devServer) {
+    onBeforeSetupMiddleware(server) {
+      // 虽然不能热更，但是刷新一下还是可以重新加载代码的
+      // mock拦截
+      server.app.use((request, response, next) => {
+        const targetUrl = request.originalUrl;
+        if (MOCK_REGEXP.test(targetUrl)) {
+          const mockPath = resolve(PathConfig.appPath, `${targetUrl.slice(1)}.js`);
+          if (!fsExist(mockPath)) {
+            next();
+            return;
+          }
+          const detailFun = require(`${mockPath}`);
+          detailFun(request, response);
+          delete require.cache[mockPath];
+          return;
+        }
+        next();
+      });
+    },
+    // onAfterSetupMiddleware (server) {
     //   // 在内置中间件执行之后做些什么
     // }
   };
