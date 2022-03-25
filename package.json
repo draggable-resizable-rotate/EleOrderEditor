@@ -14,7 +14,20 @@
     "build:dev": "webpack --config ./config/webpack.config.js --env mode=development",
     "start": "npm run server",
     "server": "webpack server --config ./config/webpack.config.js --env mode=development",
-    "lint": "eslint ./"
+    "runESlint": "eslint ./src --ext .js,.jsx,.ts,.tsx,.html",
+    "runStylelint": "stylelint ./src/**/*.{css,less,sass,scss,html}",
+    "runPrettierWrite": "prettier --write"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,html}": [
+      "npm run runESlint"
+    ],
+    "**/*.{css,less,sass,scss,html}": [
+      "npm run runStylelint"
+    ],
+    "**/*.{html,md,json}": [
+      "npm run runPrettierWrite"
+    ]
   },
   "browserslist": {
     "production": [
@@ -63,6 +76,7 @@
     "is-wsl": "^2.2.0",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
+    "lint-staged": "^12.3.7",
     "mini-css-extract-plugin": "^2.5.3",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-loader": "^6.2.1",
