@@ -7,16 +7,9 @@ module.exports = {
   },
   root: true,
   // 忽略那些文件
-  ignorePatterns: [
-    'node_modules',
-    'public',
-    'dist',
-    'build',
-    'config',
-    'mock'
-  ],
+  ignorePatterns: [],
   extends: [
-    'eslint:recommended', 
+    'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking'

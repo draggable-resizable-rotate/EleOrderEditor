@@ -1,0 +1,12 @@
+# npm 包
+/node_modules
+
+# public
+/public
+
+# 打包文件
+/dist
+/build
+
+# 分开 config 基础架构 检查
+/config
