@@ -46,6 +46,8 @@ module.exports = {
   rules: {
     'no-console': 'error',
     // 这条配置其实是默认的，但是写出来提醒一下，jsx-runtime 默认没有引入
-    'react/react-in-jsx-scope': 'error'
+    'react/react-in-jsx-scope': 'error',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-member-access': 'off'
   },
 }
