@@ -14,8 +14,10 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const { getEnvironment, DependEnvConfig } = require('./utils/env');
 const PathConfig = require('./utils/path');
 const moduleFileExtensions = require('./extensions');
+const Provider = require('./provider');
 
 const SrcEffectiveEnv = getEnvironment(PathConfig.publicPath);
+const { ProvidePlugin } = webpack;
 
 const {
   hasJsxRuntime,
@@ -131,6 +133,7 @@ const plugins = [
   }),
   // 进度条，替代方案 progress-bar-webpack-plugin
   new WebpackBar(),
+  new ProvidePlugin(Provider),
 ].filter(Boolean);
 
 module.exports = plugins;

@@ -8,6 +8,7 @@ const { DependEnvConfig } = require('../utils/env');
 const PathConfig = require('../utils/path');
 const WebpackPlugins = require('../plugins');
 const WebpackSplitChunks = require('../splitChunks');
+const Externals = require('../externals');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (env, args) => {
@@ -58,6 +59,7 @@ module.exports = (env, args) => {
     // 开启browserslist 之后需要在 package.json 也开启
     target: ['browserslist'],
     entry,
+    externals: Externals,
     output,
     devtool,
     cache,

@@ -54,6 +54,11 @@ declare module '*.svg' {
   export default src;
 }
 
+declare module '*.css';
+declare module '*.less';
+declare module '*.scss';
+declare module '*.sass';
+
 declare module '*.module.css' {
   const classes: { readonly [key: string]: string };
   export default classes;
