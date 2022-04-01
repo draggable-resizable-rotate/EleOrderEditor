@@ -18,6 +18,7 @@ const {
   isEnvDevelopment,
   imageInlineSizeLimit,
   shouldUseSourceMap,
+  sourceMapLoader,
 } = DependEnvConfig;
 
 function getStyleLoaders(cssOptions, preProcessor) {
@@ -88,7 +89,7 @@ module.exports = {
   strictExportPresence: true,
   rules: [
     // 能够提取匹配到的第三方模块的source-map，无论是文件或者链接或者内联模式都可
-    {
+    sourceMapLoader && {
       enforce: 'pre',
       exclude: /@babel(?:\/|\\{1,2})runtime/,
       test: /\.(js|jsx|ts|tsx|css)$/,
@@ -270,5 +271,5 @@ module.exports = {
         },
       ],
     },
-  ],
+  ].filter(Boolean),
 };

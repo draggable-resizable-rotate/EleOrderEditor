@@ -115,5 +115,6 @@ module.exports = {
     sockPort: EnvConfig.WDS_SOCKET_PORT,
     // 浏览器是否自动启动
     browserOpen: cvrStringToBoolean(EnvConfig.BROWSER_OPEN, true),
+    sourceMapLoader: EnvConfig.SOURCE_MAP_LOADER,
   },
 };
