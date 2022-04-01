@@ -12,7 +12,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:react-hooks/recommended',
     // 接入 prettier 适配
     'prettier'
   ],
@@ -47,7 +47,8 @@ module.exports = {
     'no-console': 'error',
     // 这条配置其实是默认的，但是写出来提醒一下，jsx-runtime 默认没有引入
     'react/react-in-jsx-scope': 'error',
-    '@typescript-eslint/no-unsafe-assignment': 'off',
-    '@typescript-eslint/no-unsafe-member-access': 'off'
+    'quotes': ['error', 'single', { 'allowTemplateLiterals': true }],
+    'jsx-quotes': ['error', 'prefer-double']
   },
 }
+
