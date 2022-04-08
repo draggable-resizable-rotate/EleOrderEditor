@@ -50,6 +50,7 @@
   - fonts，通过 asset/resource 直接导出
 
 - 工程化
+
   - dotenv 方式配置环境变量文件
   - eslint：，eslint 可以通过 外部 eslintrc 和 package.json 的 eslintConfig，如果你希望在 build 的时候关闭内部的 eslint 检查，需要设置环境变量 DISABLE_ESLINT_PLUGIN、接入 react-hook-eslint 的接入
   - typescript
@@ -57,4 +58,8 @@
   - editorconfig
   - husky, pre-commit => npm run lint
   - mock，'热更新' mock，请求的时候 API 携带 /mock/xxx 路径，你需要在 mock 文件夹下，创建 xxx.js 文件
-- 集成 stylelint
+  - 集成 stylelint
+  - 集成 prettier
+  - 集成 lint-staged
+
+- source-map-loader：需要的话修改对应的环境变量配置
