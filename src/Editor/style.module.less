@@ -1,0 +1,33 @@
+@greyColor: #fafafa;
+@vPadding: 25px;
+@hPadding: 20px;
+
+.module-nav {
+  :global {
+    .ant-tabs {
+      height: 100%;
+
+      .ant-tabs-nav {
+        background-color: @greyColor;
+
+        .ant-tabs-nav-list {
+          padding-top: @vPadding;
+        }
+      }
+
+      .ant-tabs-content-holder {
+        padding: @vPadding @hPadding;
+      }
+    }
+  }
+}
+
+
+#editor {
+  display: flex;
+  height: 100vh;
+
+  // :global {
+
+  // }
+}

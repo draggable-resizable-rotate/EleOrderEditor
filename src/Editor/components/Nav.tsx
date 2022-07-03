@@ -1,13 +1,14 @@
 import React from 'react';
 import { Tabs } from 'antd';
-
-import StyleModule from './../style.less';
+import StyleModule from './../style.module.less';
 
 const { TabPane } = Tabs;
 const ModuleNav: React.FC = () => {
   console.log('moduleNav');
   return (
-    <div className={StyleModule['module-nav']} >
+    <div
+    className={StyleModule['module-nav']}
+    >
         <Tabs tabPosition="left">
         <TabPane tab="Tab 1" key="1">
           Content of Tab 1

@@ -12,6 +12,7 @@ import {
   StoreActionType,
 } from './store/module';
 import { uniqueId } from './utils/uniqueId';
+import StyleModule from './style.module.less'
 
 export type StoreContext = {
   storeState: StoreState;
@@ -58,9 +59,10 @@ const Editor: React.FC = () => {
         moduleDatas,
       }}
     >
-      <button onClick={addModule}>添加组件</button>
-      <ModuleNav />
-      <ModuleCanvas />
+      <div id={StyleModule['editor'] }>
+        <ModuleNav />
+        <ModuleCanvas />
+      </div>
     </Provider>
   );
 };
