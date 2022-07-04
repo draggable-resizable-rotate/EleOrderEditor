@@ -2,7 +2,7 @@ module.exports = {
   extends: [
     'stylelint-config-standard',
     'stylelint-config-idiomatic-order',
-    'stylelint-config-standard-scss',
+    // 'stylelint-config-standard-scss',
     'stylelint-config-css-modules',
     'stylelint-config-prettier',
   ],
@@ -11,6 +11,9 @@ module.exports = {
     'stylelint-declaration-block-no-ignored-properties'
   ],
   ignoreFiles: ['**/*.js', '**/*.jsx', '**/*.tsx', '**/*.ts'],
+  rules: {
+    'at-rule-no-unknown': null
+  }
 }
 
 // stylelint-config-standard  css 标准语法要求

@@ -48,7 +48,8 @@ module.exports = {
     // 这条配置其实是默认的，但是写出来提醒一下，jsx-runtime 默认没有引入
     'react/react-in-jsx-scope': 'error',
     'quotes': ['error', 'single', { 'allowTemplateLiterals': true }],
-    'jsx-quotes': ['error', 'prefer-double']
+    'jsx-quotes': ['error', 'prefer-double'],
+    '@typescript-eslint/no-explicit-any': 'off'
   },
 }
 

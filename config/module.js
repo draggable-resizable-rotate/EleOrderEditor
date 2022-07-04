@@ -77,7 +77,9 @@ function getStyleLoaders(cssOptions, preProcessor) {
         loader: require.resolve(preProcessor),
         options: {
           sourceMap: proUseSourceMap,
-          // javascriptEnabled: true,
+          lessOptions: {
+            javascriptEnabled: true,
+          },
         },
       },
     );

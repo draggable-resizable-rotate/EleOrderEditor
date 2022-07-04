@@ -1,8 +1,13 @@
+@import '~antd/lib/style/themes/default.less';
 @greyColor: #fafafa;
 @vPadding: 25px;
 @hPadding: 20px;
+@leftWidth: 276px;
+@mainColor: @blue-6;
 
 .module-nav {
+  width: @leftWidth;
+
   :global {
     .ant-tabs {
       height: 100%;
@@ -12,11 +17,57 @@
 
         .ant-tabs-nav-list {
           padding-top: @vPadding;
+
+          .ant-tabs-tab {
+            padding: 0 15px;
+          }
         }
       }
 
       .ant-tabs-content-holder {
-        padding: @vPadding @hPadding;
+        .ant-tabs-content {
+          height: 100%;
+
+          .ant-tabs-tabpane {
+            padding: 0;
+          }
+
+          /* 导航栏渲染 内容 start */
+          .nav-pane {
+            height: 100%;
+            padding: @vPadding @hPadding;
+
+            .nav-item-container {
+              display: flex;
+              flex-wrap: wrap;
+
+              .nav-item {
+                display: flex;
+                width: 80px;
+                height: 60px;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin: 0 12px 12px 0;
+                background: rgb(24 144 255 / 5%);
+                border-radius: 2px;
+                cursor: pointer;
+                font-size: small;
+
+                &:nth-child(2n) {
+                  margin-right: 0;
+                }
+
+                &:hover {
+                  background-color: @mainColor;
+                  color: #fff;
+                }
+              }
+            }
+          }
+
+          /* 导航栏渲染 内容 end */
+        }
       }
     }
   }
@@ -26,8 +77,4 @@
 #editor {
   display: flex;
   height: 100vh;
-
-  // :global {
-
-  // }
 }
