@@ -2,6 +2,9 @@
 import { ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
 import LineViewComponent from './ViewComponent';
 
+const BaseLongWidth = 25 * 3
+// const BaseShortWidth = 25 * 3
+
 // 组件基础信息
 const info = {
   nameZn: '线',
@@ -12,7 +15,7 @@ export const LineInitProps = {
   zIndex: 0,
   left: 5,
   top: 5,
-  width: 10,
+  width: BaseLongWidth,
   height: 1,
   lineColor: '#000000',
   lineWidth: 1,
@@ -45,7 +48,7 @@ export const HLineModuleClass: ModuleClass<LineProps> = {
   initProps: {
     ...LineInitProps,
     height: 1,
-    width: 10,
+    width: BaseLongWidth,
   },
   viewComponent: LineViewComponent,
   resizeAxis: 'x',
@@ -60,7 +63,7 @@ export const VLineModuleClass: ModuleClass<LineProps> = {
   },
   initProps: {
     ...LineInitProps,
-    height: 10,
+    height: BaseLongWidth,
     width: 1,
   },
   viewComponent: LineViewComponent,

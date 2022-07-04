@@ -2,10 +2,16 @@
 @greyColor: #fafafa;
 @vPadding: 25px;
 @hPadding: 20px;
-@leftWidth: 276px;
+@leftWidth: 252px;
 @mainColor: @blue-6;
+@navItemBackgroundColor: rgb(24 144 255 / 7.5%);
 
-.module-nav {
+#editor {
+  display: flex;
+  height: 100vh;
+}
+
+#editor-module-nav {
   width: @leftWidth;
 
   :global {
@@ -43,13 +49,13 @@
 
               .nav-item {
                 display: flex;
-                width: 80px;
+                width: 70px;
                 height: 60px;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 margin: 0 12px 12px 0;
-                background: rgb(24 144 255 / 5%);
+                background: @navItemBackgroundColor;
                 border-radius: 2px;
                 cursor: pointer;
                 font-size: small;
@@ -62,6 +68,14 @@
                   background-color: @mainColor;
                   color: #fff;
                 }
+
+                .nav-item-text {
+                  margin-top: 4px;
+                }
+
+                svg {
+                  margin-top: 4px;
+                }
               }
             }
           }
@@ -73,8 +87,10 @@
   }
 }
 
-
-#editor {
-  display: flex;
-  height: 100vh;
+#editor-module-canvas {
+  flex-grow: 1;
+  background-color: #f5f6fa;
+  position: relative;
 }
+// #f5f6fa 背景
+// #e7e8e8 边框

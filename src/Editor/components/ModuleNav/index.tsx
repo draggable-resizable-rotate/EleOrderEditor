@@ -30,7 +30,7 @@ const ModuleNav: React.FC<ModuleNavProps> = ({ dispatch }) => {
   }
 
   return (
-    <div className={StyleModule['module-nav']}>
+    <div id={StyleModule['editor-module-nav']}>
       <Tabs tabPosition="left">
         {defaultShowCategoryArr.map((navKey) => {
           const navItem = CategoryMap[navKey];
@@ -54,7 +54,7 @@ const ModuleNav: React.FC<ModuleNavProps> = ({ dispatch }) => {
                         }}
                       >
                         <ChildIconComponent width={18} height={18} style={{ display: 'block' }} />
-                        {childrenNavItem.title}
+                        <span className="nav-item-text">{childrenNavItem.title}</span>
                       </div>
                     );
                   })}

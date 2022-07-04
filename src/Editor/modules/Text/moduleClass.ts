@@ -1,6 +1,10 @@
 import { ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
 import TextViewComponent from './ViewComponent';
 
+
+const BaseLongWidth = 25 * 3
+const BaseShortWidth = 15 * 3
+
 // 组件基础信息
 const info = {
   name: 'text',
@@ -33,8 +37,8 @@ export const TextInitProps = {
   zIndex: 0,
   left: 5,
   top: 5,
-  width: 25,
-  height: 15,
+  width: BaseLongWidth,
+  height: BaseShortWidth,
   // 文本的文档流方向
   orientation: TextOrientation.Horizontal,
   opacity: 1,
@@ -77,8 +81,8 @@ export const HTextModuleClass: ModuleClass<TextProps> = {
   initProps: {
     ...TextInitProps,
     orientation: TextOrientation.Horizontal,
-    width: 25,
-    height: 15,
+    width: BaseLongWidth,
+    height: BaseShortWidth,
   },
 };
 
@@ -87,7 +91,7 @@ export const VTextModuleClass: ModuleClass<TextProps> = {
   initProps: {
     ...TextInitProps,
     orientation: TextOrientation.Horizontal,
-    width: 15,
-    height: 25,
+    width: BaseShortWidth,
+    height: BaseLongWidth,
   },
 };

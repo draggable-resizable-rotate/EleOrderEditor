@@ -1,4 +1,4 @@
-import { GraphicSvg, HLineSvg, HTextSvg, TextSvg, VLineSvg, VTextSvg, RectSvg, TableSvg, ImageSvg } from '@/Editor/assets/icon';
+import { GraphicSvg, HLineSvg, HTextSvg, TextSvg, VLineSvg, VTextSvg, RectSvg, ImageSvg } from '@/Editor/assets/icon';
 import React from 'react';
 
 // 默认的展示 菜单项的顺序

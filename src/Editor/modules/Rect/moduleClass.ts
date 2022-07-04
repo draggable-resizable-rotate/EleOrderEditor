@@ -2,6 +2,8 @@
 import { ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
 import RectViewComponent from './ViewComponent';
 
+const BaseLongWidth = 25 * 3
+// const BaseShortWidth = 25 * 3
 
 // 组件基础信息
 const info = {
@@ -13,8 +15,8 @@ export const RectInitProps = {
   zIndex: 0,
   left: 5,
   top: 5,
-  width: 15,
-  height: 15,
+  width: BaseLongWidth,
+  height: BaseLongWidth,
   lineColor: '#fff',
   lineWidth: 1,
   lineType: 'solid',

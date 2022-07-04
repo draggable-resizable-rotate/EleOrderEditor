@@ -38,21 +38,6 @@ const Editor: React.FC = () => {
   // moduleData 数组
   const moduleDatas = useMemo(() => Object.values(moduleDatasMap), [moduleDatasMap]);
 
-  function addModule() {
-    dispatch({
-      type: StoreActionType.AddModuleDatas,
-      payload: {
-        moduleDatas: [
-          {
-            id: uniqueId(),
-            type: ModuleType.Rect,
-            props: { ...RectModuleClass.initProps },
-          },
-        ],
-      },
-    });
-  }
-
   return (
     <Provider
       value={{
@@ -62,7 +47,9 @@ const Editor: React.FC = () => {
       }}
     >
       <div id={StyleModule['editor']}>
-        <ModuleNav />
+        {/* Nav组件要支持缓存 => 传入dispatch而不用useContext获取 start */}
+        <ModuleNav dispatch={dispatch} />
+        {/* Nav组件要支持缓存 end */}
         <ModuleCanvas />
       </div>
     </Provider>

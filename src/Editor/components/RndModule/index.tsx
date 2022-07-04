@@ -115,8 +115,12 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, isActive, dispatch }
         const { size, position } = delta;
       }}
       // 其它组件也需要更新
-      onDrag={(event, delta, position) => {}}
-      onDragStart={(event) => {}}
+      onDrag={(event, delta, position) => {
+        return true
+      }}
+      onDragStart={(event) => {
+        return true
+      }}
       onDragStop={() => {}}
     >
       <ViewComponent moduleData={moduleData} />
