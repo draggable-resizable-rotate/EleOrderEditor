@@ -1,8 +1,8 @@
 import React, { useMemo, useReducer } from 'react';
-import ModuleCanvas from './components/Canvas';
 import RectModuleClass from './modules/Rect/moduleClass';
 import { ModuleDataStore, ModuleType } from './modules/TypeConstraints';
-import ModuleNav from './components/Nav';
+import ModuleNav from './components/ModuleNav';
+import ModuleCanvas from './components/ModuleCanvas';
 import {
   createInitialStore,
   StoreDispatch,
@@ -12,7 +12,7 @@ import {
   StoreActionType,
 } from './store/module';
 import { uniqueId } from './utils/uniqueId';
-import StyleModule from './style.module.less'
+import StyleModule from './style.module.less';
 
 export type StoreContext = {
   storeState: StoreState;
@@ -42,11 +42,13 @@ const Editor: React.FC = () => {
     dispatch({
       type: StoreActionType.AddModuleDatas,
       payload: {
-        moduleDatas: [{
-          id: uniqueId(),
-          type: ModuleType.Rect,
-          props: { ...RectModuleClass.initProps },
-        }],
+        moduleDatas: [
+          {
+            id: uniqueId(),
+            type: ModuleType.Rect,
+            props: { ...RectModuleClass.initProps },
+          },
+        ],
       },
     });
   }
@@ -59,7 +61,7 @@ const Editor: React.FC = () => {
         moduleDatas,
       }}
     >
-      <div id={StyleModule['editor'] }>
+      <div id={StyleModule['editor']}>
         <ModuleNav />
         <ModuleCanvas />
       </div>
