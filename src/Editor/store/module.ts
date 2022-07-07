@@ -124,12 +124,17 @@ export const reducer = function (state: StoreState, action: StoreAction) {
     /* 批量更新激活组件：比如多选 */
     case StoreActionType.UpdateSelectModuleDataIds: {
       const toUpdateSelectModuleDataIds = (payload.selectModuleDataIds || []) as Array<ModuleDataStore['id']>;
-      const newState: StoreState = {
+      const isReset = Boolean(payload.isReset)
+      let newSelectModuleDataIds = []
+      if(isReset) {
+        newSelectModuleDataIds = [...toUpdateSelectModuleDataIds]
+      } else {
+        newSelectModuleDataIds = [...state.selectModuleDataIds, ...toUpdateSelectModuleDataIds]
+      }
+      return {
         ...state,
-        selectModuleDataIds: [...toUpdateSelectModuleDataIds],
+        selectModuleDataIds: newSelectModuleDataIds,
       };
-
-      return newState;
     }
     default:
       return createInitialStore();

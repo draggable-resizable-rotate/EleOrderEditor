@@ -1,6 +1,6 @@
 import React, { useMemo, useRef } from 'react';
 import { HandleComponent, HandleStyles, ResizeEnable, Rnd } from '../Rnd';
-import { StoreDispatch } from '../../store/module';
+import { StoreActionType, StoreDispatch } from '../../store/module';
 import { ModuleDataStore } from '../../modules/TypeConstraints';
 import { ModuleTypeClassMap } from '../../modules/config';
 import { TextModuleData } from '../../modules/Text/moduleClass';
@@ -85,6 +85,33 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, isActive, dispatch }
     return defaultResizing as ResizeEnable;
   }, [resizeAxis]);
 
+
+
+  // 选择元素
+  function handleSelectModule(event: React.MouseEvent<Element, MouseEvent>) {
+    event.stopPropagation();
+    event.nativeEvent.stopPropagation();
+    if ((event.shiftKey || event.ctrlKey || event.metaKey) && !isActive) { // 多选
+      // 添加
+      dispatch?.({
+        type: StoreActionType.UpdateSelectModuleDataIds,
+        payload: {
+          selectComponentIds: [moduleData.id],
+          isReset: false
+        },
+      });
+    } else if(!isActive) {
+      // 非激活状态
+      dispatch?.({
+        type: StoreActionType.UpdateSelectModuleDataIds,
+        payload: {
+          selectModuleDataIds: [moduleData.id],
+          isReset: true,
+        },
+      });
+    }
+  }
+
   return (
     <Rnd
       lockAspectRatio={lockAspectRatio}
@@ -103,6 +130,7 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, isActive, dispatch }
       minWidth={1}
       minHeight={1}
       bounds="parent"
+      // 阻止时间冒泡、选中当前元素
       onResizeStart={(event) => {}}
       onResizeStop={() => {
         if (timerResizeRef.current !== null) {
@@ -118,9 +146,7 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, isActive, dispatch }
       onDrag={(event, delta, position) => {
         return true
       }}
-      onDragStart={(event) => {
-        return true
-      }}
+      onDragStart={handleSelectModule}
       onDragStop={() => {}}
     >
       <ViewComponent moduleData={moduleData} />

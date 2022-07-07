@@ -28,7 +28,7 @@ export type RndResizeCallback = (
   position: Position,
 ) => void;
 
-type State = {};
+type State = Record<string, unknown>;
 
 export type ResizeEnable =
   | {
@@ -133,6 +133,7 @@ const getEnableResizingByFlag = (flag: boolean): Enable => ({
   topRight: flag,
 });
 
+// rnd的关键点在于将两个组件的数据源进行统一，同步两边的state，而不是props
 export class Rnd extends React.PureComponent<Props, State> {
   resizableElementRef: React.RefObject<HTMLElement>;
   draggableRef: React.RefObject<Draggable>;
@@ -140,10 +141,7 @@ export class Rnd extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.state = {
-      currentState: undefined,
-      reloadFlag: false,
-    };
+    this.state = {};
     this.onResizeStart = this.onResizeStart.bind(this);
     this.onResize = this.onResize.bind(this);
     this.onResizeStop = this.onResizeStop.bind(this);
@@ -157,14 +155,29 @@ export class Rnd extends React.PureComponent<Props, State> {
 
   onDragStart(e: React.MouseEvent, delta: DraggableDelta, position: Position) {
     this.props.onDragStart?.(e, delta, position);
+    const resizable: Resizable = this.resizableRef.current as Resizable;
+    resizable.setState({
+      isResizing: true,
+      position: { ...this.props.position }
+    })
   }
 
   onDrag(e: MouseEvent, delta: DraggableDelta, position: Position) {
-    return this.props.onDrag?.(e, delta, position);
+    const needContinue = this.props.onDrag?.(e, delta, position)
+    if(!needContinue) return false
+    const resizable: Resizable = this.resizableRef.current as Resizable;
+    resizable.setState({
+      position: { ...position }
+    })
+    return true;
   }
 
   onDragStop(e: MouseEvent, delta: DraggableDelta, position: Position) {
     this.props.onDragStop?.(e, delta, position);
+    const resizable: Resizable = this.resizableRef.current as Resizable;
+    resizable.setState({
+      isResizing: false,
+    })
   }
 
   onResizeStart(event: React.MouseEvent, dir: Direction, delta: ResizableDelta) {
@@ -228,7 +241,7 @@ export class Rnd extends React.PureComponent<Props, State> {
       ...resizableProps
     } = this.props;
 
-    const cursorStyle =      disableDragging || dragHandleClassName ? { cursor: 'auto' } : { cursor: 'move' };
+    const cursorStyle =  disableDragging || dragHandleClassName ? { cursor: 'auto' } : { cursor: 'move' };
     const innerStyle = {
       ...resizableStyle,
       ...cursorStyle,
