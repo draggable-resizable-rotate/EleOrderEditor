@@ -1,19 +1,24 @@
 import React, { useContext, useRef } from 'react';
 import { EditorContext } from '../../index';
+import DragToSelectContainer from '../DragToSelect';
 import RndModule, { RndRefMap } from '../RndModule';
 import StyleModule from './../../style.module.less';
 
 const ModuleCanvas: React.FC = () => {
   const { moduleDatas } = useContext(EditorContext);
+  // 防止调用findNode
+  const editorModuleCanvasRef = React.createRef<HTMLDivElement>();
 
   const rndRefMap = useRef<RndRefMap>({});
 
   return (
-    <div id={StyleModule['editor-module-canvas']}>
-      {moduleDatas.map((moduleData) => {
-        return <RndModule moduleData={moduleData} key={moduleData.id} rndRefMap={rndRefMap} />;
-      })}
-    </div>
+    <DragToSelectContainer nodeRef={editorModuleCanvasRef}>
+      <div id={StyleModule['editor-module-canvas']} ref={editorModuleCanvasRef}>
+        {moduleDatas.map((moduleData) => {
+          return <RndModule moduleData={moduleData} key={moduleData.id} rndRefMap={rndRefMap} />;
+        })}
+      </div>
+    </DragToSelectContainer>
   );
 };
 
