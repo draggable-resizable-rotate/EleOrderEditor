@@ -1,41 +1,18 @@
-import React, { useContext, useEffect, useMemo, useRef } from 'react';
-import { HandleComponent, HandleStyles, Position, ResizeEnable, Rnd } from '../Rnd';
-import { StoreActionType, StoreDispatch, StoreState } from '../../store/module';
+import React, { useContext, useEffect, useMemo } from 'react';
+import { HandleStyles, Rnd } from '../Rnd';
+import { StoreActionType } from '../../store/module';
 import { ModuleDataStore } from '../../modules/TypeConstraints';
 import { ModuleTypeClassMap } from '../../modules/config';
 import { TextModuleData } from '../../modules/Text/moduleClass';
-import { ApexAngleHandleStyles, DefaultResizeStyle, LineHandleStyles } from './config';
-import { Rect } from '@draggable-resizable-rotate/graphics';
+import {
+  ApexAngleHandleStyles,
+  getEnableByResizeAxis,
+  LineHandleStyles,
+  ResizeHandleComponent,
+} from './config';
+
 import { MAIN_COLOR } from '@/Editor/config';
 import { EditorContext } from '@/Editor';
-
-const { RECT_DIRECT, RECT_LINE_DIRECTION } = Rect;
-
-// 四边 中间变换 元素渲染
-const ResizerComponent = () => (
-  <div
-    style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: '100%',
-      height: '100%',
-    }}
-  >
-    <span
-      style={{
-        ...DefaultResizeStyle,
-        background: '#ffffff',
-      }}
-    ></span>
-  </div>
-);
-
-const resizeHandleComponent = RECT_LINE_DIRECTION.reduce((preResult, position) => {
-  // eslint-disable-next-line no-param-reassign
-  preResult[position] = <ResizerComponent />;
-  return preResult;
-}, {} as unknown as HandleComponent);
 
 export interface RndRefMap {
   [key: string]: Rnd | null;
@@ -57,7 +34,6 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
   // module类型的"原型"
   const moduleClass = ModuleTypeClassMap[moduleType];
   const { viewComponent: ViewComponent, resizeAxis, lockAspectRatio } = moduleClass;
-  const timerResizeRef = useRef<any>(null);
 
   // 拖拽锚点的样式
   const resizeHandleStyles: HandleStyles = {
@@ -66,31 +42,7 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
   };
 
   // 获取能够渲染的锚点
-  const enableResizing = useMemo(() => {
-    const axis = resizeAxis;
-    const defaultResizing = RECT_DIRECT.reduce((preResult, position) => {
-      // eslint-disable-next-line no-param-reassign
-      preResult[position] = false;
-      return preResult;
-    }, {} as any);
-
-    if (!axis || axis === 'both') return true;
-    switch (axis) {
-      case 'none':
-        return false;
-      case 'x': {
-        defaultResizing.right = true;
-        defaultResizing.left = true;
-        break;
-      }
-      case 'y': {
-        defaultResizing.top = true;
-        defaultResizing.bottom = true;
-        break;
-      }
-    }
-    return defaultResizing as ResizeEnable;
-  }, [resizeAxis]);
+  const enableResizing = useMemo(() => getEnableByResizeAxis(resizeAxis), [resizeAxis]);
 
   // 选择元素
   function handleSelectModule(event: React.MouseEvent<Element, MouseEvent>) {
@@ -144,23 +96,34 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
       // 可操控的点位，只有在激活的时候才显示
       enableResizing={isActive && enableResizing}
       // 自定义 四边中间 变换 组件
-      resizeHandleComponent={resizeHandleComponent}
+      resizeHandleComponent={ResizeHandleComponent}
       // rnd 默认最小为 10
       minWidth={1}
       minHeight={1}
       bounds="parent"
       // 阻止时间冒泡、选中当前元素
-      onResizeStart={(event) => {}}
-      onResizeStop={() => {
-        if (timerResizeRef.current !== null) {
-          // saveHistory?.();
-          timerResizeRef.current = null;
-        }
+      onResizeStart={(event) => {
+        event.stopPropagation();
+        event.nativeEvent.stopPropagation();
+      }}
+      // 更新module大小和位置信息
+      onResizeStop={(e, direction, delta) => {
+        const { size, position } = delta;
+        dispatch?.({
+          type: StoreActionType.UpdateModuleDatas,
+          payload: {
+            moduleDatas: [
+              {
+                id: moduleData.id,
+                props: { ...position, ...size },
+              },
+            ],
+            merge: true,
+          },
+        });
       }}
       // 变换时，实时更新组件 位置和大小
-      onResize={(e, direction, delta) => {
-        const { size, position } = delta;
-      }}
+      onResize={() => undefined}
       /* 处理移动 start */
       onDragStart={(event) => {
         // 判断是否聚焦元素
@@ -171,18 +134,15 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
         });
       }}
       // 其它组件也需要更新
-      onDrag={(event, delta, position) => {
-        // x 上的变化量
-        const changeX = position.left - left;
-        // y 上的变化量
-        const changY = position.top - top;
+      onDrag={(event, delta) => {
+        // x 上的变化量, y 上的变化量
+        const { changeX, changeY } = delta;
         selectModuleDataIds.forEach((selectModuleDataId) => {
-          const selectModuleDataProps = moduleDatasMap[selectModuleDataId].props;
-          const newPosition = {
-            left: selectModuleDataProps.left + changeX,
-            top: selectModuleDataProps.top + changY,
-          };
-          rndRefMap.current?.[selectModuleDataId]?.groupMove(newPosition);
+          moduleDatasMap[selectModuleDataId].props;
+          rndRefMap.current?.[selectModuleDataId]?.groupMove({
+            changeX,
+            changeY,
+          });
         });
       }}
       // 更新所有的数据
@@ -196,18 +156,16 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
             },
           };
         });
-        // console.log(newSelectModuleDataPositions);
-        // // 批量更新组件信息
-        // dispatch?.({
-        //   type: StoreActionType.UpdateModuleDatas,
-        //   payload: {
-        //     moduleDatas: newSelectModuleDataPositions,
-        //     merge: true,
-        //   },
-        // });
+        // 批量更新组件信息
+        dispatch?.({
+          type: StoreActionType.UpdateModuleDatas,
+          payload: {
+            moduleDatas: newSelectModuleDataPositions,
+            merge: true,
+          },
+        });
       }}
       /* 处理移动 end */
-
       // 收集module的rnd实例
       ref={(rndInstance) => {
         if (rndRefMap?.current) {

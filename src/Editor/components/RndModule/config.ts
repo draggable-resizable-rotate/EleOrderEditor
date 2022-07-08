@@ -1,12 +1,16 @@
-import { HandleStyles } from '@draggable-resizable-rotate/react-resizable-pro';
+import { HandleComponent, HandleStyles } from '@draggable-resizable-rotate/react-resizable-pro';
 import { MAIN_COLOR } from '../../config';
 import { Rect } from '@draggable-resizable-rotate/graphics';
 import React from 'react';
+import { ModuleClass } from '@/Editor/modules/TypeConstraints';
+import { ResizeEnable } from '../Rnd';
+import ModuleResizer from '../ModuleResizer';
 
-const { RECT_APEX_ANGLE_DIRECTION, RECT_LINE_DIRECTION } = Rect;
+const { RECT_APEX_ANGLE_DIRECTION, RECT_LINE_DIRECTION, RECT_DIRECT } = Rect;
 // Resize 锚点的大小
 const ResizeWidth = 5;
 
+// 默认的样式
 export const DefaultResizeStyle: React.CSSProperties = {
   position: 'absolute',
   width: `${ResizeWidth}px`,
@@ -50,3 +54,36 @@ export const LineHandleStyles = RECT_LINE_DIRECTION.reduce((preResult, value) =>
 }, {} as unknown as HandleStyles);
 
 
+// 通过resizeAxis获取要渲染的变换锚点
+export function getEnableByResizeAxis(resizeAxis: ModuleClass<unknown>['resizeAxis']) {
+  const axis = resizeAxis;
+  const defaultResizing = RECT_DIRECT.reduce((preResult, position) => {
+    // eslint-disable-next-line no-param-reassign
+    preResult[position] = false;
+    return preResult;
+  }, {} as any);
+
+  if (!axis || axis === 'both') return true;
+  switch (axis) {
+    case 'none':
+      return false;
+    case 'x': {
+      defaultResizing.right = true;
+      defaultResizing.left = true;
+      break;
+    }
+    case 'y': {
+      defaultResizing.top = true;
+      defaultResizing.bottom = true;
+      break;
+    }
+  }
+  return defaultResizing as ResizeEnable;
+}
+
+// 自定义 四边中间 变换 组件
+export const ResizeHandleComponent = RECT_LINE_DIRECTION.reduce((preResult, position) => {
+  // eslint-disable-next-line no-param-reassign
+  preResult[position] = React.createElement(ModuleResizer);
+  return preResult;
+}, {} as unknown as HandleComponent);

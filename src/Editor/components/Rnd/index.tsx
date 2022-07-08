@@ -2,6 +2,7 @@ import React from 'react';
 import Draggable, {
   DraggableMouseHandle,
   DraggableDelta,
+  DraggableBounds,
 } from '@draggable-resizable-rotate/react-draggable-pro';
 import Resizable, {
   Enable,
@@ -133,11 +134,18 @@ const getEnableResizingByFlag = (flag: boolean): Enable => ({
   topRight: flag,
 });
 
+export interface GroupMoveCahce {
+  bounds: DraggableBounds | null;
+  size: Size;
+  validPosition: Position;
+}
+
 // rnd的关键点在于将两个组件的数据源进行统一，同步两边的state，而不是props
 export class Rnd extends React.PureComponent<Props, State> {
   resizableElementRef: React.RefObject<HTMLElement>;
   draggableRef: React.RefObject<Draggable>;
   resizableRef: React.RefObject<Resizable>;
+  groupMoveCahce: Partial<GroupMoveCahce>;
 
   constructor(props: Props) {
     super(props);
@@ -151,6 +159,7 @@ export class Rnd extends React.PureComponent<Props, State> {
     this.resizableElementRef = React.createRef<HTMLElement>();
     this.draggableRef = React.createRef<Draggable>();
     this.resizableRef = React.createRef<Resizable>();
+    this.groupMoveCahce = {};
   }
 
   onDragStart(e: React.MouseEvent, delta: DraggableDelta, position: Position) {
@@ -159,6 +168,7 @@ export class Rnd extends React.PureComponent<Props, State> {
     resizable.setState({
       isResizing: true,
       position: { ...this.props.position },
+      size: { ...this.props.size },
       backgroundStyle: {
         ...resizable.state.backgroundStyle,
         cursor: 'move',
@@ -181,11 +191,12 @@ export class Rnd extends React.PureComponent<Props, State> {
     const resizable: Resizable = this.resizableRef.current as Resizable;
     resizable.setState({
       isResizing: false,
+      position: { ...this.props.position },
+      size: { ...this.props.size },
       backgroundStyle: {
         ...resizable.state.backgroundStyle,
         cursor: 'auto',
       },
-      position: { ...this.props.position },
     });
   }
 
@@ -222,6 +233,13 @@ export class Rnd extends React.PureComponent<Props, State> {
   groupMoveStart() {
     const draggable: Draggable = this.draggableRef.current as Draggable;
     const resizable: Resizable = this.resizableRef.current as Resizable;
+    const element = draggable.draggableProvider.current?.elementRef as HTMLElement;
+
+    this.groupMoveCahce.bounds = draggable.getValidBounds(this.props.position);
+    this.groupMoveCahce.size = {
+      width: element.offsetWidth,
+      height: element.offsetHeight,
+    };
     draggable.setState({
       dragging: true,
       position: { ...this.props.position },
@@ -233,23 +251,39 @@ export class Rnd extends React.PureComponent<Props, State> {
   }
 
   // 当前位置是增量 postion
-  groupMove(addPosition: Position) {
+  groupMove(deltaPosition: { changeX: number; changeY: number }) {
     const draggable: Draggable = this.draggableRef.current as Draggable;
+    const { position: oldPosition } = draggable.state;
     const resizable: Resizable = this.resizableRef.current as Resizable;
+    const { bounds, size } = this.groupMoveCahce as GroupMoveCahce;
+    const newPosition = {
+      left: (oldPosition?.left || 0) + deltaPosition.changeX,
+      top: (oldPosition?.top || 0) + deltaPosition.changeY,
+    };
+    let validPosition = { ...newPosition };
+    if (bounds) {
+      validPosition = draggable.getValidPositionByBounds(validPosition, {
+        left: bounds.left,
+        right: bounds.right - size.width,
+        top: bounds.top,
+        bottom: bounds.bottom - size.height,
+      });
+    }
+    // 考虑到是否超出边界
     draggable.setState({
-      position: { ...addPosition },
+      position: { ...validPosition },
     });
     resizable.setState({
-      position: { ...addPosition },
+      position: { ...validPosition },
     });
-    return { ...addPosition };
+    this.groupMoveCahce.validPosition = { ...validPosition };
+    return { ...validPosition };
   }
 
   groupMoveEnd() {
     const draggable: Draggable = this.draggableRef.current as Draggable;
     const resizable: Resizable = this.resizableRef.current as Resizable;
-    // 最近一次移动的position
-    const moveEndPosition = draggable.state.position as Position;
+    const endPosition = this.groupMoveCahce.validPosition as Position;
     draggable.setState({
       dragging: false,
       position: { ...this.props.position },
@@ -258,7 +292,7 @@ export class Rnd extends React.PureComponent<Props, State> {
       isResizing: false,
       position: { ...this.props.position },
     });
-    return { ...moveEndPosition };
+    return { ...endPosition };
   }
 
   render() {
