@@ -1,6 +1,8 @@
 import { ClientPoint } from '@draggable-resizable-rotate/react-draggable-pro';
 import DraggableProvider, {
   HandleFunMap,
+  addUserSelectStyles,
+  removeUserSelectStyles,
 } from '@draggable-resizable-rotate/react-draggable-provider';
 import { ElementRect, ResizableDelta } from '@draggable-resizable-rotate/react-resizable-pro';
 import React from 'react';
@@ -71,6 +73,7 @@ class DragToSelectContainer extends React.Component<
       { ...DragToSelectContainer.defaultPosition },
       { ...DragToSelectContainer.defaultSize },
     );
+    addUserSelectStyles(dragBoxElement.ownerDocument);
   };
 
   onMouseMove: HandleFunMap['onMouseMove'] = (event, delta) => {
@@ -113,11 +116,13 @@ class DragToSelectContainer extends React.Component<
 
   // 重置
   onMouseUp: HandleFunMap['onMouseUp'] = (event) => {
+    const dragBoxElement = this.draggableProvider.current?.elementRef as HTMLElement;
+    this.props?.onMouseUp?.(event, { ...this.state.position }, { ...this.state.size });
     this.setState({
       position: { ...DragToSelectContainer.defaultPosition },
       size: { ...DragToSelectContainer.defaultSize },
     });
-    this.props?.onMouseUp?.(event, { ...this.state.position }, { ...this.state.size });
+    removeUserSelectStyles(dragBoxElement.ownerDocument);
   };
 
   render() {

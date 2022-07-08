@@ -247,6 +247,7 @@ export class Rnd extends React.PureComponent<Props, State> {
     resizable.setState({
       isResizing: true,
       position: { ...this.props.position },
+      size: { ...this.props.size },
     });
   }
 
@@ -291,6 +292,7 @@ export class Rnd extends React.PureComponent<Props, State> {
     resizable.setState({
       isResizing: false,
       position: { ...this.props.position },
+      size: { ...this.props.size },
     });
     return { ...endPosition };
   }
