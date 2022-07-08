@@ -48,22 +48,15 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
   function handleSelectModule(event: React.MouseEvent<Element, MouseEvent>) {
     event.stopPropagation();
     event.nativeEvent.stopPropagation();
-    if ((event.shiftKey || event.ctrlKey || event.metaKey) && !isActive) {
+    // 非激活状态
+    if (!isActive) {
       // 多选
+      const isNotReset = event.shiftKey || event.ctrlKey || event.metaKey;
       dispatch?.({
         type: StoreActionType.UpdateSelectModuleDataIds,
         payload: {
           selectModuleDataIds: [moduleData.id],
-          reset: false,
-        },
-      });
-    } else if (!isActive) {
-      // 非激活状态
-      dispatch?.({
-        type: StoreActionType.UpdateSelectModuleDataIds,
-        payload: {
-          selectModuleDataIds: [moduleData.id],
-          reset: true,
+          reset: !isNotReset,
         },
       });
     }

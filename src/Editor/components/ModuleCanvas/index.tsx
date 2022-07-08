@@ -46,11 +46,13 @@ const ModuleCanvas: React.FC = () => {
             .map((data) => data.id);
           // 如果选中了，那么更新
           if (selectModuleDataIds.length) {
+            // 多选
+            const isNotReset = event.shiftKey || event.ctrlKey || event.metaKey;
             dispatch?.({
               type: StoreActionType.UpdateSelectModuleDataIds,
               payload: {
                 selectModuleDataIds,
-                reset: true,
+                reset: !isNotReset,
               },
             });
           }

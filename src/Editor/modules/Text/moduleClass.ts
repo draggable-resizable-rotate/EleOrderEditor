@@ -90,7 +90,7 @@ export const VTextModuleClass: ModuleClass<TextProps> = {
   ...moduleClass,
   initProps: {
     ...TextInitProps,
-    orientation: TextOrientation.Horizontal,
+    orientation: TextOrientation.Vertical,
     width: BaseShortWidth,
     height: BaseLongWidth,
   },
