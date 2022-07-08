@@ -13,6 +13,7 @@ import {
 } from './store/module';
 import { uniqueId } from './utils/uniqueId';
 import StyleModule from './style.module.less';
+import ModuleStyle from './components/ModuleStyle';
 
 export type StoreContext = {
   storeState: StoreState;
@@ -51,6 +52,7 @@ const Editor: React.FC = () => {
         <ModuleNav dispatch={dispatch} />
         {/* Nav组件要支持缓存 end */}
         <ModuleCanvas />
+        <ModuleStyle />
       </div>
     </Provider>
   );

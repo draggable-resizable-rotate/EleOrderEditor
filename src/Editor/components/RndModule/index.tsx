@@ -1,11 +1,14 @@
-import React, { useMemo, useRef } from 'react';
-import { HandleComponent, HandleStyles, ResizeEnable, Rnd } from '../Rnd';
-import { StoreActionType, StoreDispatch } from '../../store/module';
+import React, { useContext, useEffect, useMemo, useRef } from 'react';
+import { HandleComponent, HandleStyles, Position, ResizeEnable, Rnd } from '../Rnd';
+import { StoreActionType, StoreDispatch, StoreState } from '../../store/module';
 import { ModuleDataStore } from '../../modules/TypeConstraints';
 import { ModuleTypeClassMap } from '../../modules/config';
 import { TextModuleData } from '../../modules/Text/moduleClass';
 import { ApexAngleHandleStyles, DefaultResizeStyle, LineHandleStyles } from './config';
 import { Rect } from '@draggable-resizable-rotate/graphics';
+import { MAIN_COLOR } from '@/Editor/config';
+import { EditorContext } from '@/Editor';
+
 const { RECT_DIRECT, RECT_LINE_DIRECTION } = Rect;
 
 // 四边 中间变换 元素渲染
@@ -34,16 +37,20 @@ const resizeHandleComponent = RECT_LINE_DIRECTION.reduce((preResult, position) =
   return preResult;
 }, {} as unknown as HandleComponent);
 
+export interface RndRefMap {
+  [key: string]: Rnd | null;
+}
 interface BaseModuleProps {
   // module 数据
   moduleData: ModuleDataStore;
-  // 是否被选中
-  isActive: boolean;
-  // 触发store更新的patch
-  dispatch?: StoreDispatch;
+  rndRefMap: React.MutableRefObject<RndRefMap>;
 }
 
-const RndModule: React.FC<BaseModuleProps> = ({ moduleData, isActive, dispatch }) => {
+const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
+  const { storeState, dispatch } = useContext(EditorContext);
+  const { selectModuleDataIds, moduleDatasMap } = storeState;
+  const isActive = selectModuleDataIds.includes(moduleData.id);
+
   const { type: moduleType, props: propsData, id: moduleId } = moduleData;
   const { left, top, width, height } = propsData;
   const rotate = (propsData as unknown as TextModuleData['props']).rotate || 0;
@@ -85,32 +92,39 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, isActive, dispatch }
     return defaultResizing as ResizeEnable;
   }, [resizeAxis]);
 
-
-
   // 选择元素
   function handleSelectModule(event: React.MouseEvent<Element, MouseEvent>) {
     event.stopPropagation();
     event.nativeEvent.stopPropagation();
-    if ((event.shiftKey || event.ctrlKey || event.metaKey) && !isActive) { // 多选
-      // 添加
+    if ((event.shiftKey || event.ctrlKey || event.metaKey) && !isActive) {
+      // 多选
       dispatch?.({
         type: StoreActionType.UpdateSelectModuleDataIds,
         payload: {
-          selectComponentIds: [moduleData.id],
-          isReset: false
+          selectModuleDataIds: [moduleData.id],
+          reset: false,
         },
       });
-    } else if(!isActive) {
+    } else if (!isActive) {
       // 非激活状态
       dispatch?.({
         type: StoreActionType.UpdateSelectModuleDataIds,
         payload: {
           selectModuleDataIds: [moduleData.id],
-          isReset: true,
+          reset: true,
         },
       });
     }
   }
+
+  useEffect(() => {
+    return () => {
+      if (rndRefMap?.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        rndRefMap.current[moduleData.id] = null;
+      }
+    };
+  }, [moduleData.id, rndRefMap]);
 
   return (
     <Rnd
@@ -120,7 +134,12 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, isActive, dispatch }
       size={{ width, height }}
       rotate={rotate}
       // 激活的样式
-      style={{ zIndex: propsData.zIndex }}
+      style={{
+        zIndex: propsData.zIndex,
+        borderWidth: 1,
+        borderStyle: 'dashed',
+        borderColor: isActive ? MAIN_COLOR : 'transparent',
+      }}
       resizeHandleStyles={resizeHandleStyles}
       // 可操控的点位，只有在激活的时候才显示
       enableResizing={isActive && enableResizing}
@@ -142,12 +161,59 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, isActive, dispatch }
       onResize={(e, direction, delta) => {
         const { size, position } = delta;
       }}
+      /* 处理移动 start */
+      onDragStart={(event) => {
+        // 判断是否聚焦元素
+        handleSelectModule(event);
+        // 当前所有被选中的元素都要开始 groupMove
+        selectModuleDataIds.forEach((selectModuleDataId) => {
+          rndRefMap.current?.[selectModuleDataId]?.groupMoveStart();
+        });
+      }}
       // 其它组件也需要更新
       onDrag={(event, delta, position) => {
-        return true
+        // x 上的变化量
+        const changeX = position.left - left;
+        // y 上的变化量
+        const changY = position.top - top;
+        selectModuleDataIds.forEach((selectModuleDataId) => {
+          const selectModuleDataProps = moduleDatasMap[selectModuleDataId].props;
+          const newPosition = {
+            left: selectModuleDataProps.left + changeX,
+            top: selectModuleDataProps.top + changY,
+          };
+          rndRefMap.current?.[selectModuleDataId]?.groupMove(newPosition);
+        });
       }}
-      onDragStart={handleSelectModule}
-      onDragStop={() => {}}
+      // 更新所有的数据
+      onDragStop={() => {
+        const newSelectModuleDataPositions = selectModuleDataIds.map((selectModuleDataId) => {
+          const newPosition = rndRefMap.current?.[selectModuleDataId]?.groupMoveEnd();
+          return {
+            id: selectModuleDataId,
+            props: {
+              ...newPosition,
+            },
+          };
+        });
+        // console.log(newSelectModuleDataPositions);
+        // // 批量更新组件信息
+        // dispatch?.({
+        //   type: StoreActionType.UpdateModuleDatas,
+        //   payload: {
+        //     moduleDatas: newSelectModuleDataPositions,
+        //     merge: true,
+        //   },
+        // });
+      }}
+      /* 处理移动 end */
+
+      // 收集module的rnd实例
+      ref={(rndInstance) => {
+        if (rndRefMap?.current) {
+          rndRefMap.current[moduleData.id] = rndInstance;
+        }
+      }}
     >
       <ViewComponent moduleData={moduleData} />
     </Rnd>

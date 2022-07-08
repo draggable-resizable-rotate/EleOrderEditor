@@ -32,15 +32,15 @@ type State = Record<string, unknown>;
 
 export type ResizeEnable =
   | {
-    bottom?: boolean;
-    bottomLeft?: boolean;
-    bottomRight?: boolean;
-    left?: boolean;
-    right?: boolean;
-    top?: boolean;
-    topLeft?: boolean;
-    topRight?: boolean;
-  }
+      bottom?: boolean;
+      bottomLeft?: boolean;
+      bottomRight?: boolean;
+      left?: boolean;
+      right?: boolean;
+      top?: boolean;
+      topLeft?: boolean;
+      topRight?: boolean;
+    }
   | boolean;
 
 export type HandleClasses = {
@@ -158,17 +158,21 @@ export class Rnd extends React.PureComponent<Props, State> {
     const resizable: Resizable = this.resizableRef.current as Resizable;
     resizable.setState({
       isResizing: true,
-      position: { ...this.props.position }
-    })
+      position: { ...this.props.position },
+      backgroundStyle: {
+        ...resizable.state.backgroundStyle,
+        cursor: 'move',
+      },
+    });
   }
 
   onDrag(e: MouseEvent, delta: DraggableDelta, position: Position) {
-    const needContinue = this.props.onDrag?.(e, delta, position)
-    if(!needContinue) return false
+    const needContinue = this.props.onDrag?.(e, delta, position);
+    if (!needContinue) return false;
     const resizable: Resizable = this.resizableRef.current as Resizable;
     resizable.setState({
-      position: { ...position }
-    })
+      position: { ...position },
+    });
     return true;
   }
 
@@ -177,7 +181,12 @@ export class Rnd extends React.PureComponent<Props, State> {
     const resizable: Resizable = this.resizableRef.current as Resizable;
     resizable.setState({
       isResizing: false,
-    })
+      backgroundStyle: {
+        ...resizable.state.backgroundStyle,
+        cursor: 'auto',
+      },
+      position: { ...this.props.position },
+    });
   }
 
   onResizeStart(event: React.MouseEvent, dir: Direction, delta: ResizableDelta) {
@@ -187,6 +196,7 @@ export class Rnd extends React.PureComponent<Props, State> {
     const draggable: Draggable = this.draggableRef.current as Draggable;
     draggable.setState({
       dragging: true,
+      position: { ...this.props.position },
     });
   }
 
@@ -194,7 +204,7 @@ export class Rnd extends React.PureComponent<Props, State> {
     const { position } = delta;
     const draggable: Draggable = this.draggableRef.current as Draggable;
     draggable.setState({
-      position: JSON.parse(JSON.stringify(position)),
+      position: { ...position },
     });
     this.props.onResize?.(e, direction, delta, { ...position });
   }
@@ -204,8 +214,51 @@ export class Rnd extends React.PureComponent<Props, State> {
     const draggable: Draggable = this.draggableRef.current as Draggable;
     draggable.setState({
       dragging: false,
+      position: { ...this.props.position },
     });
     this.props.onResizeStop?.(e, direction, delta, { ...position });
+  }
+
+  groupMoveStart() {
+    const draggable: Draggable = this.draggableRef.current as Draggable;
+    const resizable: Resizable = this.resizableRef.current as Resizable;
+    draggable.setState({
+      dragging: true,
+      position: { ...this.props.position },
+    });
+    resizable.setState({
+      isResizing: true,
+      position: { ...this.props.position },
+    });
+  }
+
+  // 当前位置是增量 postion
+  groupMove(addPosition: Position) {
+    const draggable: Draggable = this.draggableRef.current as Draggable;
+    const resizable: Resizable = this.resizableRef.current as Resizable;
+    draggable.setState({
+      position: { ...addPosition },
+    });
+    resizable.setState({
+      position: { ...addPosition },
+    });
+    return { ...addPosition };
+  }
+
+  groupMoveEnd() {
+    const draggable: Draggable = this.draggableRef.current as Draggable;
+    const resizable: Resizable = this.resizableRef.current as Resizable;
+    // 最近一次移动的position
+    const moveEndPosition = draggable.state.position as Position;
+    draggable.setState({
+      dragging: false,
+      position: { ...this.props.position },
+    });
+    resizable.setState({
+      isResizing: false,
+      position: { ...this.props.position },
+    });
+    return { ...moveEndPosition };
   }
 
   render() {
@@ -241,7 +294,8 @@ export class Rnd extends React.PureComponent<Props, State> {
       ...resizableProps
     } = this.props;
 
-    const cursorStyle =  disableDragging || dragHandleClassName ? { cursor: 'auto' } : { cursor: 'move' };
+    const cursorStyle =
+      disableDragging || dragHandleClassName ? { cursor: 'auto' } : { cursor: 'move' };
     const innerStyle = {
       ...resizableStyle,
       ...cursorStyle,

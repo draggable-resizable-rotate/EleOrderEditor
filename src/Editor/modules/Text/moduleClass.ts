@@ -35,8 +35,8 @@ export enum FlexAlign {
 // 文本初始化属性
 export const TextInitProps = {
   zIndex: 0,
-  left: 5,
-  top: 5,
+  left: 100,
+  top: 100,
   width: BaseLongWidth,
   height: BaseShortWidth,
   // 文本的文档流方向

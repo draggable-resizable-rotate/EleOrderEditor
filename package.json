@@ -42,8 +42,8 @@
     ]
   },
   "dependencies": {
-    "@draggable-resizable-rotate/react-draggable-pro": "^1.0.10",
-    "@draggable-resizable-rotate/react-resizable-pro": "^1.0.11",
+    "@draggable-resizable-rotate/react-draggable-pro": "^1.0.11",
+    "@draggable-resizable-rotate/react-resizable-pro": "^1.0.12",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
     "antd": "^4.21.4",

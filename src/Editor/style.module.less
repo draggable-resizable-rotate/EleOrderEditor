@@ -13,6 +13,8 @@
 
 #editor-module-nav {
   width: @leftWidth;
+  flex-grow: 0;
+  flex-shrink: 0;
 
   :global {
     .ant-tabs {
@@ -88,9 +90,17 @@
 }
 
 #editor-module-canvas {
+  position: relative;
   flex-grow: 1;
   background-color: #f5f6fa;
-  position: relative;
 }
-// #f5f6fa 背景
-// #e7e8e8 边框
+
+/* #f5f6fa 背景 */
+
+/* #e7e8e8 边框 */
+
+#editor-module-style {
+  width: @leftWidth;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
