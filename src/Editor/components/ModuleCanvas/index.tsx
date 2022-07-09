@@ -22,6 +22,10 @@ const ModuleCanvas: React.FC = () => {
   const rndRefMap = useRef<RndRefMap>({});
   // 拖拽选择module
   const handleSelectModule: DragToSelectContainerProps['onMouseUp'] = (event, position, size) => {
+    const relativePosition = {
+      left: position.left + (outerRect.left - innerRect.left),
+      top: position.top + (outerRect.top - innerRect.top),
+    };
     // 绘制面积未达阈值，清除选择
     if (size.height * size.width <= SURE_DRAG_SELECT_AREA) {
       dispatch?.({
@@ -45,7 +49,7 @@ const ModuleCanvas: React.FC = () => {
               height: moduleData.props.height,
             },
           );
-          return boxesIntersect(createBox(position, size), moduleBox);
+          return boxesIntersect(createBox(relativePosition, size), moduleBox);
         })
         .map((data) => data.id);
       // 如果选中了，那么更新
