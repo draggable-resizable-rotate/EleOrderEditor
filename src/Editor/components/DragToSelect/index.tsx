@@ -16,7 +16,7 @@ export interface DragToSelectContainerMouseHandle {
   onMouseUp: (event: MouseEvent, position: Position, size: Size) => any;
 }
 
-interface DragToSelectContainerProps extends Partial<DragToSelectContainerMouseHandle> {
+export interface DragToSelectContainerProps extends Partial<DragToSelectContainerMouseHandle> {
   children: React.ReactNode;
   selectBoxStyle?: React.CSSProperties;
   nodeRef?: React.RefObject<HTMLElement>;

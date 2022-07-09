@@ -1,0 +1,175 @@
+/* 整个都是浮层，注意默认层级是 画布区域高于 标尺区 */
+.axis-ruler {
+  position: absolute;
+
+  /* 拉伸等宽高于父元素 */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-left: 1px solid #e7e8e8;
+  margin: auto;
+
+  :global {
+    /* 左上角小正方形，第一个元素，不需要定位 */
+    .square {
+      width: 20px;
+      height: 20px;
+      border-right: 1px solid #e7e8e8;
+      border-bottom: 1px solid #e7e8e8;
+      background-color: white;
+    }
+
+    /* 画标尺，层级背景 */
+    .h-ruler,
+    .v-ruler {
+      position: absolute;
+      z-index: 1000;
+      background-color: white;
+    }
+
+    /* 当前激活 line */
+    [class*='active-line'] {
+      position: absolute;
+      z-index: 1000;
+
+      .active-line-att {
+        background-color: #fff;
+        font-size: 12px;
+      }
+    }
+
+    .h-ruler {
+      top: 0;
+      left: 20px;
+      width: calc(100% - 20px);
+      height: 20px;
+      border-bottom: 1px solid #e7e8e8;
+      background-color: white;
+
+      /* 相对 h-ruler定位 */
+      .h-active-line {
+        top: 0;
+        left: 0;
+        width: 0;
+        border-left: 1px solid #fa465b;
+
+        .active-line-att {
+          left: 2px;
+        }
+      }
+    }
+
+    .v-ruler {
+      top: 20px;
+      left: 0;
+      width: 20px;
+      height: calc(100% - 20px);
+      border-right: 1px solid #e7e8e8;
+
+      /* 相对 v-ruler 定位 */
+      .v-active-line {
+        top: 0;
+        left: 0;
+        height: 0;
+        border-top: 1px solid #fa465b;
+
+        .active-line-att {
+          transform: rotate(180deg) translate(0, 2px);
+          transform-origin: 50% 0;
+          writing-mode: vertical-rl;
+        }
+      }
+    }
+
+    /* 所有可移动的 line */
+    [class*='line-box'] {
+      position: absolute;
+      z-index: 1000;
+
+      .line {
+        height: 100%;
+
+        .action {
+          position: absolute;
+          display: flex;
+        }
+
+        .line-att {
+          transform: scale(0.715);
+        }
+
+        .line-delete {
+          display: block;
+        }
+      }
+    }
+
+    /* h-line-box 和 h标尺一致 */
+    .h-line-box {
+      top: 0;
+      left: 20px;
+      width: calc(100% - 20px);
+
+      .line {
+        border-left: 1px solid #fa465b;
+
+        .action {
+          top: 20px;
+          flex-direction: row-reverse;
+          align-items: center;
+          transform: translate(-14px, 0);
+        }
+
+        .line-att {
+          transform: translate(-15%, 0) scale(0.715);
+        }
+
+        .line-delete-box {
+          justify-content: right;
+          margin-right: 4px;
+        }
+
+        .line-delete {
+          cursor: pointer;
+        }
+      }
+    }
+
+    /* v-line-box 和 v标尺一致 */
+    .v-line-box {
+      top: 20px;
+      left: 0;
+      height: calc(100% - 20px);
+
+      .line {
+        border-bottom: 1px solid #fa465b;
+
+        .action {
+          left: 20px;
+          flex-direction: column-reverse;
+          align-items: center;
+          transform: translate(0, -14px);
+        }
+
+        .line-att {
+          margin-top: -1px;
+          transform: translate(0, -15%) scale(0.715);
+        }
+
+        .line-delete-box {
+          justify-content: right;
+          margin-bottom: 4px;
+        }
+
+        .line-delete {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.react-draggable {
+  cursor: move;
+}

@@ -5,6 +5,8 @@
 @leftWidth: 252px;
 @mainColor: @blue-6;
 @navItemBackgroundColor: rgb(24 144 255 / 7.5%);
+@moduleCanvasWidth: 400px;
+@moduleCanvasHieght: 600px;
 
 #editor {
   display: flex;
@@ -91,8 +93,35 @@
 
 #editor-module-canvas {
   position: relative;
+  overflow: hidden;
   flex-grow: 1;
   background-color: #f5f6fa;
+
+  :global {
+    .editor-module-canvas-inner {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+
+      .module-canvas {
+        position: relative;
+        width: @moduleCanvasWidth;
+        height: @moduleCanvasHieght;
+        flex-shrink: 0;
+        margin: 0 auto;
+        background-color: #fff;
+      }
+    }
+
+    .axis-ruler-conatiner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
 
 /* #f5f6fa 背景 */
