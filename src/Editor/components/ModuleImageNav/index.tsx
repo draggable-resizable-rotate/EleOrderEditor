@@ -20,7 +20,7 @@ const DELETE_SVG = (
   />
 );
 
-const DEFAULT_SIZE = 80;
+const DEFAULT_SIZE = 75;
 
 export interface ImageInfo {
   url: string;

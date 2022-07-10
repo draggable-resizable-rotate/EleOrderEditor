@@ -1,6 +1,8 @@
 import { ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
 import QRCodeViewComponent from './ViewComponent';
 
+const BaseLongWidth = 25 * 3
+// const BaseShortWidth = 25 * 3
 
 // 组件基础信息
 const info = {
@@ -12,8 +14,8 @@ export const QRCodeInitProps = {
   zIndex: 0,
   left: 5,
   top: 5,
-  width: 15,
-  height: 15,
+  width: BaseLongWidth,
+  height: BaseLongWidth,
   value: '',
   // 码式，当前暂时只支持 qrcode
   type: 'qrcode',

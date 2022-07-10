@@ -9,7 +9,6 @@ interface Props {
 
 const QRCodeViewComponent: React.FC<Props> = ({ moduleData }) => {
   const { width, height, value } = moduleData.props;
-
   return (
     <div
       {...getModuleIdentifier(moduleData, Identifier.View)}

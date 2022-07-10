@@ -1,7 +1,7 @@
 import React from 'react';
-import { Tabs, Typography } from 'antd';
+import { Tabs } from 'antd';
 import StyleModule from './../../style.module.less';
-import { CategoryMap, defaultShowCategoryArr } from './config';
+import { CategoryMap, defaultShowCategoryArr, MainCategoryName } from './config';
 import { ModuleDataStore, ModuleType } from '@/Editor/modules/TypeConstraints';
 import { ModuleTypeClassMap } from '@/Editor/modules/config';
 import { StoreActionType, StoreDispatch } from '@/Editor/store/module';
@@ -42,10 +42,10 @@ const ModuleNav: React.FC<ModuleNavProps> = ({ dispatch }) => {
               key={navItem.key}
             >
               <div className="nav-pane">
-                <Typography.Title level={4}>{navItem.title}</Typography.Title>
+                <div className="nav-pane-title">{navItem.title}</div>
                 {(() => {
                   switch (navKey) {
-                    case ModuleType.Image: {
+                    case MainCategoryName.Image: {
                       return <ModuleImageNav />;
                     }
                     default: {
