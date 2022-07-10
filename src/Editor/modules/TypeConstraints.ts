@@ -44,6 +44,7 @@ export enum ModuleType {
   VText = 'v-text',
   Rect = 'rect',
   Image = 'image',
+  QRCode = 'QR-code',
 };
 
 

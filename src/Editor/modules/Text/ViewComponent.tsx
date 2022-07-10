@@ -1,4 +1,5 @@
 import React from 'react';
+import { getModuleIdentifier, Identifier } from '../utils/getModuleIdentifier';
 import { TextModuleData } from './moduleClass';
 
 interface Props {
@@ -6,7 +7,6 @@ interface Props {
 }
 
 const TextViewComponent: React.FC<Props> = ({ moduleData }) => {
-  const { id } = moduleData;
   // rotate 设置在外层
   const {
     value,
@@ -30,7 +30,7 @@ const TextViewComponent: React.FC<Props> = ({ moduleData }) => {
 
   return (
     <div
-      id={`${id}-view`}
+      {...getModuleIdentifier(moduleData, Identifier.View)}
       style={{
         width: '100%',
         height: '100%',
