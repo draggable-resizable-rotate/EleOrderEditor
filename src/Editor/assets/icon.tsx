@@ -10,6 +10,8 @@ export { ReactComponent as TableSvg } from './table.svg';
 export { ReactComponent as ImageSvg } from './image.svg';
 export { ReactComponent as DeleteSvg } from './delete.svg';
 export { ReactComponent as AddSvg } from './add.svg';
+export { ReactComponent as CodeSvg } from './code.svg';
+export { ReactComponent as QRCodeSvg } from './QR-code.svg';
 
 export const settingSelectedIcon = (
   <svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
@@ -48,36 +50,6 @@ export const alignCenterIcon = (
   <svg width="14" height="13" viewBox="0 0 14 13" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M.4.813C.16.813 0 .65 0 .406 0 .162.16 0 .4 0h13.2c.24 0 .4.163.4.406 0 .244-.16.406-.4.406H.4zm3 3c-.24 0-.4-.163-.4-.407C3 3.162 3.16 3 3.4 3h8c.24 0 .4.163.4.406 0 .244-.16.406-.4.406h-8zm-3 3c-.24 0-.4-.163-.4-.407C0 6.162.16 6 .4 6h13.2c.24 0 .4.162.4.406 0 .244-.16.407-.4.407H.4zm3 3c-.24 0-.4-.163-.4-.407C3 9.162 3.16 9 3.4 9h8c.24 0 .4.162.4.406 0 .244-.16.406-.4.406h-8zm-3 3c-.24 0-.4-.163-.4-.407C0 12.162.16 12 .4 12h13.2c.24 0 .4.162.4.406 0 .244-.16.406-.4.406H.4z"
-      fill="currentColor"
-      fillRule="nonzero"
-    />
-  </svg>
-);
-
-export const hBarCodeIcon = (
-  <svg width="24" height="12" viewBox="0 0 24 12" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M0 0h3v12H0V0zm3.75 0h1.5v12h-1.5V0zM6 0h.75v12H6V0zm3.75 0h1.5v12h-1.5V0zM12 0h3v12h-3V0zm9.375 0H24v12h-2.625V0zM7.125 0h2.25v12h-2.25V0zm11.25 0h2.25v12h-2.25V0zM17.25 0H18v12h-.75V0zm-1.5 0h.75v12h-.75V0z"
-      fill="currentColor"
-      fillRule="nonzero"
-    />
-  </svg>
-);
-
-export const vBarCodeIcon = (
-  <svg width="12" height="24" viewBox="0 0 12 24" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M12 0v3H0V0h12zm0 3.75v1.5H0v-1.5h12zM12 6v.75H0V6h12zm0 3.75v1.5H0v-1.5h12zM12 12v3H0v-3h12zm0 9.375V24H0v-2.625h12zm0-14.25v2.25H0v-2.25h12zm0 11.25v2.25H0v-2.25h12zm0-1.125V18H0v-.75h12zm0-1.5v.75H0v-.75h12z"
-      fill="currentColor"
-      fillRule="nonzero"
-    />
-  </svg>
-);
-
-export const qrCodeIcon = (
-  <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M13.846 13.846h3.077V10.77H20v4.616h-3.077v1.538h-3.077v-1.538H10.77v-4.616h3.077v3.077zM0 10.77h9.23V20H0v-9.23zm3.077 3.077v3.077h3.077v-3.077H3.077zM0 0h9.23v9.23H0V0zm3.077 3.077v3.077h3.077V3.077H3.077zM10.769 0H20v9.23h-9.23V0zm3.077 3.077v3.077h3.077V3.077h-3.077zm3.077 13.846H20V20h-3.077v-3.077zm-6.154 0h3.077V20H10.77v-3.077z"
       fill="currentColor"
       fillRule="nonzero"
     />

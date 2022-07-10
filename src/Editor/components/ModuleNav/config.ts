@@ -1,8 +1,22 @@
-import { GraphicSvg, HLineSvg, HTextSvg, TextSvg, VLineSvg, VTextSvg, RectSvg, ImageSvg } from '@/Editor/assets/icon';
+import { GraphicSvg, HLineSvg, HTextSvg, TextSvg, VLineSvg, VTextSvg, RectSvg, ImageSvg, CodeSvg, QRCodeSvg } from '@/Editor/assets/icon';
+import { ModuleType } from '@/Editor/modules/TypeConstraints';
 import React from 'react';
 
+export enum MainCategoryName {
+  Text = 'text',
+  Graphic = 'graphic',
+  Image = 'image',
+  Code = 'code'
+}
+
+
 // 默认的展示 菜单项的顺序
-export const defaultShowCategoryArr = ['text', 'graphic', 'image'];
+export const defaultShowCategoryArr = [
+  MainCategoryName.Text,
+  MainCategoryName.Graphic,
+  MainCategoryName.Image,
+  MainCategoryName.Code,
+];
 
 
 export interface Category {
@@ -15,17 +29,17 @@ export interface Category {
 // 文本菜单
 export const TextCategory: Category = {
   title: '文本',
-  key: 'text',
+  key: MainCategoryName.Text,
   icon: TextSvg,
   children: [
     {
       title: '横排文本',
-      key: 'h-text',
+      key: ModuleType.HText,
       icon: HTextSvg,
     },
     {
       title: '竖排文本',
-      key: 'v-text',
+      key: ModuleType.VText,
       icon: VTextSvg,
     },
   ],
@@ -33,23 +47,23 @@ export const TextCategory: Category = {
 
 // 图形菜单
 export const GraphicCategory: Category = {
-  key: 'graphic',
+  key: MainCategoryName.Graphic,
   title: '图形',
   icon: GraphicSvg,
   children: [
     {
       title: '垂直线',
-      key: 'v-line',
+      key: ModuleType.VLine,
       icon: VLineSvg,
     },
     {
       title: '水平线',
-      key: 'h-line',
+      key: ModuleType.HLine,
       icon: HLineSvg,
     },
     {
       title: '矩形',
-      key: 'rect',
+      key: ModuleType.Rect,
       icon: RectSvg,
     },
     // {
@@ -62,9 +76,23 @@ export const GraphicCategory: Category = {
 
 // 图片菜单
 export const ImageCategory: Category = {
-  key: 'image',
+  key: MainCategoryName.Image,
   title: '图片',
   icon: ImageSvg,
+};
+
+// 码菜单
+export const QRCodeCategory: Category = {
+  key: MainCategoryName.Code,
+  title: '二维码',
+  icon: CodeSvg,
+  children: [
+    {
+      title: '二维码',
+      key: ModuleType.QRCode,
+      icon: QRCodeSvg,
+    },
+  ],
 };
 
 
@@ -72,7 +100,8 @@ export const ImageCategory: Category = {
 export const CategoryMap: {
   [key: string]: Category
 } = {
-  text: TextCategory,
-  graphic: GraphicCategory,
-  image: ImageCategory,
+  [MainCategoryName.Text]: TextCategory,
+  [MainCategoryName.Graphic]: GraphicCategory,
+  [MainCategoryName.Image]: ImageCategory,
+  [MainCategoryName.Code]: QRCodeCategory,
 };
