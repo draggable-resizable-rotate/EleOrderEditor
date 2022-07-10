@@ -1,6 +1,5 @@
 import React, { useMemo, useReducer } from 'react';
-import RectModuleClass from './modules/Rect/moduleClass';
-import { ModuleDataStore, ModuleType } from './modules/TypeConstraints';
+import { ModuleDataStore } from './modules/TypeConstraints';
 import ModuleNav from './components/ModuleNav';
 import ModuleCanvas from './components/ModuleCanvas';
 import {
@@ -9,16 +8,16 @@ import {
   StoreState,
   createContext,
   reducer,
-  StoreActionType,
 } from './store/module';
-import { uniqueId } from './utils/uniqueId';
 import StyleModule from './style.module.less';
 import ModuleStyle from './components/ModuleStyle';
+import { ImageAction } from './components/ModuleImageNav';
 
 export type StoreContext = {
   storeState: StoreState;
   moduleDatas: ModuleDataStore[];
-  dispatch?: StoreDispatch;
+  dispatch: StoreDispatch;
+  imageAction?: ImageAction;
 };
 
 export const EditorContext = (() => {
@@ -27,12 +26,17 @@ export const EditorContext = (() => {
     {
       storeState: initStore,
       moduleDatas: [],
+      dispatch: () => undefined,
     },
     'editor',
   );
 })();
 
-const Editor: React.FC = () => {
+interface EditorProps {
+  imageAction?: ImageAction;
+}
+
+const Editor: React.FC<EditorProps> = ({ imageAction }) => {
   const { Provider } = EditorContext;
   const [storeState, dispatch] = useReducer(reducer, createInitialStore());
   const { moduleDatasMap } = storeState;
@@ -45,6 +49,7 @@ const Editor: React.FC = () => {
         storeState,
         dispatch,
         moduleDatas,
+        imageAction,
       }}
     >
       <div id={StyleModule['editor']}>

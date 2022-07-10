@@ -1,0 +1,113 @@
+.module-image-nav {
+  width: 100%;
+
+  :global {
+    .image-upload {
+      display: block;
+      margin-bottom: 12px;
+
+      .ant-upload.ant-upload-select {
+        width: 90px;
+        height: 90px;
+        border: 1px dashed #d9d9d9;
+        margin: 0;
+        background-color: transparent;
+        border-radius: 3px;
+
+        .ant-upload {
+          display: flex;
+          width: 100%;
+          height: 100%;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+
+          span {
+            margin-top: 6px;
+            color: rgb(22 24 35 / 50%);
+            line-height: 22px;
+          }
+        }
+      }
+    }
+
+    .att {
+      margin-bottom: 20px;
+      color: rgb(0 0 0 / 45%);
+      font-size: 12px;
+      line-height: 22px;
+    }
+
+    .image-container-title {
+      margin-bottom: 12px;
+    }
+
+    .image-container {
+      display: flex;
+      flex-direction: row;
+      /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
+      flex-wrap: wrap;
+
+      .image-item {
+        position: relative;
+        width: 47.5%;
+        height: 0;
+        padding-top: 47.5%;
+        border: 1px dashed #979797;
+        margin-bottom: 8px;
+        border-radius: 3px;
+        cursor: pointer;
+
+        /* 用户不会停留 selection */
+        user-select: none;
+
+        &:nth-child(2n + 1) {
+          margin-right: 5%;
+        }
+
+        .loading-text {
+          display: flex;
+          width: 100%;
+          height: 100%;
+          align-items: center;
+          justify-content: center;
+          color: rgb(0 0 0 / 50%);
+        }
+
+        img {
+          position: absolute;
+          z-index: 1;
+          top: 0;
+          left: 0;
+          object-fit: contain;
+        }
+
+        .mark {
+          position: absolute;
+          z-index: 2;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgb(0 0 0 / 50%);
+          color: white;
+          opacity: 0;
+          transition: opacity 0.3s;
+
+          svg {
+            position: absolute;
+            right: 8px;
+            bottom: 8px;
+          }
+        }
+
+        &:hover {
+          .mark {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}

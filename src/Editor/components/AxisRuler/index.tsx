@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { deleteIcon } from '../../assets/icon';
+import { DeleteSvg } from '../../assets/icon';
 import { uniqueId } from '../../utils/uniqueId';
 import Ruler from './Ruler';
 import StyleModule from './style.module.less';
@@ -273,12 +273,14 @@ const AxisRuler: React.FC<AxisRulerProps> = ({ outerRect, innerRect }) => {
               <div className="action">
                 <span className="line-att">{(item.position + hRuler.start).toFixed(0)}</span>
                 <span className="line-delete-box">
-                  {React.cloneElement(deleteIcon, {
-                    width: 12,
-                    height: 12,
-                    className: 'line-delete',
-                    onClick: () => handleDeleteReferenceLine(item.id, Direction.Horizontal),
-                  })}
+                  <DeleteSvg
+                    {...{
+                      width: 12,
+                      height: 12,
+                      className: 'line-delete',
+                      onClick: () => handleDeleteReferenceLine(item.id, Direction.Horizontal),
+                    }}
+                  />
                 </span>
               </div>
             </div>
@@ -317,12 +319,14 @@ const AxisRuler: React.FC<AxisRulerProps> = ({ outerRect, innerRect }) => {
               <div className="action">
                 <span className="line-att">{(item.position + vRuler.start).toFixed(0)}</span>
                 <span className="line-delete-box">
-                  {React.cloneElement(deleteIcon, {
-                    width: 12,
-                    height: 12,
-                    className: 'line-delete',
-                    onClick: () => handleDeleteReferenceLine(item.id, Direction.Vertical),
-                  })}
+                  <DeleteSvg
+                    {...{
+                      width: 12,
+                      height: 12,
+                      className: 'line-delete',
+                      onClick: () => handleDeleteReferenceLine(item.id, Direction.Horizontal),
+                    }}
+                  />
                 </span>
               </div>
             </div>

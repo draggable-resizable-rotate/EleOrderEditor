@@ -10,7 +10,7 @@ import { TextModuleData } from './Text/moduleClass';
 export type ResizeAxis = DraggableProps['axis'];
 
 // 每个模块组件的类型
-export type ModuleData<ModuleType, PropsType extends object = {}> = {
+export type ModuleData<ModuleType, PropsType extends object = Record<string, unknown>> = {
   id: string;
   type: ModuleType;
   // 待定
@@ -43,6 +43,7 @@ export enum ModuleType {
   HText = 'h-text',
   VText = 'v-text',
   Rect = 'rect',
+  Image = 'image',
 };
 
 
