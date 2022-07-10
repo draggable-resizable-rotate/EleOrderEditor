@@ -3,12 +3,10 @@ import { RcFile } from 'rc-upload/lib/interface';
 import React, { useContext, useEffect, useState } from 'react';
 import { AddSvg, DeleteSvg } from '../../assets/icon';
 import StyleModule from './style.module.less';
-
+import ImageModuleClass from '../../modules/Image/moduleClass';
 import { StoreActionType } from '../../store/module';
 import { uniqueId } from './../../utils/uniqueId';
-
 import { EditorContext } from '@/Editor';
-import { ModuleTypeClassMap } from '@/Editor/modules/config';
 import { ModuleType } from '@/Editor/modules/TypeConstraints';
 
 const imageDefaultAccept = ['jpg', 'jpeg', 'png'];
@@ -60,7 +58,6 @@ const ModuleImageNav: React.FC = () => {
 
   // 添加组件
   function addComponent(imageInfo: ImageInfo) {
-    const moduleKey = ModuleType.Image;
     const { url: src, width: imageWidth, height: imageHeight } = imageInfo;
     const radio = imageWidth / imageHeight;
     // 计算新的初始化 width 和 height
@@ -71,24 +68,23 @@ const ModuleImageNav: React.FC = () => {
       newImageWidth = DEFAULT_SIZE * radio;
     }
 
-    if (ModuleTypeClassMap[moduleKey]) {
-      dispatch?.({
-        type: StoreActionType.AddModuleDatas,
-        payload: {
-          component: {
+    dispatch({
+      type: StoreActionType.AddModuleDatas,
+      payload: {
+        moduleDatas: [
+          {
             id: uniqueId(),
-            type: moduleKey,
+            type: ModuleType.Image,
             props: {
-              ...ModuleTypeClassMap[moduleKey].initProps,
+              ...ImageModuleClass.initProps,
               height: newImageHeight,
               width: newImageWidth,
               src,
             },
           },
-          resetSelection: true,
-        },
-      });
-    }
+        ],
+      },
+    });
   }
 
   // 删除图片
