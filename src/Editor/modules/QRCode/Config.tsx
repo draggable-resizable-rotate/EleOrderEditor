@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Card, Form, Input, Select } from 'antd';
+import { Card, Form, Input } from 'antd';
 import { FormItemLayout } from '@/Editor/config';
 import { QRCodeModuleData } from './moduleClass';
 
@@ -7,23 +7,12 @@ export interface QRCodeConfigProps {
   moduleData: QRCodeModuleData;
 }
 
-// 码式
-const CodeTypeOptions = [
-  {
-    value: 'qrcode',
-    label: 'qrcode',
-  },
-];
-
 let MemoConfigForm: React.FC<{
   moduleId: string;
 }> = ({ moduleId }) => (
   <Card title="文本配置">
     <Form.Item label="内容" name={[moduleId, 'value']}>
       <Input.TextArea placeholder="请输入文本内容" />
-    </Form.Item>
-    <Form.Item label="码式" name={[moduleId, 'type']}>
-      <Select options={CodeTypeOptions} />
     </Form.Item>
   </Card>
 );

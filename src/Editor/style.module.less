@@ -7,6 +7,7 @@
 @navItemBackgroundColor: rgb(24 144 255 / 7.5%);
 @moduleCanvasWidth: 400px;
 @moduleCanvasHieght: 600px;
+@mainCanvasColor: #f5f6fa;
 
 #editor {
   display: flex;
@@ -100,7 +101,7 @@
   position: relative;
   overflow: hidden;
   flex-grow: 1;
-  background-color: #f5f6fa;
+  background-color: @mainCanvasColor;
 
   :global {
     .editor-module-canvas-inner {
@@ -129,10 +130,6 @@
   }
 }
 
-/* #f5f6fa 背景 */
-
-/* #e7e8e8 边框 */
-
 #editor-module-style {
   width: @leftWidth;
   flex-grow: 0;
@@ -141,6 +138,8 @@
   :global {
     .editor-module-style-nav.ant-tabs  {
       .ant-tabs-nav {
+        margin-bottom: 0;
+
         .ant-tabs-nav-list {
           display: flex;
           width: 100%;
@@ -160,6 +159,21 @@
             }
           }
         }
+      }
+    }
+
+    .ant-card {
+      .ant-card-head {
+        padding: 12px 16px;
+
+        .ant-card-head-title {
+          padding: 0;
+        }
+      }
+
+      .ant-card-body {
+        padding: 12px 16px;
+        background-color: @mainCanvasColor;
       }
     }
   }

@@ -1,5 +1,6 @@
 import { EditorContext } from '@/Editor';
 import { SettingSvg, StyleSvg } from '@/Editor/assets/icon';
+import { ModuleTypeClassMap } from '@/Editor/modules/config';
 import { StoreActionType } from '@/Editor/store/module';
 import { Button, Tabs } from 'antd';
 import React, { useContext } from 'react';
@@ -22,6 +23,9 @@ export const TabTypeMap = {
 
 const ModuleStyle: React.FC = () => {
   const { storeState, dispatch } = useContext(EditorContext);
+  const { selectModuleDataIds, moduleDatasMap } = storeState;
+  // 当前被选中的module的数组
+  const selectModuleData = selectModuleDataIds.map((id) => moduleDatasMap[id]);
 
   function deleteSelectModule() {
     dispatch?.({
@@ -56,8 +60,12 @@ const ModuleStyle: React.FC = () => {
           }
           key={TabType.CONFIG}
         >
-          <p>Content of Tab Pane 2</p>
-          <p>Content of Tab Pane 2</p>
+          {selectModuleData.map((moduleData) => {
+            const moduleClass = ModuleTypeClassMap[moduleData.type];
+            const ConfigComponent = moduleClass.configComponent;
+            if (!ConfigComponent) return null;
+            return <ConfigComponent key={moduleData.id} moduleData={moduleData} />;
+          })}
         </Tabs.TabPane>
       </Tabs>
       <Button onClick={deleteSelectModule}>删除选中的组件</Button>

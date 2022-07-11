@@ -11,7 +11,7 @@ let MemoConfigForm: React.FC<{
   moduleId: string;
 }> = ({ moduleId }) => (
   <Card title="文本配置">
-    <Form.Item label="Value" name={[moduleId, 'value']}>
+    <Form.Item label="内容" name={[moduleId, 'value']}>
       <Input.TextArea placeholder="请输入文本内容" rows={3} />
     </Form.Item>
     <Form.Item label="别名" name={[moduleId, 'alias']}>
