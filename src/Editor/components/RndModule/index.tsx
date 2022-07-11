@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useMemo } from 'react';
-import { HandleStyles, Rnd } from '../Rnd';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { HandleStyles, Position, Rnd, Size } from '../Rnd';
 import { StoreActionType } from '../../store/module';
 import { ModuleDataStore } from '../../modules/TypeConstraints';
 import { ModuleTypeClassMap } from '../../modules/config';
@@ -10,6 +10,7 @@ import {
   LineHandleStyles,
   ResizeHandleComponent,
 } from './config';
+import StyleModule from './style.module.less';
 
 import { MAIN_COLOR } from '@/Editor/config';
 import { EditorContext } from '@/Editor';
@@ -71,6 +72,9 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
     };
   }, [moduleData.id, rndRefMap]);
 
+  const [realTimePosition, setRealTimePosition] = useState<Position>();
+  const [realTimeSize, setRealTimeSize] = useState<Size>();
+
   return (
     <Rnd
       lockAspectRatio={lockAspectRatio}
@@ -95,12 +99,18 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
       minHeight={1}
       bounds="parent"
       // 阻止时间冒泡、选中当前元素
-      onResizeStart={(event) => {
+      onResizeStart={(event, dir, delta) => {
         event.stopPropagation();
         event.nativeEvent.stopPropagation();
+        setRealTimeSize({ ...delta.size });
+      }}
+      // 变换时，实时更新组件 位置和大小
+      onResize={(event, dir, delta) => {
+        setRealTimeSize({ ...delta.size });
       }}
       // 更新module大小和位置信息
       onResizeStop={(e, direction, delta) => {
+        setRealTimeSize(undefined);
         const { size, position } = delta;
         dispatch?.({
           type: StoreActionType.UpdateModuleDatas,
@@ -115,10 +125,9 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
           },
         });
       }}
-      // 变换时，实时更新组件 位置和大小
-      onResize={() => undefined}
       /* 处理移动 start */
-      onDragStart={(event) => {
+      onDragStart={(event, delta, position) => {
+        setRealTimePosition({ ...position });
         // 判断是否聚焦元素
         handleSelectModule(event);
         // 当前所有被选中的元素都要开始 groupMove
@@ -127,7 +136,8 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
         });
       }}
       // 其它组件也需要更新
-      onDrag={(event, delta) => {
+      onDrag={(event, delta, position) => {
+        setRealTimePosition({ ...position });
         // x 上的变化量, y 上的变化量
         const { changeX, changeY } = delta;
         selectModuleDataIds.forEach((selectModuleDataId) => {
@@ -140,6 +150,7 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
       }}
       // 更新所有的数据
       onDragStop={() => {
+        setRealTimePosition(undefined);
         const newSelectModuleDataPositions = selectModuleDataIds.map((selectModuleDataId) => {
           const newPosition = rndRefMap.current?.[selectModuleDataId]?.groupMoveEnd();
           return {
@@ -167,6 +178,25 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
       }}
     >
       <ViewComponent moduleData={moduleData} />
+      {(() => {
+        if (realTimePosition) {
+          return (
+            <div className={StyleModule['position-size-info']}>
+              <span className="show-left">{`T: ${parseInt(`${realTimePosition.top}`)}`}</span>
+              <span className="show-top">{`L: ${parseInt(`${realTimePosition.left}`)}`}</span>
+            </div>
+          );
+        }
+
+        if (realTimeSize) {
+          return (
+            <div className={StyleModule['position-size-info']}>
+              <span className="show-left">{`H: ${parseInt(`${realTimeSize.height}`)}`}</span>
+              <span className="show-top">{`W: ${parseInt(`${realTimeSize.width}`)}`}</span>
+            </div>
+          );
+        }
+      })()}
     </Rnd>
   );
 };

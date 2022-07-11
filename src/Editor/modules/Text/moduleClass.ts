@@ -2,8 +2,8 @@ import { ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
 import TextViewComponent from './ViewComponent';
 
 
-const BaseLongWidth = 25 * 3
-const BaseShortWidth = 15 * 3
+const BaseLongWidth = 25 * 3;
+const BaseShortWidth = 15 * 3;
 
 // 组件基础信息
 const info = {
@@ -22,7 +22,7 @@ export enum TextDirection {
 // 文本朝向
 export enum TextOrientation {
   Horizontal = 'initial',
-  Vertical = 'vertical-rl'
+  Vertical = 'vertical-lr'
 }
 
 // flex的对齐方式

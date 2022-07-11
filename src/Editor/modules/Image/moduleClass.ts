@@ -1,7 +1,7 @@
 import { ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
 import ImageViewComponent from './ViewComponent';
 
-const BaseLongWidth = 25 * 3
+const BaseLongWidth = 25 * 3;
 
 // 组件基础信息
 const info = {

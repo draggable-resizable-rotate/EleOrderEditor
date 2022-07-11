@@ -1,0 +1,30 @@
+.position-size-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  :global {
+    .show-left, .show-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .show-left {
+      display: inline-flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      transform: translate(-100%, 0);
+      writing-mode: vertical-lr;
+    }
+
+    .show-top {
+      width: 100%;
+      text-align: center;
+      transform: translate(0, -100%);
+    }
+  }
+}

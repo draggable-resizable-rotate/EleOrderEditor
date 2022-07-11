@@ -124,12 +124,12 @@ export const reducer = function (state: StoreState, action: StoreAction) {
     /* 批量更新激活组件：比如多选 */
     case StoreActionType.UpdateSelectModuleDataIds: {
       const toUpdateSelectModuleDataIds = (payload.selectModuleDataIds || []) as Array<ModuleDataStore['id']>;
-      const isReset = Boolean(payload.reset)
-      let newSelectModuleDataIds = []
+      const isReset = Boolean(payload.reset);
+      let newSelectModuleDataIds = [];
       if (isReset) {
-        newSelectModuleDataIds = [...toUpdateSelectModuleDataIds]
+        newSelectModuleDataIds = [...toUpdateSelectModuleDataIds];
       } else {
-        newSelectModuleDataIds = [...state.selectModuleDataIds, ...toUpdateSelectModuleDataIds]
+        newSelectModuleDataIds = [...state.selectModuleDataIds, ...toUpdateSelectModuleDataIds];
       }
       return {
         ...state,
