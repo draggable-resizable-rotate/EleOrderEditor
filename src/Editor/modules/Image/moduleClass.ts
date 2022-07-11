@@ -24,7 +24,7 @@ export const ImageInitProps = {
 // 线的props
 type ImageProps = typeof ImageInitProps;
 
-const moduleClass: ModuleClass<ImageProps> = {
+const ImageModuleClass: ModuleClass<ImageProps> = {
   info,
   viewComponent: ImageViewComponent,
   initProps: { ...ImageInitProps },
@@ -32,7 +32,7 @@ const moduleClass: ModuleClass<ImageProps> = {
   resizeAxis: 'both',
 };
 
-export default moduleClass;
+export default ImageModuleClass;
 
 // 横线的moudle data类型
 export type ImageModuleData = ModuleData<ModuleType.Image, ImageProps>;

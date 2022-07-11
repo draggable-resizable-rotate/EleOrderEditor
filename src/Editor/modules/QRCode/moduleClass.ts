@@ -28,7 +28,7 @@ export const QRCodeInitProps = {
 
 type QRCodeProps = typeof QRCodeInitProps;
 
-const moduleClass: ModuleClass<QRCodeProps> = {
+const QRCodeModuleClass: ModuleClass<QRCodeProps> = {
   info,
   viewComponent: QRCodeViewComponent,
   initProps: { ...QRCodeInitProps },
@@ -37,7 +37,7 @@ const moduleClass: ModuleClass<QRCodeProps> = {
   lockAspectRatio: true,
 };
 
-export default moduleClass;
+export default QRCodeModuleClass;
 
 // 横线的moudle data类型
 export type QRCodeModuleData = ModuleData<ModuleType.QRCode, QRCodeProps>;

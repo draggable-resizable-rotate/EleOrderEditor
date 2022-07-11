@@ -64,7 +64,7 @@ export const TextInitProps = {
 // 线的props
 type TextProps = typeof TextInitProps;
 
-const moduleClass: ModuleClass<TextProps> = {
+const TextModuleClass: ModuleClass<TextProps> = {
   info,
   initProps: { ...TextInitProps },
   propsKeys: Object.keys(TextInitProps) as Array<keyof TextProps>,
@@ -72,13 +72,13 @@ const moduleClass: ModuleClass<TextProps> = {
   resizeAxis: 'both',
 };
 
-export default moduleClass;
+export default TextModuleClass;
 
 // 横线的moudle data类型
 export type TextModuleData = ModuleData<ModuleType.HLine | ModuleType.VLine, TextProps>;
 
 export const HTextModuleClass: ModuleClass<TextProps> = {
-  ...moduleClass,
+  ...TextModuleClass,
   initProps: {
     ...TextInitProps,
     orientation: TextOrientation.Horizontal,
@@ -86,14 +86,14 @@ export const HTextModuleClass: ModuleClass<TextProps> = {
     height: BaseShortWidth,
   },
   info: {
-    ...moduleClass.info,
+    ...TextModuleClass.info,
     name: ModuleType.HText,
     nameZn: '横向文本'
   }
 };
 
 export const VTextModuleClass: ModuleClass<TextProps> = {
-  ...moduleClass,
+  ...TextModuleClass,
   initProps: {
     ...TextInitProps,
     orientation: TextOrientation.Vertical,
@@ -101,7 +101,7 @@ export const VTextModuleClass: ModuleClass<TextProps> = {
     height: BaseLongWidth,
   },
   info: {
-    ...moduleClass.info,
+    ...TextModuleClass.info,
     name: ModuleType.VText,
     nameZn: '竖向文本'
   }

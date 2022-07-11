@@ -26,7 +26,8 @@ export const LineInitProps = {
 // 线的props
 type LineProps = typeof LineInitProps;
 
-const moduleClass: ModuleClass<LineProps> = {
+
+const LineModuleClass: ModuleClass<LineProps> = {
   info,
   viewComponent: () => null,
   initProps: { ...LineInitProps },
@@ -34,16 +35,16 @@ const moduleClass: ModuleClass<LineProps> = {
   resizeAxis: 'both',
 };
 
-export default moduleClass;
+export default LineModuleClass;
 
 // 横线的moudle data类型
 export type LineModuleData = ModuleData<ModuleType.HLine | ModuleType.VLine, LineProps>;
 
 // 横线组件
 export const HLineModuleClass: ModuleClass<LineProps> = {
-  ...moduleClass,
+  ...LineModuleClass,
   info: {
-    ...moduleClass.info,
+    ...LineModuleClass.info,
     nameZn: '水平线',
     name: ModuleType.HLine,
   },
@@ -58,9 +59,9 @@ export const HLineModuleClass: ModuleClass<LineProps> = {
 
 // 横线组件
 export const VLineModuleClass: ModuleClass<LineProps> = {
-  ...moduleClass,
+  ...LineModuleClass,
   info: {
-    ...moduleClass.info,
+    ...LineModuleClass.info,
     nameZn: '垂直线',
     name: ModuleType.VLine,
   },
