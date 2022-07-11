@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { HandleStyles, Position, Rnd, Size } from '../Rnd';
 import { StoreActionType } from '../../store/module';
-import { ModuleDataStore } from '../../modules/TypeConstraints';
+import { StoreModuleData } from '../../modules/TypeConstraints';
 import { ModuleTypeClassMap } from '../../modules/config';
 import { TextModuleData } from '../../modules/Text/moduleClass';
 import {
@@ -20,7 +20,7 @@ export interface RndRefMap {
 }
 interface BaseModuleProps {
   // module 数据
-  moduleData: ModuleDataStore;
+  moduleData: StoreModuleData;
   rndRefMap: React.MutableRefObject<RndRefMap>;
 }
 

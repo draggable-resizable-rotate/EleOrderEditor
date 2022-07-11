@@ -1,5 +1,5 @@
 import React, { useMemo, useReducer } from 'react';
-import { ModuleDataStore } from './modules/TypeConstraints';
+import { StoreModuleData } from './modules/TypeConstraints';
 import ModuleNav from './components/ModuleNav';
 import ModuleCanvas from './components/ModuleCanvas';
 import {
@@ -15,7 +15,7 @@ import { ImageAction } from './components/ModuleImageNav';
 
 export type StoreContext = {
   storeState: StoreState;
-  moduleDatas: ModuleDataStore[];
+  moduleDatas: StoreModuleData[];
   dispatch: StoreDispatch;
   imageAction?: ImageAction;
 };

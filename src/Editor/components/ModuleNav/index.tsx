@@ -2,7 +2,7 @@ import React from 'react';
 import { Tabs } from 'antd';
 import StyleModule from './../../style.module.less';
 import { CategoryMap, defaultShowCategoryArr, MainCategoryName } from './config';
-import { ModuleDataStore, ModuleType } from '@/Editor/modules/TypeConstraints';
+import { StoreModuleData, ModuleType } from '@/Editor/modules/TypeConstraints';
 import { ModuleTypeClassMap } from '@/Editor/modules/config';
 import { StoreActionType, StoreDispatch } from '@/Editor/store/module';
 import { uniqueId } from '@/Editor/utils/uniqueId';
@@ -25,7 +25,7 @@ const ModuleNav: React.FC<ModuleNavProps> = ({ dispatch }) => {
             type: type,
             props: { ...moduleClass.initProps },
           },
-        ] as ModuleDataStore[],
+        ] as StoreModuleData[],
       },
     });
   }

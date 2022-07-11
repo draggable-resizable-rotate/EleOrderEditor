@@ -1,4 +1,4 @@
-import { ModuleDataStore } from '../modules/TypeConstraints';
+import { StoreModuleData } from '../modules/TypeConstraints';
 import React from 'react';
 import EditorHistory, { EditorHistoryState } from './EditorHistory';
 
@@ -11,8 +11,8 @@ const MAX_HISTORY_COUNT = 100;
 export const editorHistory = new EditorHistory<HistoryStorage>(MAX_HISTORY_COUNT);
 
 export interface StoreState {
-  moduleDatasMap: Record<ModuleDataStore['id'], ModuleDataStore>;
-  selectModuleDataIds: Array<ModuleDataStore['id']>;
+  moduleDatasMap: Record<StoreModuleData['id'], StoreModuleData>;
+  selectModuleDataIds: Array<StoreModuleData['id']>;
   editorHistoryState: EditorHistoryState;
 }
 
@@ -56,7 +56,7 @@ export const reducer = function (state: StoreState, action: StoreAction) {
   switch (action.type) {
     /* 批量添加组件 */
     case StoreActionType.AddModuleDatas: {
-      const toAddModuleDatas = payload.moduleDatas as ModuleDataStore[];
+      const toAddModuleDatas = payload.moduleDatas as StoreModuleData[];
       // 添加到map
       const newModuleDatasMap = toAddModuleDatas.reduce((prev, ModuleData) => {
         // eslint-disable-next-line no-param-reassign
@@ -94,7 +94,7 @@ export const reducer = function (state: StoreState, action: StoreAction) {
     /* 批量更新组件 */
     case StoreActionType.UpdateModuleDatas: {
       // id 和 所有新属性 props
-      const toUpdateModuleDatas = payload.moduleDatas as ModuleDataStore[];
+      const toUpdateModuleDatas = payload.moduleDatas as StoreModuleData[];
       // 替换还是合并
       const isMerge = Boolean(payload.merge);
       const newModuleDatasMap = { ...state.moduleDatasMap };
@@ -107,7 +107,7 @@ export const reducer = function (state: StoreState, action: StoreAction) {
             ...oldModuleData,
             ...toUpdateModuleData,
             props: Object.assign(oldModuleDataProps, toUpdateModuleData.props),
-          } as unknown as ModuleDataStore;
+          } as unknown as StoreModuleData;
           newModuleDatasMap[toUpdateModuleData.id] = newModuleData;
         }
       } else { // 替换
@@ -123,7 +123,7 @@ export const reducer = function (state: StoreState, action: StoreAction) {
     }
     /* 批量更新激活组件：比如多选 */
     case StoreActionType.UpdateSelectModuleDataIds: {
-      const toUpdateSelectModuleDataIds = (payload.selectModuleDataIds || []) as Array<ModuleDataStore['id']>;
+      const toUpdateSelectModuleDataIds = (payload.selectModuleDataIds || []) as Array<StoreModuleData['id']>;
       const isReset = Boolean(payload.reset);
       let newSelectModuleDataIds = [];
       if (isReset) {

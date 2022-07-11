@@ -27,6 +27,7 @@ export interface ModuleClass<PropsType> {
   info: ModuleClassInfo;
   // 被可拖拽、变换、旋转组件包裹的展示的组件内容
   viewComponent: React.FC<{ moduleData: any }>;
+  ConfigComponent?: React.FC<{ moduleData: any }>;
   // 初始化属性
   initProps: PropsType;
   // 属性键
@@ -57,4 +58,4 @@ export enum GroupModuleType {
   QRCode = 'QR-code',
 }
 
-export type ModuleDataStore = LineModuleData | TextModuleData | RectModuleData;
+export type StoreModuleData = LineModuleData | TextModuleData | RectModuleData;
