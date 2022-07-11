@@ -137,4 +137,30 @@
   width: @leftWidth;
   flex-grow: 0;
   flex-shrink: 0;
+
+  :global {
+    .editor-module-style-nav.ant-tabs  {
+      .ant-tabs-nav {
+        .ant-tabs-nav-list {
+          display: flex;
+          width: 100%;
+
+          .ant-tabs-tab {
+            flex-grow: 1;
+            justify-content: center;
+            text-align: center;
+
+            .ant-tabs-tab-btn {
+              display: flex;
+              align-items: center;
+            }
+
+            & + .ant-tabs-tab {
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+  }
 }

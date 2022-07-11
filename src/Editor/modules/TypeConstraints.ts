@@ -47,5 +47,13 @@ export enum ModuleType {
   QRCode = 'QR-code',
 };
 
+// 分组的type
+export enum GroupModuleType {
+  Line = 'line',
+  text = 'text',
+  Rect = 'rect',
+  Image = 'image',
+  QRCode = 'QR-code',
+}
 
 export type ModuleDataStore = LineModuleData | TextModuleData | RectModuleData;

@@ -14,8 +14,6 @@ export async function imageResourcePromise(url: string): Promise<HTMLImageElemen
   });
 }
 
-
-
 export function createDataUrlAsync(file: File): Promise<string> {
   return new Promise((resolve) => {
     const reader = new FileReader();
