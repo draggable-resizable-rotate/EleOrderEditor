@@ -9,11 +9,11 @@ import StyleMemoForm from './StyleMemoForm';
 
 const moduleType = GroupModuleType.Text;
 
-export interface TextStyleProps {
+export interface TextStyleFormProps {
   mergeModuleDataProps: TextModuleData['props'];
 }
 
-const TextStyle: React.FC<TextStyleProps> = ({ mergeModuleDataProps: mergeProps }) => {
+const TextStyleForm: React.FC<TextStyleFormProps> = ({ mergeModuleDataProps: mergeProps }) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -28,4 +28,4 @@ const TextStyle: React.FC<TextStyleProps> = ({ mergeModuleDataProps: mergeProps 
   );
 };
 
-export default TextStyle;
+export default TextStyleForm;

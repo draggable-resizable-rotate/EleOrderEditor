@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, Form, InputNumber, Radio, Select, Space } from 'antd';
-import styles from './index.less';
 import { alignCenterIcon, alignLeftIcon } from '../../assets/icon';
 import { GroupModuleType } from '../TypeConstraints';
 const { Option } = Select;
@@ -105,10 +104,7 @@ const StyleMemoForm: React.FC = () => {
               }}
             </Form.Item>
             <Form.Item name={[moduleType, 'lineHeightUnit']} style={{ marginBottom: 0 }}>
-              <Select
-                style={{ width: 68, borderLeftColor: '#E7E8E8' }}
-                className={styles.rightSelect}
-              >
+              <Select style={{ width: 68, borderLeftColor: '#E7E8E8' }}>
                 <Option value="%">%</Option>
                 <Option value="mm">mm</Option>
               </Select>
@@ -143,7 +139,6 @@ const StyleMemoForm: React.FC = () => {
             <Radio.Group
               options={[{ label: '/', value: true }]}
               size="small"
-              className={styles.itatlicRadio}
               style={{ borderRight: '#E7E8E8' }}
             />
           </Form.Item>
@@ -153,7 +148,6 @@ const StyleMemoForm: React.FC = () => {
                 { label: <span style={{ textDecoration: 'underline' }}>U</span>, value: true },
               ]}
               size="small"
-              className={styles.itatlicRadio}
             />
           </Form.Item>
         </Form.Item>
@@ -161,12 +155,7 @@ const StyleMemoForm: React.FC = () => {
 
       <Card title="排列">
         <Form.Item name={[moduleType, 'align']} noStyle>
-          <Radio.Group
-            optionType="button"
-            buttonStyle="solid"
-            size="small"
-            className={styles.alignRadio}
-          >
+          <Radio.Group optionType="button" buttonStyle="solid" size="small">
             <Radio.Button value="left">
               <span>{alignLeftIcon}</span>
             </Radio.Button>
@@ -179,12 +168,7 @@ const StyleMemoForm: React.FC = () => {
           </Radio.Group>
         </Form.Item>
         <Form.Item name={[moduleType, 'valign']} noStyle>
-          <Radio.Group
-            optionType="button"
-            buttonStyle="solid"
-            size="small"
-            className={styles.alignRadio}
-          >
+          <Radio.Group optionType="button" buttonStyle="solid" size="small">
             <Radio.Button value="top">
               <span style={{ transform: 'rotate(90deg)' }}>{alignLeftIcon}</span>
             </Radio.Button>
