@@ -1,6 +1,6 @@
 
 import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
-import LineView from './View';
+import LineView, { LineViewProps } from './View';
 
 const BaseLongWidth = 25 * 3;
 // const BaseShortWidth = 25 * 3
@@ -27,7 +27,7 @@ export const LineInitProps = {
 type LineProps = typeof LineInitProps;
 
 
-const LineModuleClass: ModuleClass<LineProps> = {
+const LineModuleClass: ModuleClass<LineProps, LineViewProps> = {
   info,
   viewComponent: LineView,
   initProps: { ...LineInitProps },
@@ -41,7 +41,7 @@ export default LineModuleClass;
 export type LineModuleData = ModuleData<ModuleType.HLine | ModuleType.VLine, LineProps>;
 
 // 横线组件
-export const HLineModuleClass: ModuleClass<LineProps> = {
+export const HLineModuleClass: ModuleClass<LineProps, LineViewProps> = {
   ...LineModuleClass,
   info: {
     ...LineModuleClass.info,
@@ -57,7 +57,7 @@ export const HLineModuleClass: ModuleClass<LineProps> = {
 };
 
 // 横线组件
-export const VLineModuleClass: ModuleClass<LineProps> = {
+export const VLineModuleClass: ModuleClass<LineProps, LineViewProps> = {
   ...LineModuleClass,
   info: {
     ...LineModuleClass.info,

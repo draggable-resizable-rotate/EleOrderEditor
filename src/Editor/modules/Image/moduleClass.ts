@@ -1,5 +1,5 @@
 import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
-import ImageView from './View';
+import ImageView, { ImageViewProps } from './View';
 
 const BaseLongWidth = 25 * 3;
 
@@ -24,7 +24,7 @@ export const ImageInitProps = {
 // 线的props
 type ImageProps = typeof ImageInitProps;
 
-const ImageModuleClass: ModuleClass<ImageProps> = {
+const ImageModuleClass: ModuleClass<ImageProps, ImageViewProps> = {
   info,
   viewComponent: ImageView,
   initProps: { ...ImageInitProps },

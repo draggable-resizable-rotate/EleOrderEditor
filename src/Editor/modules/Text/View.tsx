@@ -2,7 +2,7 @@ import React from 'react';
 import { getModuleIdentifier, Identifier } from '../utils/getModuleIdentifier';
 import { TextModuleData } from './moduleClass';
 
-interface TextViewProps {
+export interface TextViewProps {
   moduleData: TextModuleData;
 }
 

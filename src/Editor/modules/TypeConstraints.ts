@@ -23,11 +23,11 @@ interface ModuleClassInfo {
   groupType: GroupModuleType;
 }
 
-export interface ModuleClass<PropsType> {
+export interface ModuleClass<PropsType, ViewComponentProps, ConfigComponentProps = Record<string, unknown>> {
   info: ModuleClassInfo;
   // 被可拖拽、变换、旋转组件包裹的展示的组件内容
-  viewComponent: React.FC<{ moduleData: any }>;
-  ConfigComponent?: React.FC<{ moduleData: any }>;
+  viewComponent: React.FC<ViewComponentProps>;
+  ConfigComponent?: React.FC<ConfigComponentProps>;
   // 初始化属性
   initProps: PropsType;
   // 属性键

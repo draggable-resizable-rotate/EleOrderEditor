@@ -1,6 +1,6 @@
 
 import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
-import RectViewComponent from './ViewComponent';
+import RectViewComponent, { RectViewProps } from './ViewComponent';
 
 const BaseLongWidth = 25 * 3;
 // const BaseShortWidth = 25 * 3
@@ -27,7 +27,7 @@ export const RectInitProps = {
 // 线的props
 type RectProps = typeof RectInitProps;
 
-const RectModuleClass: ModuleClass<RectProps> = {
+const RectModuleClass: ModuleClass<RectProps, RectViewProps> = {
   info,
   initProps: { ...RectInitProps },
   propsKeys: Object.keys(RectInitProps) as Array<keyof RectProps>,

@@ -1,5 +1,5 @@
 import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
-import QRCodeView from './View';
+import QRCodeView, { QRCodeViewProps } from './View';
 
 const BaseLongWidth = 25 * 3;
 // const BaseShortWidth = 25 * 3
@@ -28,7 +28,7 @@ export const QRCodeInitProps = {
 
 type QRCodeProps = typeof QRCodeInitProps;
 
-const QRCodeModuleClass: ModuleClass<QRCodeProps> = {
+const QRCodeModuleClass: ModuleClass<QRCodeProps, QRCodeViewProps> = {
   info,
   viewComponent: QRCodeView,
   initProps: { ...QRCodeInitProps },
