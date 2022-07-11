@@ -20,6 +20,7 @@ export type ModuleData<ModuleType, PropsType extends object = Record<string, unk
 interface ModuleClassInfo {
   nameZn: string;
   name: string;
+  groupType: GroupModuleType;
 }
 
 export interface ModuleClass<PropsType> {
@@ -50,7 +51,7 @@ export enum ModuleType {
 // 分组的type
 export enum GroupModuleType {
   Line = 'line',
-  text = 'text',
+  Text = 'text',
   Rect = 'rect',
   Image = 'image',
   QRCode = 'QR-code',

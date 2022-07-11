@@ -1,5 +1,5 @@
 
-import { ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
+import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
 import LineViewComponent from './ViewComponent';
 
 const BaseLongWidth = 25 * 3;
@@ -8,7 +8,8 @@ const BaseLongWidth = 25 * 3;
 // 组件基础信息
 const info = {
   nameZn: '线',
-  name: 'line',
+  name: GroupModuleType.Line,
+  groupType: GroupModuleType.Line,
 };
 
 export const LineInitProps = {
@@ -42,7 +43,8 @@ export type LineModuleData = ModuleData<ModuleType.HLine | ModuleType.VLine, Lin
 export const HLineModuleClass: ModuleClass<LineProps> = {
   ...moduleClass,
   info: {
-    nameZn: '横线',
+    ...moduleClass.info,
+    nameZn: '水平线',
     name: ModuleType.HLine,
   },
   initProps: {
@@ -58,7 +60,8 @@ export const HLineModuleClass: ModuleClass<LineProps> = {
 export const VLineModuleClass: ModuleClass<LineProps> = {
   ...moduleClass,
   info: {
-    nameZn: '竖线',
+    ...moduleClass.info,
+    nameZn: '垂直线',
     name: ModuleType.VLine,
   },
   initProps: {

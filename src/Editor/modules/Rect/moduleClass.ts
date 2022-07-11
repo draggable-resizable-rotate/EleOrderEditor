@@ -1,5 +1,5 @@
 
-import { ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
+import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
 import RectViewComponent from './ViewComponent';
 
 const BaseLongWidth = 25 * 3;
@@ -7,8 +7,9 @@ const BaseLongWidth = 25 * 3;
 
 // 组件基础信息
 const info = {
-  name: 'rect',
+  name: ModuleType.Rect,
   nameZn: '矩形',
+  groupType: GroupModuleType.Rect
 };
 
 export const RectInitProps = {

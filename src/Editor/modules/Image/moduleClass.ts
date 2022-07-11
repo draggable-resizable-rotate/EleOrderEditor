@@ -1,12 +1,13 @@
-import { ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
+import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
 import ImageViewComponent from './ViewComponent';
 
 const BaseLongWidth = 25 * 3;
 
 // 组件基础信息
 const info = {
-  nameZn: '图片组件',
-  name: 'image',
+  nameZn: '图片',
+  name: GroupModuleType.Image,
+  groupType: GroupModuleType.Image,
 };
 
 export const ImageInitProps = {

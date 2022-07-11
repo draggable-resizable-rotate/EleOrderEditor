@@ -1,4 +1,4 @@
-import { ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
+import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
 import TextViewComponent from './ViewComponent';
 
 
@@ -7,8 +7,9 @@ const BaseShortWidth = 15 * 3;
 
 // 组件基础信息
 const info = {
-  name: 'text',
+  name: GroupModuleType.Text,
   nameZn: '文本',
+  groupType: GroupModuleType.Text
 };
 
 // 文本水平的方向
@@ -84,6 +85,11 @@ export const HTextModuleClass: ModuleClass<TextProps> = {
     width: BaseLongWidth,
     height: BaseShortWidth,
   },
+  info: {
+    ...moduleClass.info,
+    name: ModuleType.HText,
+    nameZn: '横向文本'
+  }
 };
 
 export const VTextModuleClass: ModuleClass<TextProps> = {
@@ -94,4 +100,9 @@ export const VTextModuleClass: ModuleClass<TextProps> = {
     width: BaseShortWidth,
     height: BaseLongWidth,
   },
+  info: {
+    ...moduleClass.info,
+    name: ModuleType.VText,
+    nameZn: '竖向文本'
+  }
 };

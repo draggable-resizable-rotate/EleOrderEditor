@@ -1,4 +1,4 @@
-import { ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
+import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
 import QRCodeViewComponent from './ViewComponent';
 
 const BaseLongWidth = 25 * 3;
@@ -7,7 +7,8 @@ const BaseLongWidth = 25 * 3;
 // 组件基础信息
 const info = {
   nameZn: '二维码',
-  name: 'QR-code'
+  name: ModuleType.QRCode,
+  groupType: GroupModuleType.QRCode
 };
 
 export const QRCodeInitProps = {
