@@ -21,7 +21,7 @@ const TextStyleForm: React.FC<TextStyleFormProps> = ({ mergeModuleDataProps: mer
   }, [form, mergeProps]);
 
   return (
-    <Form form={form} {...FormItemLayout} labelAlign="left">
+    <Form form={form} {...FormItemLayout}>
       <PositionForm prefixFormName={[moduleType]} />
       <StyleMemoForm />
     </Form>

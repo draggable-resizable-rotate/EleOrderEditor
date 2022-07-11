@@ -19,7 +19,7 @@ const QRCodeConfigForm: React.FC<QRCodeConfigFormProps> = ({ moduleData }) => {
   }, [value, type, moduleId, form]);
 
   return (
-    <Form form={form} {...FormItemLayout} labelAlign="left">
+    <Form form={form} {...FormItemLayout}>
       <ConfigMemoForm moduleId={moduleId} />
     </Form>
   );
