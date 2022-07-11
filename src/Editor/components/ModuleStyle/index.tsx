@@ -62,7 +62,7 @@ const ModuleStyle: React.FC = () => {
         >
           {selectModuleData.map((moduleData) => {
             const moduleClass = ModuleTypeClassMap[moduleData.type];
-            const ConfigComponent = moduleClass.configComponent;
+            const ConfigComponent = moduleClass.configFormComponent;
             if (!ConfigComponent) return null;
             return <ConfigComponent key={moduleData.id} moduleData={moduleData} />;
           })}

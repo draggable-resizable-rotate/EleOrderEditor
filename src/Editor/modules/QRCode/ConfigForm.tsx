@@ -1,24 +1,14 @@
 import React, { useEffect } from 'react';
-import { Card, Form, Input } from 'antd';
+import { Form } from 'antd';
 import { FormItemLayout } from '@/Editor/config';
 import { QRCodeModuleData } from './moduleClass';
+import ConfigMemoForm from './ConfigMemoForm';
 
-export interface QRCodeConfigProps {
+export interface QRCodeConfigFormProps {
   moduleData: QRCodeModuleData;
 }
 
-let MemoConfigForm: React.FC<{
-  moduleId: string;
-}> = ({ moduleId }) => (
-  <Card title="文本配置">
-    <Form.Item label="内容" name={[moduleId, 'value']}>
-      <Input.TextArea placeholder="请输入文本内容" />
-    </Form.Item>
-  </Card>
-);
-MemoConfigForm = React.memo(MemoConfigForm);
-
-const QRCodeConfig: React.FC<QRCodeConfigProps> = ({ moduleData }) => {
+const QRCodeConfigForm: React.FC<QRCodeConfigFormProps> = ({ moduleData }) => {
   const [form] = Form.useForm();
   const moduleId = module.id;
   const { value, type } = moduleData.props;
@@ -30,9 +20,9 @@ const QRCodeConfig: React.FC<QRCodeConfigProps> = ({ moduleData }) => {
 
   return (
     <Form form={form} {...FormItemLayout} labelAlign="left">
-      <MemoConfigForm moduleId={moduleId} />
+      <ConfigMemoForm moduleId={moduleId} />
     </Form>
   );
 };
 
-export default QRCodeConfig;
+export default QRCodeConfigForm;

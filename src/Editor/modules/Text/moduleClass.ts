@@ -1,6 +1,6 @@
 import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
 import TextView, { TextViewProps } from './View';
-import TextConfig, { TextConfigProps } from './Config';
+import TextConfigForm, { TextConfigFormProps } from './ConfigForm';
 
 const BaseLongWidth = 25 * 3;
 const BaseShortWidth = 15 * 3;
@@ -63,7 +63,7 @@ export const TextInitProps = {
 
 // 线的props
 type TextProps = typeof TextInitProps;
-type TextModuleClassType = ModuleClass<TextProps, TextViewProps, TextConfigProps>
+type TextModuleClassType = ModuleClass<TextProps, TextViewProps, TextConfigFormProps>
 
 const TextModuleClass: TextModuleClassType = {
   info,
@@ -71,7 +71,7 @@ const TextModuleClass: TextModuleClassType = {
   propsKeys: Object.keys(TextInitProps) as Array<keyof TextProps>,
   viewComponent: TextView,
   resizeAxis: 'both',
-  configComponent: TextConfig,
+  configFormComponent: TextConfigForm,
 };
 
 export default TextModuleClass;
