@@ -1,5 +1,6 @@
 
 import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
+import RectStyleForm, { RectStyleFormProps } from './StyleForm';
 import RectViewComponent, { RectViewProps } from './ViewComponent';
 
 const BaseLongWidth = 25 * 3;
@@ -27,11 +28,12 @@ export const RectInitProps = {
 // 线的props
 type RectProps = typeof RectInitProps;
 
-const RectModuleClass: ModuleClass<RectProps, RectViewProps> = {
+const RectModuleClass: ModuleClass<RectProps, RectViewProps, RectStyleFormProps> = {
   info,
   initProps: { ...RectInitProps },
   propsKeys: Object.keys(RectInitProps) as Array<keyof RectProps>,
   viewComponent: RectViewComponent,
+  styleFormComponent: RectStyleForm,
   resizeAxis: 'both',
 };
 

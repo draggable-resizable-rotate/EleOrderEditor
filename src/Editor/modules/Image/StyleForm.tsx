@@ -1,19 +1,18 @@
 import React, { useEffect } from 'react';
 import { Form } from 'antd';
-
 import { FormItemLayout } from '@/Editor/config';
 import PositionForm from '@/Editor/components/PositionForm';
 import { ImageModuleData } from './moduleClass';
 import { GroupModuleType } from '../TypeConstraints';
 import StyleMemoForm from './StyleMemoForm';
 
-interface ImageConfigFormProps {
+export interface ImageStyleFormProps {
   mergeModuleDataProps: ImageModuleData['props'];
 }
 
 const moduleType = GroupModuleType.Image;
 
-const ImageConfigForm: React.FC<ImageConfigFormProps> = ({ mergeModuleDataProps: mergeProps }) => {
+const ImageStyleForm: React.FC<ImageStyleFormProps> = ({ mergeModuleDataProps: mergeProps }) => {
   const [form] = Form.useForm();
 
   const { left, top, width, height, opacity } = mergeProps;
@@ -30,4 +29,4 @@ const ImageConfigForm: React.FC<ImageConfigFormProps> = ({ mergeModuleDataProps:
   );
 };
 
-export default ImageConfigForm;
+export default ImageStyleForm;

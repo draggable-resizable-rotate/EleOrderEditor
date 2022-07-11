@@ -1,5 +1,6 @@
 
 import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
+import LineStyleForm, { LineStyleFormProps } from './StyleForm';
 import LineView, { LineViewProps } from './View';
 
 const BaseLongWidth = 25 * 3;
@@ -26,13 +27,16 @@ export const LineInitProps = {
 // 线的props
 type LineProps = typeof LineInitProps;
 
+type LineModuleClassType = ModuleClass<LineProps, LineViewProps, LineStyleFormProps>
 
-const LineModuleClass: ModuleClass<LineProps, LineViewProps> = {
+
+const LineModuleClass: LineModuleClassType = {
   info,
   viewComponent: LineView,
   initProps: { ...LineInitProps },
   propsKeys: Object.keys(LineInitProps) as Array<keyof LineProps>,
   resizeAxis: 'both',
+  styleFormComponent: LineStyleForm,
 };
 
 export default LineModuleClass;
@@ -41,7 +45,7 @@ export default LineModuleClass;
 export type LineModuleData = ModuleData<ModuleType.HLine | ModuleType.VLine, LineProps>;
 
 // 横线组件
-export const HLineModuleClass: ModuleClass<LineProps, LineViewProps> = {
+export const HLineModuleClass: LineModuleClassType = {
   ...LineModuleClass,
   info: {
     ...LineModuleClass.info,
@@ -57,7 +61,7 @@ export const HLineModuleClass: ModuleClass<LineProps, LineViewProps> = {
 };
 
 // 横线组件
-export const VLineModuleClass: ModuleClass<LineProps, LineViewProps> = {
+export const VLineModuleClass: LineModuleClassType = {
   ...LineModuleClass,
   info: {
     ...LineModuleClass.info,

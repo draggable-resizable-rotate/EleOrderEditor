@@ -64,7 +64,7 @@ export const TextInitProps = {
 
 // 线的props
 type TextProps = typeof TextInitProps;
-type TextModuleClassType = ModuleClass<TextProps, TextViewProps, TextConfigFormProps, TextStyleFormProps>
+type TextModuleClassType = ModuleClass<TextProps, TextViewProps, TextStyleFormProps, TextConfigFormProps>
 
 const TextModuleClass: TextModuleClassType = {
   info,

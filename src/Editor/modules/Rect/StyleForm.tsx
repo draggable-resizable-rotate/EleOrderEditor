@@ -6,13 +6,13 @@ import StyleMemoForm from './StyleMemoForm';
 import { GroupModuleType } from '../TypeConstraints';
 import PositionForm from '@/Editor/components/PositionForm';
 
-export interface RectConfigFormProps {
+export interface RectStyleFormProps {
   mergeModuleDataProps: RectModuleData['props'];
 }
 
 const moduleType = GroupModuleType.Rect;
 
-const RectConfigForm: React.FC<RectConfigFormProps> = ({ mergeModuleDataProps: mergeProps }) => {
+const RectStyleForm: React.FC<RectStyleFormProps> = ({ mergeModuleDataProps: mergeProps }) => {
   const [form] = Form.useForm();
 
   const { lineWidth, lineType, fillColor, left, top, width, height } = mergeProps;
@@ -31,4 +31,4 @@ const RectConfigForm: React.FC<RectConfigFormProps> = ({ mergeModuleDataProps: m
   );
 };
 
-export default RectConfigForm;
+export default RectStyleForm;

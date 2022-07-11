@@ -6,7 +6,7 @@ import { FormItemLayout } from '@/Editor/config';
 import { QRCodeModuleData } from './moduleClass';
 import { GroupModuleType } from '../TypeConstraints';
 
-interface QRCodeStyleFormProps {
+export interface QRCodeStyleFormProps {
   mergeModuleDataProps: QRCodeModuleData['props'];
 }
 

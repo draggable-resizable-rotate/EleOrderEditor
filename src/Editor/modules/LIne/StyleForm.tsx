@@ -7,7 +7,7 @@ import { LineModuleData } from './moduleClass';
 import { GroupModuleType } from '../TypeConstraints';
 import PositionForm from '@/Editor/components/PositionForm';
 
-interface LineStyleFormProps {
+export interface LineStyleFormProps {
   mergeModuleDataProps: LineModuleData['props'];
 }
 

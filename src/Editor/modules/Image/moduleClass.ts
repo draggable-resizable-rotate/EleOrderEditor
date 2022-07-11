@@ -1,4 +1,5 @@
 import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
+import ImageStyleForm, { ImageStyleFormProps } from './StyleForm';
 import ImageView, { ImageViewProps } from './View';
 
 const BaseLongWidth = 25 * 3;
@@ -24,12 +25,13 @@ export const ImageInitProps = {
 // 线的props
 type ImageProps = typeof ImageInitProps;
 
-const ImageModuleClass: ModuleClass<ImageProps, ImageViewProps> = {
+const ImageModuleClass: ModuleClass<ImageProps, ImageViewProps, ImageStyleFormProps> = {
   info,
   viewComponent: ImageView,
   initProps: { ...ImageInitProps },
   propsKeys: Object.keys(ImageInitProps) as Array<keyof ImageProps>,
   resizeAxis: 'both',
+  styleFormComponent: ImageStyleForm
 };
 
 export default ImageModuleClass;
