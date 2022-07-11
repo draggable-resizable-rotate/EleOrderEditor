@@ -54,7 +54,13 @@ module.exports = {
     // 尾部分号
     'semi': ['error', 'always'],
     // 模板字面量而非字符串连接
-    'prefer-template': 'error'
+    'prefer-template': 'error',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        'args': 'after-used',
+        'ignoreRestSiblings': true
+      }
+    ],
   }
 };
-

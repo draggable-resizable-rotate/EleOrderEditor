@@ -15,5 +15,5 @@ export function createBox(position: Position, size: Size) {
     ...position,
     right: position.left + size.width,
     bottom: position.top + size.height,
-  }
+  };
 }
