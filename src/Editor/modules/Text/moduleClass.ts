@@ -1,6 +1,6 @@
 import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
 import TextView, { TextViewProps } from './View';
-
+import TextConfig, { TextConfigProps } from './Config';
 
 const BaseLongWidth = 25 * 3;
 const BaseShortWidth = 15 * 3;
@@ -63,13 +63,15 @@ export const TextInitProps = {
 
 // 线的props
 type TextProps = typeof TextInitProps;
+type TextModuleClassType = ModuleClass<TextProps, TextViewProps, TextConfigProps>
 
-const TextModuleClass: ModuleClass<TextProps, TextViewProps> = {
+const TextModuleClass: TextModuleClassType = {
   info,
   initProps: { ...TextInitProps },
   propsKeys: Object.keys(TextInitProps) as Array<keyof TextProps>,
   viewComponent: TextView,
   resizeAxis: 'both',
+  configComponent: TextConfig,
 };
 
 export default TextModuleClass;
@@ -77,7 +79,7 @@ export default TextModuleClass;
 // 横线的moudle data类型
 export type TextModuleData = ModuleData<ModuleType.HLine | ModuleType.VLine, TextProps>;
 
-export const HTextModuleClass: ModuleClass<TextProps, TextViewProps> = {
+export const HTextModuleClass: TextModuleClassType = {
   ...TextModuleClass,
   initProps: {
     ...TextInitProps,
@@ -92,7 +94,7 @@ export const HTextModuleClass: ModuleClass<TextProps, TextViewProps> = {
   }
 };
 
-export const VTextModuleClass: ModuleClass<TextProps, TextViewProps> = {
+export const VTextModuleClass: TextModuleClassType = {
   ...TextModuleClass,
   initProps: {
     ...TextInitProps,

@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { Card, Form, Input } from 'antd';
-
-import { FormItemLayout } from './../../config';
+import { FormItemLayout } from '../../config';
 import { TextModuleData } from './moduleClass';
 
-interface ConfigComponentProps {
+export interface TextConfigProps {
   moduleData: TextModuleData;
 }
 
@@ -23,7 +22,7 @@ let MemoConfigForm: React.FC<{
 
 MemoConfigForm = React.memo(MemoConfigForm);
 
-const ConfigComponent: React.FC<ConfigComponentProps> = ({ moduleData }) => {
+const TextConfig: React.FC<TextConfigProps> = ({ moduleData }) => {
   const [form] = Form.useForm();
   const moduleId = module.id;
   const { value, alias } = moduleData.props;
@@ -39,4 +38,4 @@ const ConfigComponent: React.FC<ConfigComponentProps> = ({ moduleData }) => {
   );
 };
 
-export default ConfigComponent;
+export default TextConfig;

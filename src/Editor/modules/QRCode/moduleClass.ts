@@ -1,4 +1,5 @@
 import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
+import QRCodeConfig, { QRCodeConfigProps } from './Config';
 import QRCodeView, { QRCodeViewProps } from './View';
 
 const BaseLongWidth = 25 * 3;
@@ -28,9 +29,10 @@ export const QRCodeInitProps = {
 
 type QRCodeProps = typeof QRCodeInitProps;
 
-const QRCodeModuleClass: ModuleClass<QRCodeProps, QRCodeViewProps> = {
+const QRCodeModuleClass: ModuleClass<QRCodeProps, QRCodeViewProps, QRCodeConfigProps> = {
   info,
   viewComponent: QRCodeView,
+  configComponent: QRCodeConfig,
   initProps: { ...QRCodeInitProps },
   resizeAxis: 'both',
   propsKeys: Object.keys(QRCodeInitProps) as Array<keyof QRCodeProps>,
