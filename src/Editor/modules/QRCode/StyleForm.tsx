@@ -6,15 +6,13 @@ import { FormItemLayout } from '@/Editor/config';
 import { QRCodeModuleData } from './moduleClass';
 import { GroupModuleType } from '../TypeConstraints';
 
-interface QRCodeConfigFormProps {
+interface QRCodeStyleFormProps {
   mergeModuleDataProps: QRCodeModuleData['props'];
 }
 
 const moduleType = GroupModuleType.QRCode;
 
-const QRCodeConfigForm: React.FC<QRCodeConfigFormProps> = ({
-  mergeModuleDataProps: mergeProps,
-}) => {
+const QRCodeStyleForm: React.FC<QRCodeStyleFormProps> = ({ mergeModuleDataProps: mergeProps }) => {
   const [form] = Form.useForm();
 
   const { left, top, width, height } = mergeProps;
@@ -30,4 +28,4 @@ const QRCodeConfigForm: React.FC<QRCodeConfigFormProps> = ({
   );
 };
 
-export default QRCodeConfigForm;
+export default QRCodeStyleForm;
