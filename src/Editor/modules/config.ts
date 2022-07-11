@@ -1,9 +1,9 @@
+import ImageModuleClass from './Image/moduleClass';
 import { HLineModuleClass, VLineModuleClass } from './LIne/moduleClass';
+import QRCodeModuleClass from './QRCode/moduleClass';
 import RectModuleClass from './Rect/moduleClass';
 import { HTextModuleClass, VTextModuleClass } from './Text/moduleClass';
 import { ModuleType } from './TypeConstraints';
-import ImageModuleClass from './Image/moduleClass';
-import QRCodeModuleClass from './QRCode/moduleClass';
 
 export const ModuleTypeClassMap = {
   [ModuleType.HLine]: HLineModuleClass,

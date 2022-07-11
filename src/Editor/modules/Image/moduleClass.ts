@@ -1,5 +1,5 @@
 import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
-import ImageViewComponent from './ViewComponent';
+import ImageView from './View';
 
 const BaseLongWidth = 25 * 3;
 
@@ -26,7 +26,7 @@ type ImageProps = typeof ImageInitProps;
 
 const ImageModuleClass: ModuleClass<ImageProps> = {
   info,
-  viewComponent: ImageViewComponent,
+  viewComponent: ImageView,
   initProps: { ...ImageInitProps },
   propsKeys: Object.keys(ImageInitProps) as Array<keyof ImageProps>,
   resizeAxis: 'both',

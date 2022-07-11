@@ -3,11 +3,11 @@ import { QRCodeModuleData } from './moduleClass';
 import QRCode from 'qrcode.react';
 import { getModuleIdentifier, Identifier } from '../utils/getModuleIdentifier';
 
-interface Props {
+export interface QRCodeViewProps {
   moduleData: QRCodeModuleData;
 }
 
-const QRCodeViewComponent: React.FC<Props> = ({ moduleData }) => {
+const QRCodeView: React.FC<QRCodeViewProps> = ({ moduleData }) => {
   const { width, height, value } = moduleData.props;
   return (
     <div
@@ -23,4 +23,4 @@ const QRCodeViewComponent: React.FC<Props> = ({ moduleData }) => {
   );
 };
 
-export default QRCodeViewComponent;
+export default QRCodeView;

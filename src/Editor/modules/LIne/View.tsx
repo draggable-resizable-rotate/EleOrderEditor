@@ -3,11 +3,11 @@ import { ModuleType } from '../TypeConstraints';
 import { getModuleIdentifier, Identifier } from '../utils/getModuleIdentifier';
 import { LineModuleData } from './moduleClass';
 
-interface Props {
+export interface LineViewProps {
   moduleData: LineModuleData;
 }
 
-const LineViewComponent: React.FC<Props> = ({ moduleData }) => {
+const LineView: React.FC<LineViewProps> = ({ moduleData }) => {
   const { type, props: propsData } = moduleData;
   const { lineType, lineWidth } = propsData;
   const style: CSSProperties = {};
@@ -28,4 +28,4 @@ const LineViewComponent: React.FC<Props> = ({ moduleData }) => {
   );
 };
 
-export default LineViewComponent;
+export default LineView;

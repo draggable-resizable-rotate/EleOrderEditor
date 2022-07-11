@@ -1,5 +1,5 @@
 import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
-import TextViewComponent from './ViewComponent';
+import TextView from './View';
 
 
 const BaseLongWidth = 25 * 3;
@@ -68,7 +68,7 @@ const TextModuleClass: ModuleClass<TextProps> = {
   info,
   initProps: { ...TextInitProps },
   propsKeys: Object.keys(TextInitProps) as Array<keyof TextProps>,
-  viewComponent: TextViewComponent,
+  viewComponent: TextView,
   resizeAxis: 'both',
 };
 

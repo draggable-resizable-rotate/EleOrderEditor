@@ -2,11 +2,11 @@ import React from 'react';
 import { getModuleIdentifier, Identifier } from '../utils/getModuleIdentifier';
 import { RectModuleData } from './moduleClass';
 
-interface Props {
+export interface RectViewProps {
   moduleData: RectModuleData;
 }
 
-const RectViewComponent: React.FC<Props> = ({ moduleData }) => {
+const RectView: React.FC<RectViewProps> = ({ moduleData }) => {
   const { lineWidth, lineType, fillColor } = moduleData.props;
 
   return (
@@ -22,4 +22,4 @@ const RectViewComponent: React.FC<Props> = ({ moduleData }) => {
   );
 };
 
-export default RectViewComponent;
+export default RectView;

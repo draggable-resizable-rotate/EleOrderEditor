@@ -1,6 +1,6 @@
 
 import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
-import LineViewComponent from './ViewComponent';
+import LineView from './View';
 
 const BaseLongWidth = 25 * 3;
 // const BaseShortWidth = 25 * 3
@@ -29,7 +29,7 @@ type LineProps = typeof LineInitProps;
 
 const LineModuleClass: ModuleClass<LineProps> = {
   info,
-  viewComponent: () => null,
+  viewComponent: LineView,
   initProps: { ...LineInitProps },
   propsKeys: Object.keys(LineInitProps) as Array<keyof LineProps>,
   resizeAxis: 'both',
@@ -53,7 +53,6 @@ export const HLineModuleClass: ModuleClass<LineProps> = {
     height: 1,
     width: BaseLongWidth,
   },
-  viewComponent: LineViewComponent,
   resizeAxis: 'x',
 };
 
@@ -70,7 +69,6 @@ export const VLineModuleClass: ModuleClass<LineProps> = {
     height: BaseLongWidth,
     width: 1,
   },
-  viewComponent: LineViewComponent,
   resizeAxis: 'y',
 };
 

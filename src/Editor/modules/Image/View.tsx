@@ -2,11 +2,11 @@ import React from 'react';
 import { getModuleIdentifier, Identifier } from '../utils/getModuleIdentifier';
 import { ImageModuleData } from './moduleClass';
 
-interface Props {
+export interface ImageViewProps {
   moduleData: ImageModuleData;
 }
 
-const ImageViewComponent: React.FC<Props> = ({ moduleData }) => {
+const ImageView: React.FC<ImageViewProps> = ({ moduleData }) => {
   const { src, opacity } = moduleData.props;
 
   return (
@@ -24,4 +24,4 @@ const ImageViewComponent: React.FC<Props> = ({ moduleData }) => {
   );
 };
 
-export default ImageViewComponent;
+export default ImageView;

@@ -2,11 +2,11 @@ import React from 'react';
 import { getModuleIdentifier, Identifier } from '../utils/getModuleIdentifier';
 import { TextModuleData } from './moduleClass';
 
-interface Props {
+interface TextViewProps {
   moduleData: TextModuleData;
 }
 
-const TextViewComponent: React.FC<Props> = ({ moduleData }) => {
+const TextView: React.FC<TextViewProps> = ({ moduleData }) => {
   // rotate 设置在外层
   const {
     value,
@@ -57,4 +57,4 @@ const TextViewComponent: React.FC<Props> = ({ moduleData }) => {
   );
 };
 
-export default TextViewComponent;
+export default TextView;
