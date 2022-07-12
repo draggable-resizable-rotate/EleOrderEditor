@@ -1,6 +1,6 @@
 import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
-import ImageStyleForm, { ImageStyleFormProps } from './StyleForm';
-import ImageView, { ImageViewProps } from './View';
+import ImageStyleForm from './StyleForm';
+import ImageView from './View';
 
 const BaseLongWidth = 25 * 3;
 
@@ -24,8 +24,10 @@ export const ImageInitProps = {
 
 // 线的props
 type ImageProps = typeof ImageInitProps;
+// 横线的moudle data类型
+export type ImageModuleData = ModuleData<ModuleType.Image, ImageProps>;
 
-const ImageModuleClass: ModuleClass<ImageProps, ImageViewProps, ImageStyleFormProps> = {
+const ImageModuleClass: ModuleClass<ModuleType.Image, ImageProps> = {
   info,
   viewComponent: ImageView,
   initProps: { ...ImageInitProps },
@@ -36,5 +38,4 @@ const ImageModuleClass: ModuleClass<ImageProps, ImageViewProps, ImageStyleFormPr
 
 export default ImageModuleClass;
 
-// 横线的moudle data类型
-export type ImageModuleData = ModuleData<ModuleType.Image, ImageProps>;
+

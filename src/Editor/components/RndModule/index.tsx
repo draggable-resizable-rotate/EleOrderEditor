@@ -177,7 +177,7 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
         }
       }}
     >
-      <ViewComponent moduleData={moduleData} />
+      <ViewComponent moduleData={moduleData as never} />
       {(() => {
         if (realTimePosition) {
           return (

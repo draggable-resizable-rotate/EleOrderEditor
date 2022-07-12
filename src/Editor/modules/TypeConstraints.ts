@@ -2,7 +2,10 @@
  * Module的类型约束文件
  */
 import { DraggableProps } from '@draggable-resizable-rotate/react-draggable-pro';
+import React from 'react';
+import { ImageModuleData } from './Image/moduleClass';
 import { LineModuleData } from './LIne/moduleClass';
+import { QRCodeModuleData } from './QRCode/moduleClass';
 import { RectModuleData } from './Rect/moduleClass';
 import { TextModuleData } from './Text/moduleClass';
 
@@ -23,12 +26,18 @@ interface ModuleClassInfo {
   groupType: GroupModuleType;
 }
 
-export interface ModuleClass<PropsType, ViewComponentProps, StyleFormComponentProps, ConfigFormComponentProps = Record<string, unknown>> {
+export interface ModuleClass<ModuleType, PropsType extends object = Record<string, unknown>> {
   info: ModuleClassInfo;
   // 被可拖拽、变换、旋转组件包裹的展示的组件内容
-  viewComponent: React.FC<ViewComponentProps>;
-  configFormComponent?: React.FC<ConfigFormComponentProps>;
-  styleFormComponent: React.FC<StyleFormComponentProps>;
+  viewComponent: React.FC<{
+    moduleData: ModuleData<ModuleType, PropsType>;
+  }>;
+  configFormComponent?: React.FC<{
+    moduleData: ModuleData<ModuleType, PropsType>;
+  }>;
+  styleFormComponent: React.FC<{
+    mergeModuleDataProps: PropsType
+  }>;
   // 初始化属性
   initProps: PropsType;
   // 属性键
@@ -59,4 +68,4 @@ export enum GroupModuleType {
   QRCode = 'QR-code',
 }
 
-export type StoreModuleData = LineModuleData | TextModuleData | RectModuleData;
+export type StoreModuleData = LineModuleData | TextModuleData | RectModuleData | QRCodeModuleData | ImageModuleData;

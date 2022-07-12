@@ -1,7 +1,7 @@
 
 import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
-import RectStyleForm, { RectStyleFormProps } from './StyleForm';
-import RectViewComponent, { RectViewProps } from './ViewComponent';
+import RectStyleForm from './StyleForm';
+import RectViewComponent from './ViewComponent';
 
 const BaseLongWidth = 25 * 3;
 // const BaseShortWidth = 25 * 3
@@ -28,7 +28,10 @@ export const RectInitProps = {
 // 线的props
 type RectProps = typeof RectInitProps;
 
-const RectModuleClass: ModuleClass<RectProps, RectViewProps, RectStyleFormProps> = {
+// 横线的moudle data类型
+export type RectModuleData = ModuleData<ModuleType.Rect, RectProps>;
+
+const RectModuleClass: ModuleClass<ModuleType.Rect, RectProps> = {
   info,
   initProps: { ...RectInitProps },
   propsKeys: Object.keys(RectInitProps) as Array<keyof RectProps>,
@@ -39,5 +42,3 @@ const RectModuleClass: ModuleClass<RectProps, RectViewProps, RectStyleFormProps>
 
 export default RectModuleClass;
 
-// 横线的moudle data类型
-export type RectModuleData = ModuleData<ModuleType.Rect, RectProps>;

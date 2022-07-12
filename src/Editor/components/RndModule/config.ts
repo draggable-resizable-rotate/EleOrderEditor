@@ -55,7 +55,7 @@ export const LineHandleStyles = RECT_LINE_DIRECTION.reduce((preResult, value) =>
 
 
 // 通过resizeAxis获取要渲染的变换锚点
-export function getEnableByResizeAxis(resizeAxis: ModuleClass<unknown>['resizeAxis']) {
+export function getEnableByResizeAxis(resizeAxis: ModuleClass<any, any>['resizeAxis']) {
   const axis = resizeAxis;
   const defaultResizing = RECT_DIRECT.reduce((preResult, position) => {
     // eslint-disable-next-line no-param-reassign

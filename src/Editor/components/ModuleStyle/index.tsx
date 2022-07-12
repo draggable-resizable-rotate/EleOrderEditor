@@ -1,6 +1,7 @@
 import { EditorContext } from '@/Editor';
 import { SettingSvg, StyleSvg } from '@/Editor/assets/icon';
 import { ModuleTypeClassMap } from '@/Editor/modules/config';
+import { GroupModuleType, StoreModuleData } from '@/Editor/modules/TypeConstraints';
 import { StoreActionType } from '@/Editor/store/module';
 import { Button, Tabs } from 'antd';
 import React, { useContext } from 'react';
@@ -26,6 +27,36 @@ const ModuleStyle: React.FC = () => {
   const { selectModuleDataIds, moduleDatasMap } = storeState;
   // 当前被选中的module的数组
   const selectModuleData = selectModuleDataIds.map((id) => moduleDatasMap[id]);
+
+  // 要渲染的所有的module的配置组件
+  const selectModuleDataConfigComponentList: JSX.Element[] = [];
+
+  const selectModuleDataGroupTypeMap: {
+    [key in GroupModuleType]?: StoreModuleData[];
+  } = {};
+
+  selectModuleData.forEach((moduleData) => {
+    const moduleClass = ModuleTypeClassMap[moduleData.type];
+    const ConfigComponent = moduleClass.configFormComponent;
+    const groupType = moduleClass.info.groupType;
+    if (ConfigComponent) {
+      selectModuleDataConfigComponentList.push(
+        <ConfigComponent key={moduleData.id} moduleData={moduleData} />,
+      );
+    }
+    let groupTypeSelectModuleDatas = selectModuleDataGroupTypeMap[groupType];
+    if (!groupTypeSelectModuleDatas) {
+      selectModuleDataGroupTypeMap[groupType] = groupTypeSelectModuleDatas = [];
+    }
+    groupTypeSelectModuleDatas.push(moduleData);
+  });
+
+  // const selectModuleDataStyleComponentList = Object.keys(selectModuleDataGroupTypeMap).map((groupType) => {
+  //   const moduleClass = (selectModuleDataGroupTypeMap[groupType as GroupModuleType] as StoreModuleData [])[0].type
+  //   return 'a'
+  // })
+
+  // 要渲染的所有merge
 
   function deleteSelectModule() {
     dispatch?.({
@@ -60,12 +91,7 @@ const ModuleStyle: React.FC = () => {
           }
           key={TabType.CONFIG}
         >
-          {selectModuleData.map((moduleData) => {
-            const moduleClass = ModuleTypeClassMap[moduleData.type];
-            const ConfigComponent = moduleClass.configFormComponent;
-            if (!ConfigComponent) return null;
-            return <ConfigComponent key={moduleData.id} moduleData={moduleData} />;
-          })}
+          {selectModuleDataConfigComponentList}
         </Tabs.TabPane>
       </Tabs>
       <Button onClick={deleteSelectModule}>删除选中的组件</Button>

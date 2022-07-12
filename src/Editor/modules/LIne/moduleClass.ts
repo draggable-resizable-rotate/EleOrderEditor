@@ -1,7 +1,7 @@
 
 import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
-import LineStyleForm, { LineStyleFormProps } from './StyleForm';
-import LineView, { LineViewProps } from './View';
+import LineStyleForm from './StyleForm';
+import LineView from './View';
 
 const BaseLongWidth = 25 * 3;
 // const BaseShortWidth = 25 * 3
@@ -25,10 +25,12 @@ export const LineInitProps = {
 };
 
 // 线的props
-type LineProps = typeof LineInitProps;
+export type LineProps = typeof LineInitProps;
 
-type LineModuleClassType = ModuleClass<LineProps, LineViewProps, LineStyleFormProps>
+// 横线的moudle data类型
+export type LineModuleData = ModuleData<ModuleType.HLine | ModuleType.VLine, LineProps>;
 
+type LineModuleClassType = ModuleClass<ModuleType.HLine | ModuleType.VLine, LineProps>
 
 const LineModuleClass: LineModuleClassType = {
   info,
@@ -41,8 +43,6 @@ const LineModuleClass: LineModuleClassType = {
 
 export default LineModuleClass;
 
-// 横线的moudle data类型
-export type LineModuleData = ModuleData<ModuleType.HLine | ModuleType.VLine, LineProps>;
 
 // 横线组件
 export const HLineModuleClass: LineModuleClassType = {
@@ -60,7 +60,8 @@ export const HLineModuleClass: LineModuleClassType = {
   resizeAxis: 'x',
 };
 
-// 横线组件
+
+// 竖线组件
 export const VLineModuleClass: LineModuleClassType = {
   ...LineModuleClass,
   info: {
@@ -75,4 +76,3 @@ export const VLineModuleClass: LineModuleClassType = {
   },
   resizeAxis: 'y',
 };
-

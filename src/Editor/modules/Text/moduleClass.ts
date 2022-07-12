@@ -1,7 +1,7 @@
 import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
-import TextView, { TextViewProps } from './View';
-import TextConfigForm, { TextConfigFormProps } from './ConfigForm';
-import TextStyleForm, { TextStyleFormProps } from './StyleForm';
+import TextView from './View';
+import TextConfigForm from './ConfigForm';
+import TextStyleForm from './StyleForm';
 
 const BaseLongWidth = 25 * 3;
 const BaseShortWidth = 15 * 3;
@@ -64,7 +64,9 @@ export const TextInitProps = {
 
 // 线的props
 type TextProps = typeof TextInitProps;
-type TextModuleClassType = ModuleClass<TextProps, TextViewProps, TextStyleFormProps, TextConfigFormProps>
+type TextModuleClassType = ModuleClass<ModuleType.HText | ModuleType.VText, TextProps>
+// 横线的moudle data类型
+export type TextModuleData = ModuleData<ModuleType.HText | ModuleType.VText, TextProps>;
 
 const TextModuleClass: TextModuleClassType = {
   info,
@@ -77,9 +79,6 @@ const TextModuleClass: TextModuleClassType = {
 };
 
 export default TextModuleClass;
-
-// 横线的moudle data类型
-export type TextModuleData = ModuleData<ModuleType.HLine | ModuleType.VLine, TextProps>;
 
 export const HTextModuleClass: TextModuleClassType = {
   ...TextModuleClass,
