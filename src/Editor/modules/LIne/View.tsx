@@ -12,9 +12,9 @@ const LineView: React.FC<LineViewProps> = ({ moduleData }) => {
   const { lineType, lineWidth } = propsData;
   const style: CSSProperties = {};
   if (type === ModuleType.VLine) {
-    style.borderLeft = `${lineWidth}pt ${lineType} black`;
+    style.borderLeft = `${lineWidth}px ${lineType} black`;
   } else {
-    style.borderTop = `${lineWidth}pt ${lineType} black`;
+    style.borderTop = `${lineWidth}px ${lineType} black`;
   }
   return (
     <div

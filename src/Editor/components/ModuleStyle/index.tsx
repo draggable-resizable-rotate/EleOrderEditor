@@ -1,7 +1,8 @@
 import { EditorContext } from '@/Editor';
 import { SettingSvg, StyleSvg } from '@/Editor/assets/icon';
 import { ModuleTypeClassMap } from '@/Editor/modules/config';
-import { GroupModuleType, StoreModuleData } from '@/Editor/modules/TypeConstraints';
+import { LineModuleData } from '@/Editor/modules/LIne/moduleClass';
+import { GroupModuleType, ModuleType, StoreModuleData } from '@/Editor/modules/TypeConstraints';
 import { StoreActionType } from '@/Editor/store/module';
 import mergeModuleDataByGroupType from '@/Editor/utils/mergeModuleDataByGroupType';
 import { Tabs } from 'antd';
@@ -80,14 +81,37 @@ const ModuleStyle: React.FC = () => {
       const moduleDatasByGroupType = selectModuleDataGroupTypeMap[
         groupType as GroupModuleType
       ] as StoreModuleData[];
-      moduleDatasByGroupType.forEach((moduleData) => {
-        toUpdateModuleDatas.push({
-          ...moduleData,
-          props: {
-            ...groupTypeUpdateProps,
-          },
-        } as StoreModuleData);
-      });
+
+      // 如果当前的是Line，那么需要做一些特殊处理
+      if (
+        groupType === GroupModuleType.Line &&
+        (groupTypeUpdateProps as Partial<LineModuleData['props']>).lineWidth
+      ) {
+        const newUpdateProps = { ...groupTypeUpdateProps } as Partial<LineModuleData['props']>;
+        moduleDatasByGroupType.forEach((moduleData) => {
+          if (moduleData.type === ModuleType.HLine) {
+            newUpdateProps.height = newUpdateProps.lineWidth;
+          }
+          if (moduleData.type === ModuleType.VLine) {
+            newUpdateProps.width = newUpdateProps.lineWidth;
+          }
+          toUpdateModuleDatas.push({
+            ...moduleData,
+            props: {
+              ...newUpdateProps,
+            },
+          } as StoreModuleData);
+        });
+      } else {
+        moduleDatasByGroupType.forEach((moduleData) => {
+          toUpdateModuleDatas.push({
+            ...moduleData,
+            props: {
+              ...groupTypeUpdateProps,
+            },
+          } as StoreModuleData);
+        });
+      }
     }
     dispatch({
       type: StoreActionType.UpdateModuleDatas,
