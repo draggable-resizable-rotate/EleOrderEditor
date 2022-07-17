@@ -132,11 +132,14 @@
 
 #editor-module-style {
   width: @leftWidth;
+  height: 100vh;
   flex-grow: 0;
   flex-shrink: 0;
 
   :global {
     .editor-module-style-nav.ant-tabs  {
+      height: 100%;
+
       .ant-tabs-nav {
         margin-bottom: 0;
 
@@ -159,6 +162,10 @@
             }
           }
         }
+      }
+
+      .ant-tabs-content-holder {
+        overflow: auto;
       }
     }
 

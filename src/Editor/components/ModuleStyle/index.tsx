@@ -3,7 +3,8 @@ import { SettingSvg, StyleSvg } from '@/Editor/assets/icon';
 import { ModuleTypeClassMap } from '@/Editor/modules/config';
 import { GroupModuleType, StoreModuleData } from '@/Editor/modules/TypeConstraints';
 import { StoreActionType } from '@/Editor/store/module';
-import { Button, Tabs } from 'antd';
+import mergeModuleDataByGroupType from '@/Editor/utils/mergeModuleDataByGroupType';
+import { Tabs } from 'antd';
 import React, { useContext } from 'react';
 import StyleModule from './../../style.module.less';
 
@@ -41,7 +42,7 @@ const ModuleStyle: React.FC = () => {
     const groupType = moduleClass.info.groupType;
     if (ConfigComponent) {
       selectModuleDataConfigComponentList.push(
-        <ConfigComponent key={moduleData.id} moduleData={moduleData} />,
+        <ConfigComponent key={moduleData.id} moduleData={moduleData as never} />,
       );
     }
     let groupTypeSelectModuleDatas = selectModuleDataGroupTypeMap[groupType];
@@ -51,18 +52,48 @@ const ModuleStyle: React.FC = () => {
     groupTypeSelectModuleDatas.push(moduleData);
   });
 
-  // const selectModuleDataStyleComponentList = Object.keys(selectModuleDataGroupTypeMap).map((groupType) => {
-  //   const moduleClass = (selectModuleDataGroupTypeMap[groupType as GroupModuleType] as StoreModuleData [])[0].type
-  //   return 'a'
-  // })
+  const selectModuleDataStyleComponentList = Object.keys(selectModuleDataGroupTypeMap).map(
+    (groupType) => {
+      const moduleDatasByGroupType = selectModuleDataGroupTypeMap[
+        groupType as GroupModuleType
+      ] as StoreModuleData[];
+      const moduleType = moduleDatasByGroupType[0].type;
+      const moduleClass = ModuleTypeClassMap[moduleType];
+      const StyleFormComponent = moduleClass.styleFormComponent;
+      const propsKeys = moduleClass.propsKeys;
 
-  // 要渲染的所有merge
+      const commonProps = mergeModuleDataByGroupType(moduleDatasByGroupType, propsKeys);
+      return (
+        <StyleFormComponent
+          key={groupType}
+          mergeModuleDataProps={commonProps as any}
+          onChange={onStyleFormChange}
+        />
+      );
+    },
+  );
 
-  function deleteSelectModule() {
-    dispatch?.({
-      type: StoreActionType.DeleteModuleDatas,
+  // 表单onChange
+  function onStyleFormChange(changeValues: { [key in GroupModuleType]: StoreModuleData['props'] }) {
+    const toUpdateModuleDatas: StoreModuleData[] = [];
+    for (const [groupType, groupTypeUpdateProps] of Object.entries(changeValues)) {
+      const moduleDatasByGroupType = selectModuleDataGroupTypeMap[
+        groupType as GroupModuleType
+      ] as StoreModuleData[];
+      moduleDatasByGroupType.forEach((moduleData) => {
+        toUpdateModuleDatas.push({
+          ...moduleData,
+          props: {
+            ...groupTypeUpdateProps,
+          },
+        } as StoreModuleData);
+      });
+    }
+    dispatch({
+      type: StoreActionType.UpdateModuleDatas,
       payload: {
-        moduleDataIds: [...storeState.selectModuleDataIds],
+        moduleDatas: toUpdateModuleDatas,
+        merge: true,
       },
     });
   }
@@ -79,8 +110,7 @@ const ModuleStyle: React.FC = () => {
           }
           key={TabType.STYLE}
         >
-          <p>Content of Tab Pane 1</p>
-          <p>Content of Tab Pane 1</p>
+          {selectModuleDataStyleComponentList}
         </Tabs.TabPane>
         <Tabs.TabPane
           tab={
@@ -94,7 +124,6 @@ const ModuleStyle: React.FC = () => {
           {selectModuleDataConfigComponentList}
         </Tabs.TabPane>
       </Tabs>
-      <Button onClick={deleteSelectModule}>删除选中的组件</Button>
     </div>
   );
 };

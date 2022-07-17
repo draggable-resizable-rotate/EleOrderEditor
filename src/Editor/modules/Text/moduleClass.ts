@@ -50,7 +50,7 @@ export const TextInitProps = {
   direction: TextDirection.Left,
   color: 'default',
   backgroundColor: 'default',
-  fontFamily: 'default',
+  fontFamily: 'SimHei',
   fontSize: 8,
   fontWeight: 'normal',
   fontItatlic: false,

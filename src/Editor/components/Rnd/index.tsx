@@ -169,6 +169,7 @@ export class Rnd extends React.PureComponent<Props, State> {
       isResizing: true,
       position: { ...this.props.position },
       size: { ...this.props.size },
+      rotate: this.props.rotate,
       backgroundStyle: {
         ...resizable.state.backgroundStyle,
         cursor: 'move',
@@ -193,6 +194,7 @@ export class Rnd extends React.PureComponent<Props, State> {
       isResizing: false,
       position: { ...this.props.position },
       size: { ...this.props.size },
+      rotate: this.props.rotate,
       backgroundStyle: {
         ...resizable.state.backgroundStyle,
         cursor: 'auto',
@@ -208,6 +210,7 @@ export class Rnd extends React.PureComponent<Props, State> {
     draggable.setState({
       dragging: true,
       position: { ...this.props.position },
+      rotate: this.props.rotate,
     });
   }
 
@@ -226,6 +229,7 @@ export class Rnd extends React.PureComponent<Props, State> {
     draggable.setState({
       dragging: false,
       position: { ...this.props.position },
+      rotate: this.props.rotate,
     });
     this.props.onResizeStop?.(e, direction, delta, { ...position });
   }
@@ -243,11 +247,13 @@ export class Rnd extends React.PureComponent<Props, State> {
     draggable.setState({
       dragging: true,
       position: { ...this.props.position },
+      rotate: this.props.rotate,
     });
     resizable.setState({
       isResizing: true,
       position: { ...this.props.position },
       size: { ...this.props.size },
+      rotate: this.props.rotate,
     });
   }
 
@@ -288,11 +294,13 @@ export class Rnd extends React.PureComponent<Props, State> {
     draggable.setState({
       dragging: false,
       position: { ...this.props.position },
+      rotate: this.props.rotate,
     });
     resizable.setState({
       isResizing: false,
       position: { ...this.props.position },
       size: { ...this.props.size },
+      rotate: this.props.rotate,
     });
     return { ...endPosition };
   }

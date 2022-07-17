@@ -36,7 +36,8 @@ export interface ModuleClass<ModuleType, PropsType extends object = Record<strin
     moduleData: ModuleData<ModuleType, PropsType>;
   }>;
   styleFormComponent: React.FC<{
-    mergeModuleDataProps: PropsType
+    mergeModuleDataProps: PropsType;
+    onChange: (changeValues: StyleFormValue) => any;
   }>;
   // 初始化属性
   initProps: PropsType;
@@ -69,3 +70,8 @@ export enum GroupModuleType {
 }
 
 export type StoreModuleData = LineModuleData | TextModuleData | RectModuleData | QRCodeModuleData | ImageModuleData;
+
+
+export type StyleFormValue = {
+  [key in GroupModuleType]: StoreModuleData['props']
+}
