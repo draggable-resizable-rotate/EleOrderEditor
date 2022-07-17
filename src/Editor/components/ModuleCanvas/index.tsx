@@ -5,6 +5,7 @@ import { EditorContext } from '../../index';
 import AxisRuler, { AxisRulerRect } from '../AxisRuler';
 import DragToSelectContainer, { DragToSelectContainerProps } from '../DragToSelect';
 import { boxesIntersect, createBox } from '../DragToSelect/utils';
+import ModuleOption from '../ModuleOption';
 import RndModule, { RndRefMap } from '../RndModule';
 import StyleModule from './../../style.module.less';
 import { DefaultInnerRect, DefaultOuterRect } from './config';
@@ -91,6 +92,7 @@ const ModuleCanvas: React.FC = () => {
                 <RndModule moduleData={moduleData} key={moduleData.id} rndRefMap={rndRefMap} />
               );
             })}
+            <ModuleOption />
           </div>
         </div>
       </div>

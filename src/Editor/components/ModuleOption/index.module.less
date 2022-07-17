@@ -1,0 +1,32 @@
+.module-option {
+  position: absolute;
+  right: -32px;
+  bottom: 0;
+  display: flex;
+  width: 32px;
+  height: 84px;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 6px 0;
+  background: #515cff;
+  border-radius: 0 10px 10px 0;
+  text-align: center;
+
+  & > div {
+    color: #fff;
+    cursor: pointer;
+    transition: opacity 0.3s;
+
+    &:first-child {
+      transform: rotate(180deg);
+    }
+  }
+
+  & > .disabled {
+    cursor: not-allowed;
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}

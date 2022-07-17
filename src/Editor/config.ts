@@ -14,3 +14,13 @@ export const FormItemLayout: FormProps = {
   },
   labelAlign: 'left',
 };
+
+export const TooltipConfig = {
+  color: '#fff',
+  overlayInnerStyle: {
+    color: '#161A1F',
+  },
+};
+
+// 默认的初始化 INIT_Z_INDEX
+export const INIT_Z_INDEX = 0;

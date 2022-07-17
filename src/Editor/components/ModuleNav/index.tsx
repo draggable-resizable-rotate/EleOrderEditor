@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MutableRefObject } from 'react';
 import { Tabs } from 'antd';
 import StyleModule from './../../style.module.less';
 import { CategoryMap, defaultShowCategoryArr, MainCategoryName } from './config';
@@ -10,10 +10,13 @@ import ModuleImageNav from '../ModuleImageNav';
 
 interface ModuleNavProps {
   dispatch: StoreDispatch;
+  cacheData: MutableRefObject<{
+    maxZindex: number;
+  }>;
 }
 
 const { TabPane } = Tabs;
-const ModuleNav: React.FC<ModuleNavProps> = ({ dispatch }) => {
+const ModuleNav: React.FC<ModuleNavProps> = ({ dispatch, cacheData }) => {
   function addModule(type: ModuleType) {
     const moduleClass = ModuleTypeClassMap[type];
     dispatch({
@@ -23,7 +26,7 @@ const ModuleNav: React.FC<ModuleNavProps> = ({ dispatch }) => {
           {
             id: uniqueId(),
             type: type,
-            props: { ...moduleClass.initProps },
+            props: { ...moduleClass.initProps, zIndex: cacheData.current.maxZindex + 1 },
           },
         ] as StoreModuleData[],
         resetSelection: true,
