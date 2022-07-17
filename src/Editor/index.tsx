@@ -16,6 +16,7 @@ import { INIT_Z_INDEX } from './config';
 import { sortModuleDatasByZIndex } from './utils/utils';
 import useModuleDatas from './hooks/useModuleDatas';
 import { useOrderZIndex } from './hooks/useOrderZIndex';
+import ModuleHeader from './components/ModuleHeader';
 
 export type StoreContext = {
   storeState: StoreState;
@@ -77,11 +78,16 @@ const Editor: React.FC<EditorProps> = ({ imageAction }) => {
       }}
     >
       <div id={StyleModule['editor']}>
-        {/* Nav组件要支持缓存 => 传入dispatch而不用useContext获取 start */}
-        <ModuleNav dispatch={dispatch} cacheData={moduleNavCacheData} />
-        {/* Nav组件要支持缓存 end */}
-        <ModuleCanvas />
-        <ModuleStyle />
+        <div id={StyleModule['editor-top']}>
+          <ModuleHeader />
+        </div>
+        <div id={StyleModule['editor-main']}>
+          {/* Nav组件要支持缓存 => 传入dispatch而不用useContext获取 start */}
+          <ModuleNav dispatch={dispatch} cacheData={moduleNavCacheData} />
+          {/* Nav组件要支持缓存 end */}
+          <ModuleCanvas />
+          <ModuleStyle />
+        </div>
       </div>
     </Provider>
   );

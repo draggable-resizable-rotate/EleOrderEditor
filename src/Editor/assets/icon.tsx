@@ -14,8 +14,10 @@ export { ReactComponent as CodeSvg } from './code.svg';
 export { ReactComponent as QRCodeSvg } from './QR-code.svg';
 export { ReactComponent as SettingSvg } from './setting.svg';
 export { ReactComponent as StyleSvg } from './style.svg';
-export { ReactComponent as AlignLeft } from './align-left.svg';
-export { ReactComponent as AlignCenter } from './align-center.svg';
+export { ReactComponent as AlignLeftSvg } from './align-left.svg';
+export { ReactComponent as AlignCenterSvg } from './align-center.svg';
+export { ReactComponent as BackSvg } from './back.svg';
+export { ReactComponent as CanNotBack } from './can-not-back.svg';
 
 export const arrowUpIcon = (
   <svg width="12" height="13" viewBox="0 0 12 13" xmlns="http://www.w3.org/2000/svg">

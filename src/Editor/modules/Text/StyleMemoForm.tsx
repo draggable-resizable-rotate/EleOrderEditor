@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Form, InputNumber, Radio, Select, Space } from 'antd';
-import { AlignCenter, AlignLeft } from '../../assets/icon';
+import { AlignCenterSvg, AlignLeftSvg } from '../../assets/icon';
 import { GroupModuleType } from '../TypeConstraints';
 import Checkbox from './Checkbox';
 
@@ -135,26 +135,26 @@ const StyleMemoForm: React.FC = () => {
         <Form.Item name={[moduleType, 'align']} noStyle>
           <Radio.Group optionType="button" buttonStyle="solid" size="small">
             <Radio.Button value="flex-start">
-              <AlignLeft />
+              <AlignLeftSvg />
             </Radio.Button>
             <Radio.Button value="center">
-              <AlignCenter />
+              <AlignCenterSvg />
             </Radio.Button>
             <Radio.Button value="flex-end">
-              <AlignLeft style={{ transform: 'rotate(180deg)' }} />
+              <AlignLeftSvg style={{ transform: 'rotate(180deg)' }} />
             </Radio.Button>
           </Radio.Group>
         </Form.Item>
         <Form.Item name={[moduleType, 'valign']} noStyle>
           <Radio.Group optionType="button" buttonStyle="solid" size="small">
             <Radio.Button value="flex-start">
-              <AlignLeft style={{ transform: 'rotate(90deg)' }} />
+              <AlignLeftSvg style={{ transform: 'rotate(90deg)' }} />
             </Radio.Button>
             <Radio.Button value="center">
-              <AlignCenter style={{ transform: 'rotate(90deg)' }} />
+              <AlignCenterSvg style={{ transform: 'rotate(90deg)' }} />
             </Radio.Button>
             <Radio.Button value="flex-end">
-              <AlignLeft style={{ transform: 'rotate(270deg)' }} />
+              <AlignLeftSvg style={{ transform: 'rotate(270deg)' }} />
             </Radio.Button>
           </Radio.Group>
         </Form.Item>

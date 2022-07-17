@@ -12,6 +12,19 @@
 #editor {
   display: flex;
   height: 100vh;
+  flex-direction: column;
+}
+
+#editor-top {
+  position: relative;
+  z-index: 9999;
+  height: 50px;
+  box-shadow: 0 2px 10px 2px rgb(0 0 0 / 8%);
+}
+
+#editor-main {
+  display: flex;
+  height: calc(100% - 50px);
 }
 
 #editor-module-nav {
@@ -132,7 +145,7 @@
 
 #editor-module-style {
   width: @leftWidth;
-  height: 100vh;
+  height: 100%;
   flex-grow: 0;
   flex-shrink: 0;
 
@@ -182,6 +195,36 @@
         padding: 12px 16px;
         background-color: @mainCanvasColor;
       }
+    }
+  }
+}
+
+#editor-header {
+  display: flex;
+  padding: 10px 0;
+
+  :global {
+    .left-option {
+      width: @leftWidth;
+    }
+
+    .center-option {
+      display: flex;
+      flex-grow: 1;
+      justify-content: center;
+
+      .align-svg {
+        margin: 0 15px;
+        cursor: pointer;
+
+        &:hover {
+          color: @mainColor;
+        }
+      }
+    }
+
+    .right-option {
+      width: @leftWidth;
     }
   }
 }
