@@ -113,10 +113,17 @@ const StyleMemoForm: React.FC = () => {
           </Space>
         </Form.Item>
 
-        <Form.Item label="颜色" name={[moduleType, 'colorStyle']} initialValue="default">
+        <Form.Item label="颜色" name={[moduleType, 'color']} initialValue="default">
           <Select>
-            <Option value="default">白底黑字</Option>
-            <Option value="reversed">黑底白字</Option>
+            <Option value="#ffffff">白色</Option>
+            <Option value="#000000">黑色</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item label="背景颜色" name={[moduleType, 'backgroundColor']} initialValue="default">
+          <Select>
+            <Option value="#ffffff">白色</Option>
+            <Option value="#000000">黑色</Option>
           </Select>
         </Form.Item>
 
