@@ -324,7 +324,7 @@ const AxisRuler: React.FC<AxisRulerProps> = ({ outerRect, innerRect }) => {
                       width: 12,
                       height: 12,
                       className: 'line-delete',
-                      onClick: () => handleDeleteReferenceLine(item.id, Direction.Horizontal),
+                      onClick: () => handleDeleteReferenceLine(item.id, Direction.Vertical),
                     }}
                   />
                 </span>
