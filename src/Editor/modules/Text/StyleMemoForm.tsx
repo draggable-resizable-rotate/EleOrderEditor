@@ -1,7 +1,8 @@
 import React from 'react';
-import { Card, Form, InputNumber, Radio, Select, Space, Checkbox } from 'antd';
+import { Card, Form, InputNumber, Radio, Select, Space } from 'antd';
 import { AlignCenter, AlignLeft } from '../../assets/icon';
 import { GroupModuleType } from '../TypeConstraints';
+import Checkbox from './Checkbox';
 
 const { Option } = Select;
 
@@ -85,32 +86,8 @@ const StyleMemoForm: React.FC = () => {
           </Space>
         </Form.Item>
 
-        <Form.Item label="行高">
-          <Space align="center" size={0}>
-            <Form.Item
-              noStyle
-              shouldUpdate={(prev, current) =>
-                prev[moduleType].lineHeightUnit !== current[moduleType].lineHeightUnit
-              }
-            >
-              {({ getFieldValue }) => {
-                const lineHeightUnit = getFieldValue([moduleType, 'lineHeightUnit']);
-                const useMM = lineHeightUnit !== '%';
-                const maxLineHeight = useMM ? 100 : 10000;
-                return (
-                  <Form.Item name={[moduleType, 'lineHeight']} style={{ marginBottom: 0 }}>
-                    <InputNumber min={0} max={maxLineHeight} />
-                  </Form.Item>
-                );
-              }}
-            </Form.Item>
-            <Form.Item name={[moduleType, 'lineHeightUnit']} style={{ marginBottom: 0 }}>
-              <Select style={{ width: 68, borderLeftColor: '#E7E8E8' }}>
-                <Option value="%">%</Option>
-                <Option value="mm">mm</Option>
-              </Select>
-            </Form.Item>
-          </Space>
+        <Form.Item label="行高" name={[moduleType, 'lineHeight']}>
+          <InputNumber min={0} max={10000} style={{ width: '100%' }} />
         </Form.Item>
 
         <Form.Item label="颜色" name={[moduleType, 'color']} initialValue="default">
@@ -144,17 +121,12 @@ const StyleMemoForm: React.FC = () => {
 
         <Form.Item label="样式">
           <Form.Item name={[moduleType, 'fontItatlic']} noStyle>
-            <Checkbox.Group
-              options={[{ label: '/', value: true }]}
-              style={{ borderRight: '#E7E8E8' }}
-            />
+            <Checkbox>/</Checkbox>
           </Form.Item>
           <Form.Item name={[moduleType, 'fontUnderline']} noStyle>
-            <Checkbox.Group
-              options={[
-                { label: <span style={{ textDecoration: 'underline' }}>U</span>, value: true },
-              ]}
-            />
+            <Checkbox>
+              <span style={{ textDecoration: 'underline' }}>U</span>
+            </Checkbox>
           </Form.Item>
         </Form.Item>
       </Card>

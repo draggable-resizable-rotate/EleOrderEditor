@@ -56,7 +56,6 @@ export const TextInitProps = {
   fontItatlic: false,
   fontUnderline: false,
   lineHeight: null,
-  lineHeightUnit: 'mm',
   letterSpacing: 0,
   alias: '',
   value: '',
