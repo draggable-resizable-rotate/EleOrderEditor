@@ -25,6 +25,7 @@ export interface DragToSelectContainerProps extends Partial<DragToSelectContaine
 interface DragToSelectContainerState {
   position: Position;
   size: Size;
+  dragging: boolean;
 }
 
 interface MouseDownCache {
@@ -57,6 +58,7 @@ class DragToSelectContainer extends React.Component<
     this.state = {
       position: { ...DragToSelectContainer.defaultPosition },
       size: { ...DragToSelectContainer.defaultSize },
+      dragging: false,
     };
   }
 
@@ -73,6 +75,9 @@ class DragToSelectContainer extends React.Component<
       { ...DragToSelectContainer.defaultPosition },
       { ...DragToSelectContainer.defaultSize },
     );
+    this.setState({
+      dragging: true,
+    });
     addUserSelectStyles(dragBoxElement.ownerDocument);
   };
 
@@ -121,6 +126,7 @@ class DragToSelectContainer extends React.Component<
     this.setState({
       position: { ...DragToSelectContainer.defaultPosition },
       size: { ...DragToSelectContainer.defaultSize },
+      dragging: false,
     });
     removeUserSelectStyles(dragBoxElement.ownerDocument);
   };
@@ -156,6 +162,7 @@ class DragToSelectContainer extends React.Component<
                 ...state.size,
                 zIndex: 999999,
                 border: `2px dashed rgba(0, 0, 0, 0.75)`,
+                borderWidth: this.state.dragging ? 2 : 0,
                 opacity: 0.25,
                 borderRadius: 2,
                 backgroundColor: '#fff',
