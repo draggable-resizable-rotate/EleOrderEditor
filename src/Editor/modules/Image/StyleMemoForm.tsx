@@ -7,11 +7,7 @@ const moduleType = GroupModuleType.Image;
 const StyleMemoForm: React.FC = () => {
   return (
     <Card title="其它">
-      <Form.Item
-        label="类型"
-        extra={<div style={{ textAlign: 'center', fontSize: 12 }}>透明度</div>}
-        style={{ marginBottom: '0' }}
-      >
+      <Form.Item label="透明度" style={{ marginBottom: '0' }}>
         <Space align="center">
           <Form.Item noStyle name={[moduleType, 'opacity']}>
             <InputNumber min={0} max={1} style={{ width: '100%' }} step={0.1} />

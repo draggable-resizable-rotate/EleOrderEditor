@@ -26,6 +26,7 @@ const ModuleNav: React.FC<ModuleNavProps> = ({ dispatch }) => {
             props: { ...moduleClass.initProps },
           },
         ] as StoreModuleData[],
+        resetSelection: true,
       },
     });
   }
