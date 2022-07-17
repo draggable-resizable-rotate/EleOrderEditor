@@ -27,6 +27,7 @@ export const TabTypeMap = {
 const ModuleStyle: React.FC = () => {
   const { storeState, dispatch } = useContext(EditorContext);
   const { selectModuleDataIds, moduleDatasMap } = storeState;
+
   // 当前被选中的module的数组
   const selectModuleData = selectModuleDataIds.map((id) => moduleDatasMap[id]);
 
@@ -43,7 +44,11 @@ const ModuleStyle: React.FC = () => {
     const groupType = moduleClass.info.groupType;
     if (ConfigComponent) {
       selectModuleDataConfigComponentList.push(
-        <ConfigComponent key={moduleData.id} moduleData={moduleData as never} />,
+        <ConfigComponent
+          onChange={onConfigFormChange}
+          key={moduleData.id}
+          moduleData={moduleData as never}
+        />,
       );
     }
     let groupTypeSelectModuleDatas = selectModuleDataGroupTypeMap[groupType];
@@ -117,6 +122,25 @@ const ModuleStyle: React.FC = () => {
       type: StoreActionType.UpdateModuleDatas,
       payload: {
         moduleDatas: toUpdateModuleDatas,
+        merge: true,
+      },
+    });
+  }
+
+  // 配置表单更新
+  function onConfigFormChange(changedValues: { [key: string]: StoreModuleData['props'] }) {
+    dispatch({
+      type: StoreActionType.UpdateModuleDatas,
+      payload: {
+        moduleDatas: Object.keys(changedValues).map((id) => {
+          return {
+            id,
+            type: moduleDatasMap[id].type,
+            props: {
+              ...changedValues[id],
+            },
+          };
+        }),
         merge: true,
       },
     });

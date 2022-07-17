@@ -3,14 +3,16 @@ import { Form } from 'antd';
 import { FormItemLayout } from '@/Editor/config';
 import { QRCodeModuleData } from './moduleClass';
 import ConfigMemoForm from './ConfigMemoForm';
+import { ConfigFormValue } from '../TypeConstraints';
 
 export interface QRCodeConfigFormProps {
   moduleData: QRCodeModuleData;
+  onChange: (changeValues: ConfigFormValue) => any;
 }
 
-const QRCodeConfigForm: React.FC<QRCodeConfigFormProps> = ({ moduleData }) => {
+const QRCodeConfigForm: React.FC<QRCodeConfigFormProps> = ({ moduleData, onChange }) => {
   const [form] = Form.useForm();
-  const moduleId = module.id;
+  const moduleId = moduleData.id;
   const { value, type } = moduleData.props;
 
   // 关联需要更新的数据
@@ -19,7 +21,7 @@ const QRCodeConfigForm: React.FC<QRCodeConfigFormProps> = ({ moduleData }) => {
   }, [value, type, moduleId, form]);
 
   return (
-    <Form form={form} {...FormItemLayout}>
+    <Form form={form} {...FormItemLayout} onValuesChange={onChange}>
       <ConfigMemoForm moduleId={moduleId} />
     </Form>
   );

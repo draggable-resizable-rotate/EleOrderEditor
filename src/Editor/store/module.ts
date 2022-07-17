@@ -67,7 +67,7 @@ export const reducer = function (state: StoreState, action: StoreAction) {
       const resetSelection = Boolean(payload.resetSelection);
       let newSelectModuleDataIds = [...state.selectModuleDataIds];
       if (resetSelection) {
-        newSelectModuleDataIds = toAddModuleDatas.map(module => module.id);
+        newSelectModuleDataIds = toAddModuleDatas.map(moduleData => moduleData.id);
       }
       return {
         ...state,

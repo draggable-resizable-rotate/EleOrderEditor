@@ -34,6 +34,7 @@ export interface ModuleClass<ModuleType, PropsType extends object = Record<strin
   }>;
   configFormComponent?: React.FC<{
     moduleData: ModuleData<ModuleType, PropsType>;
+    onChange: (changeValues: ConfigFormValue) => any;
   }>;
   styleFormComponent: React.FC<{
     mergeModuleDataProps: PropsType;
@@ -74,4 +75,9 @@ export type StoreModuleData = LineModuleData | TextModuleData | RectModuleData |
 
 export type StyleFormValue = {
   [key in GroupModuleType]: StoreModuleData['props']
+}
+
+
+export type ConfigFormValue = {
+  [key: string]: StoreModuleData['props']
 }
