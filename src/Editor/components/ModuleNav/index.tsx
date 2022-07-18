@@ -11,7 +11,7 @@ import ModuleImageNav from '../ModuleImageNav';
 interface ModuleNavProps {
   dispatch: StoreDispatch;
   cacheData: MutableRefObject<{
-    maxZindex: number;
+    maxZIndex: number;
   }>;
 }
 
@@ -26,7 +26,7 @@ const ModuleNav: React.FC<ModuleNavProps> = ({ dispatch, cacheData }) => {
           {
             id: uniqueId(),
             type: type,
-            props: { ...moduleClass.initProps, zIndex: cacheData.current.maxZindex + 1 },
+            props: { ...moduleClass.initProps, zIndex: cacheData.current.maxZIndex + 1 },
           },
         ] as StoreModuleData[],
         resetSelection: true,

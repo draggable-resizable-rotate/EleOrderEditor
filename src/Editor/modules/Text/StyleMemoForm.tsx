@@ -120,7 +120,7 @@ const StyleMemoForm: React.FC = () => {
         </Form.Item>
 
         <Form.Item label="样式">
-          <Form.Item name={[moduleType, 'fontItatlic']} noStyle>
+          <Form.Item name={[moduleType, 'fontItalic']} noStyle>
             <Checkbox>/</Checkbox>
           </Form.Item>
           <Form.Item name={[moduleType, 'fontUnderline']} noStyle>
@@ -145,7 +145,7 @@ const StyleMemoForm: React.FC = () => {
             </Radio.Button>
           </Radio.Group>
         </Form.Item>
-        <Form.Item name={[moduleType, 'valign']} noStyle>
+        <Form.Item name={[moduleType, 'vAlign']} noStyle>
           <Radio.Group optionType="button" buttonStyle="solid" size="small">
             <Radio.Button value="flex-start">
               <AlignLeftSvg style={{ transform: 'rotate(90deg)' }} />

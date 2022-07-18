@@ -56,13 +56,13 @@ const Editor: React.FC<EditorProps> = ({ imageAction }) => {
   const { currentMaxZIndex, moduleDataIdsOrderByZIndex } = useOrderZIndex(moduleDataListMap);
 
   const moduleNavCacheData = useRef({
-    maxZindex: currentMaxZIndex,
+    maxZIndex: currentMaxZIndex,
   });
 
   // 更新缓存数据
   useEffect(() => {
     Object.assign(moduleNavCacheData.current, {
-      maxZindex: currentMaxZIndex,
+      maxZIndex: currentMaxZIndex,
     });
   }, [currentMaxZIndex]);
 
