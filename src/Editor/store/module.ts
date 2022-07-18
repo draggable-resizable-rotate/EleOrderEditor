@@ -2,7 +2,7 @@ import { StoreModuleData } from '../modules/TypeConstraints';
 import React from 'react';
 import EditorHistory, { EditorHistoryState } from './EditorHistory';
 
-type HistoryStorage = Pick<StoreState, 'selectModuleDataIds' | 'moduleDatasMap'>;
+type HistoryStorage = Pick<StoreState, 'selectModuleDataIds' | 'moduleDataListMap'>;
 
 // 最大的历史记录
 const MAX_HISTORY_COUNT = 100;
@@ -11,18 +11,18 @@ const MAX_HISTORY_COUNT = 100;
 export const editorHistory = new EditorHistory<HistoryStorage>(MAX_HISTORY_COUNT);
 
 export interface StoreState {
-  moduleDatasMap: Record<StoreModuleData['id'], StoreModuleData>;
+  moduleDataListMap: Record<StoreModuleData['id'], StoreModuleData>;
   selectModuleDataIds: Array<StoreModuleData['id']>;
   editorHistoryState: EditorHistoryState;
 }
 
 export enum StoreActionType {
   // 批量添加组件
-  AddModuleDatas = 'addModuleDatas',
+  AddModuleDataList = 'addModuleDataList',
   // 批量删除组件
-  DeleteModuleDatas = 'deleteModuleDatas',
+  DeleteModuleDataList = 'deleteModuleDataList',
   // 批量更新组件
-  UpdateModuleDatas = 'updateModuleDatas',
+  UpdateModuleDataList = 'updateModuleDataList',
   // 批量更新 select id
   UpdateSelectModuleDataIds = 'updateSelectModuleDataIds',
   // 更新历史
@@ -40,7 +40,7 @@ export type StoreDispatch = React.Dispatch<StoreAction>;
 export function createInitialStore(): StoreState {
   return {
     selectModuleDataIds: [],
-    moduleDatasMap: {},
+    moduleDataListMap: {},
     editorHistoryState: {
       currentCount: 0,
       canSaveCount: MAX_HISTORY_COUNT,
@@ -55,52 +55,52 @@ export const reducer = function (state: StoreState, action: StoreAction) {
   const { payload } = action;
   switch (action.type) {
     /* 批量添加组件 */
-    case StoreActionType.AddModuleDatas: {
-      const toAddModuleDatas = payload.moduleDatas as StoreModuleData[];
+    case StoreActionType.AddModuleDataList: {
+      const toAddModuleDataList = payload.moduleDataList as StoreModuleData[];
       // 添加到map
-      const newModuleDatasMap = toAddModuleDatas.reduce((prev, ModuleData) => {
+      const newModuleDataListMap = toAddModuleDataList.reduce((prev, ModuleData) => {
         // eslint-disable-next-line no-param-reassign
         prev[ModuleData.id] = ModuleData;
         return prev;
-      }, { ...state.moduleDatasMap });
+      }, { ...state.moduleDataListMap });
       // 是否重置选择元素
       const resetSelection = Boolean(payload.resetSelection);
       let newSelectModuleDataIds = [...state.selectModuleDataIds];
       if (resetSelection) {
-        newSelectModuleDataIds = toAddModuleDatas.map(moduleData => moduleData.id);
+        newSelectModuleDataIds = toAddModuleDataList.map(moduleData => moduleData.id);
       }
       return {
         ...state,
-        moduleDatasMap: newModuleDatasMap,
+        moduleDataListMap: newModuleDataListMap,
         selectModuleDataIds: newSelectModuleDataIds,
       };
     }
     /* 批量删除组件 */
-    case StoreActionType.DeleteModuleDatas: {
+    case StoreActionType.DeleteModuleDataList: {
       const toDeleteModuleDataIds = payload.moduleDataIds as string[];
-      const newModuleDatasMap: StoreState['moduleDatasMap'] = {};
-      for (const [moduleDataId, moduleData] of Object.entries(state.moduleDatasMap)) {
+      const newModuleDataListMap: StoreState['moduleDataListMap'] = {};
+      for (const [moduleDataId, moduleData] of Object.entries(state.moduleDataListMap)) {
         if (toDeleteModuleDataIds.includes(moduleDataId)) continue;
         // 仅仅保留有效的moduleData
-        newModuleDatasMap[moduleDataId] = moduleData;
+        newModuleDataListMap[moduleDataId] = moduleData;
       }
       const newSelectModuleDataIds = state.selectModuleDataIds.filter(id => !toDeleteModuleDataIds.includes(id));
       return {
         ...state,
-        moduleDatasMap: newModuleDatasMap,
+        moduleDataListMap: newModuleDataListMap,
         selectModuleDataIds: newSelectModuleDataIds,
       };
     }
     /* 批量更新组件 */
-    case StoreActionType.UpdateModuleDatas: {
+    case StoreActionType.UpdateModuleDataList: {
       // id 和 所有新属性 props
-      const toUpdateModuleDatas = payload.moduleDatas as StoreModuleData[];
+      const toUpdateModuleDataList = payload.moduleDataList as StoreModuleData[];
       // 替换还是合并
       const isMerge = Boolean(payload.merge);
-      const newModuleDatasMap = { ...state.moduleDatasMap };
+      const newModuleDataListMap = { ...state.moduleDataListMap };
       if (isMerge) { // 合并
-        for (const toUpdateModuleData of toUpdateModuleDatas) {
-          const oldModuleData = newModuleDatasMap[toUpdateModuleData.id];
+        for (const toUpdateModuleData of toUpdateModuleDataList) {
+          const oldModuleData = newModuleDataListMap[toUpdateModuleData.id];
           // 保证不对原来的对象修改
           const oldModuleDataProps = Object.assign({}, oldModuleData.props);
           const newModuleData = {
@@ -108,17 +108,17 @@ export const reducer = function (state: StoreState, action: StoreAction) {
             ...toUpdateModuleData,
             props: Object.assign(oldModuleDataProps, toUpdateModuleData.props),
           } as unknown as StoreModuleData;
-          newModuleDatasMap[toUpdateModuleData.id] = newModuleData;
+          newModuleDataListMap[toUpdateModuleData.id] = newModuleData;
         }
       } else { // 替换
-        for (const moduleData of toUpdateModuleDatas) {
-          newModuleDatasMap[moduleData.id] = moduleData;
+        for (const moduleData of toUpdateModuleDataList) {
+          newModuleDataListMap[moduleData.id] = moduleData;
         }
       }
 
       return {
         ...state,
-        moduleDatasMap: newModuleDatasMap,
+        moduleDataListMap: newModuleDataListMap,
       };
     }
     /* 批量更新激活组件：比如多选 */

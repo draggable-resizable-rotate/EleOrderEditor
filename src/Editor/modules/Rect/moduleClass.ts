@@ -28,7 +28,7 @@ export const RectInitProps = {
 // 线的props
 type RectProps = typeof RectInitProps;
 
-// 横线的moudle data类型
+// 横线的module data类型
 export type RectModuleData = ModuleData<ModuleType.Rect, RectProps>;
 
 const RectModuleClass: ModuleClass<ModuleType.Rect, RectProps> = {

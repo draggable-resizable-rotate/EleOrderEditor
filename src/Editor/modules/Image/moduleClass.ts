@@ -24,7 +24,7 @@ export const ImageInitProps = {
 
 // 线的props
 type ImageProps = typeof ImageInitProps;
-// 横线的moudle data类型
+// 横线的module data类型
 export type ImageModuleData = ModuleData<ModuleType.Image, ImageProps>;
 
 const ImageModuleClass: ModuleClass<ModuleType.Image, ImageProps> = {

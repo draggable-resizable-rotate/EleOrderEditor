@@ -27,7 +27,7 @@ export const LineInitProps = {
 // 线的props
 export type LineProps = typeof LineInitProps;
 
-// 横线的moudle data类型
+// 横线的module data类型
 export type LineModuleData = ModuleData<ModuleType.HLine | ModuleType.VLine, LineProps>;
 
 type LineModuleClassType = ModuleClass<ModuleType.HLine | ModuleType.VLine, LineProps>

@@ -26,7 +26,7 @@ interface BaseModuleProps {
 
 const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
   const { storeState, dispatch } = useContext(EditorContext);
-  const { selectModuleDataIds, moduleDatasMap } = storeState;
+  const { selectModuleDataIds, moduleDataListMap } = storeState;
   const isActive = selectModuleDataIds.includes(moduleData.id);
 
   const { type: moduleType, props: propsData, id: moduleId } = moduleData;
@@ -113,9 +113,9 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
         setRealTimeSize(undefined);
         const { size, position } = delta;
         dispatch?.({
-          type: StoreActionType.UpdateModuleDatas,
+          type: StoreActionType.UpdateModuleDataList,
           payload: {
-            moduleDatas: [
+            moduleDataList: [
               {
                 id: moduleData.id,
                 props: { ...position, ...size },
@@ -141,7 +141,7 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
         // x 上的变化量, y 上的变化量
         const { changeX, changeY } = delta;
         selectModuleDataIds.forEach((selectModuleDataId) => {
-          moduleDatasMap[selectModuleDataId].props;
+          moduleDataListMap[selectModuleDataId].props;
           rndRefMap.current?.[selectModuleDataId]?.groupMove({
             changeX,
             changeY,
@@ -162,9 +162,9 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
         });
         // 批量更新组件信息
         dispatch?.({
-          type: StoreActionType.UpdateModuleDatas,
+          type: StoreActionType.UpdateModuleDataList,
           payload: {
-            moduleDatas: newSelectModuleDataPositions,
+            moduleDataList: newSelectModuleDataPositions,
             merge: true,
           },
         });

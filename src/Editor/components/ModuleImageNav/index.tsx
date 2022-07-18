@@ -69,9 +69,9 @@ const ModuleImageNav: React.FC = () => {
     }
 
     dispatch({
-      type: StoreActionType.AddModuleDatas,
+      type: StoreActionType.AddModuleDataList,
       payload: {
-        moduleDatas: [
+        moduleDataList: [
           {
             id: uniqueId(),
             type: ModuleType.Image,

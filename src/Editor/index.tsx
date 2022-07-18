@@ -13,14 +13,14 @@ import StyleModule from './style.module.less';
 import ModuleStyle from './components/ModuleStyle';
 import { ImageAction } from './components/ModuleImageNav';
 import { INIT_Z_INDEX } from './config';
-import { sortModuleDatasByZIndex } from './utils/utils';
-import useModuleDatas from './hooks/useModuleDatas';
+import { sortModuleDataListByZIndex } from './utils/utils';
+import useModuleDataList from './hooks/useModuleDataList';
 import { useOrderZIndex } from './hooks/useOrderZIndex';
 import ModuleHeader from './components/ModuleHeader';
 
 export type StoreContext = {
   storeState: StoreState;
-  moduleDatas: StoreModuleData[];
+  moduleDataList: StoreModuleData[];
   moduleDataIdsOrderByZIndex: string[];
   // 当前允许的最大层级
   currentMaxZIndex: number;
@@ -34,8 +34,8 @@ export const EditorContext = (() => {
     {
       storeState: initStore,
       currentMaxZIndex: INIT_Z_INDEX,
-      moduleDataIdsOrderByZIndex: sortModuleDatasByZIndex(initStore.moduleDatasMap),
-      moduleDatas: [],
+      moduleDataIdsOrderByZIndex: sortModuleDataListByZIndex(initStore.moduleDataListMap),
+      moduleDataList: [],
       dispatch: () => undefined,
     },
     'editor',
@@ -49,11 +49,11 @@ interface EditorProps {
 const Editor: React.FC<EditorProps> = ({ imageAction }) => {
   const { Provider } = EditorContext;
   const [storeState, dispatch] = useReducer(reducer, createInitialStore());
-  const { moduleDatasMap } = storeState;
+  const { moduleDataListMap } = storeState;
   // moduleData 数组
-  const moduleDatas = useModuleDatas(moduleDatasMap);
+  const moduleDataList = useModuleDataList(moduleDataListMap);
   // 获取当前所有组件的zIndex排序，当前最大的zIndex
-  const { currentMaxZIndex, moduleDataIdsOrderByZIndex } = useOrderZIndex(moduleDatasMap);
+  const { currentMaxZIndex, moduleDataIdsOrderByZIndex } = useOrderZIndex(moduleDataListMap);
 
   const moduleNavCacheData = useRef({
     maxZindex: currentMaxZIndex,
@@ -71,7 +71,7 @@ const Editor: React.FC<EditorProps> = ({ imageAction }) => {
       value={{
         storeState,
         dispatch,
-        moduleDatas,
+        moduleDataList,
         imageAction,
         currentMaxZIndex,
         moduleDataIdsOrderByZIndex,

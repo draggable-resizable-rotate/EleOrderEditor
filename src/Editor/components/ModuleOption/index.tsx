@@ -7,17 +7,17 @@ import { Tooltip } from 'antd';
 import { TooltipConfig } from '../../config';
 
 const ModuleOption = () => {
-  const { storeState, dispatch, moduleDataIdsOrderByZIndex, moduleDatas } =
+  const { storeState, dispatch, moduleDataIdsOrderByZIndex, moduleDataList } =
     useContext(EditorContext);
   // 获取当前的module根据zIndex排序的id集合
 
-  const { selectModuleDataIds = [], moduleDatasMap } = storeState;
+  const { selectModuleDataIds = [], moduleDataListMap } = storeState;
 
   // 降低所有组件层级
   const getNewZIndexOrderArr = useCallback(() => {
     // 根据已经排序好的ids 获取对应的的 zIndex
     const zIndexOrderArr: number[] = moduleDataIdsOrderByZIndex.map(
-      (moduleDataId) => moduleDatasMap[moduleDataId].props.zIndex,
+      (moduleDataId) => moduleDataListMap[moduleDataId].props.zIndex,
     );
     // 整体降低 zIndexOrderArr 的数值，防止zIndex过高
     const toSubNumber = zIndexOrderArr[0];
@@ -27,7 +27,7 @@ const ModuleOption = () => {
       });
     }
     return zIndexOrderArr;
-  }, [moduleDataIdsOrderByZIndex, moduleDatasMap]);
+  }, [moduleDataIdsOrderByZIndex, moduleDataListMap]);
 
   // 批量更新 modules 的层级
   // 固定有序的zIndex 数据，重排 componentIds
@@ -37,9 +37,9 @@ const ModuleOption = () => {
       if (moduleDataIdsOrderByZIndex.length === 0) return;
       // 复制一份，不在原来的上面改
       const moduleDataIdsNeedOrder = [...moduleDataIdsOrderByZIndex];
-      const selecttModuleDataIdsOrder = [...selectModuleDataIds];
+      const selectModuleDataIdsOrder = [...selectModuleDataIds];
       // 对选中的module的id排序
-      selecttModuleDataIdsOrder.sort((firstId, secondId) => {
+      selectModuleDataIdsOrder.sort((firstId, secondId) => {
         const firstIdIndex = moduleDataIdsNeedOrder.indexOf(firstId);
         const secondIdIndex = moduleDataIdsNeedOrder.indexOf(secondId);
         return firstIdIndex - secondIdIndex;
@@ -51,9 +51,9 @@ const ModuleOption = () => {
       ) {
         switch (type) {
           case 'up': {
-            // selecttModuleDataIdsOrder 从右边开始换位置
-            selecttModuleDataIdsOrder.reverse();
-            selecttModuleDataIdsOrder.forEach((currentId) => {
+            // selectModuleDataIdsOrder 从右边开始换位置
+            selectModuleDataIdsOrder.reverse();
+            selectModuleDataIdsOrder.forEach((currentId) => {
               // 找到当前 id 在已经排好序的ids里的位置
               const currentIdIndex = moduleDataIdsNeedOrder.indexOf(currentId);
               const nextIndex = currentIdIndex + 1;
@@ -61,7 +61,7 @@ const ModuleOption = () => {
               if (nextIndex >= moduleDataIdsNeedOrder.length) return;
               const nextId = moduleDataIdsNeedOrder[nextIndex];
               // 选择元素不允许相互交换
-              if (selecttModuleDataIdsOrder.includes(nextId)) return;
+              if (selectModuleDataIdsOrder.includes(nextId)) return;
               // 交换 ids 顺序
               moduleDataIdsNeedOrder[currentIdIndex] = nextId;
               moduleDataIdsNeedOrder[nextIndex] = currentId;
@@ -69,7 +69,7 @@ const ModuleOption = () => {
             break;
           }
           case 'down': {
-            selecttModuleDataIdsOrder.forEach((currentId) => {
+            selectModuleDataIdsOrder.forEach((currentId) => {
               // 找到当前 id 在已经排好序的ids里的位置
               const currentIdIndex = moduleDataIdsNeedOrder.indexOf(currentId);
               const lastIndex = currentIdIndex - 1;
@@ -77,7 +77,7 @@ const ModuleOption = () => {
               if (lastIndex < 0) return;
               const lastId = moduleDataIdsNeedOrder[lastIndex];
               // 选择元素不允许相互交换
-              if (selecttModuleDataIdsOrder.includes(lastId)) return;
+              if (selectModuleDataIdsOrder.includes(lastId)) return;
               // lastComponentId 给当前的
               moduleDataIdsNeedOrder[currentIdIndex] = lastId;
               moduleDataIdsNeedOrder[lastIndex] = currentId;
@@ -90,9 +90,9 @@ const ModuleOption = () => {
       // 整体降低 zIndexOrderArr 的数值，防止zIndex过高
       const zIndexOrderArr = getNewZIndexOrderArr();
       dispatch({
-        type: StoreActionType.UpdateModuleDatas,
+        type: StoreActionType.UpdateModuleDataList,
         payload: {
-          moduleDatas: moduleDataIdsNeedOrder.map((moduleDataId, index) => ({
+          moduleDataList: moduleDataIdsNeedOrder.map((moduleDataId, index) => ({
             id: moduleDataId,
             props: {
               zIndex: zIndexOrderArr[index],
@@ -109,9 +109,9 @@ const ModuleOption = () => {
     // 整体降低 zIndexOrderArr 的数值，防止zIndex过高
     const zIndexOrderArr = getNewZIndexOrderArr();
     dispatch({
-      type: StoreActionType.UpdateModuleDatas,
+      type: StoreActionType.UpdateModuleDataList,
       payload: {
-        moduleDatas: moduleDataIdsOrderByZIndex.map((moduleDataId, index) => ({
+        moduleDataList: moduleDataIdsOrderByZIndex.map((moduleDataId, index) => ({
           id: moduleDataId,
           props: {
             zIndex: zIndexOrderArr[index],
@@ -122,7 +122,7 @@ const ModuleOption = () => {
     });
     // 再删除所有选中组件
     dispatch({
-      type: StoreActionType.DeleteModuleDatas,
+      type: StoreActionType.DeleteModuleDataList,
       payload: {
         moduleDataIds: selectModuleDataIds,
       },
@@ -130,7 +130,7 @@ const ModuleOption = () => {
   }
   let needUp = true;
   let needDown = true;
-  if (selectModuleDataIds.length === moduleDatas.length) {
+  if (selectModuleDataIds.length === moduleDataList.length) {
     needUp = false;
     needDown = false;
   } else if (selectModuleDataIds.length === 1) {

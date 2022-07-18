@@ -11,7 +11,7 @@ import StyleModule from './../../style.module.less';
 import { DefaultInnerRect, DefaultOuterRect } from './config';
 
 const ModuleCanvas: React.FC = () => {
-  const { moduleDatas, dispatch } = useContext(EditorContext);
+  const { moduleDataList, dispatch } = useContext(EditorContext);
   // 防止调用findNode
   const editorModuleCanvasRef = React.createRef<HTMLDivElement>();
   const outerRectRef = useRef<HTMLDivElement>(null);
@@ -38,7 +38,7 @@ const ModuleCanvas: React.FC = () => {
       });
     } else {
       // 计算和多少个矩形交叉
-      const selectModuleDataIds = moduleDatas
+      const selectModuleDataIds = moduleDataList
         .filter((moduleData) => {
           const moduleBox = createBox(
             {
@@ -81,13 +81,13 @@ const ModuleCanvas: React.FC = () => {
     <DragToSelectContainer nodeRef={editorModuleCanvasRef} onMouseUp={handleSelectModule}>
       <div id={StyleModule['editor-module-canvas']} ref={editorModuleCanvasRef}>
         {/* 绘制标尺 start */}
-        <div className="axis-ruler-conatiner">
+        <div className="axis-ruler-container">
           <AxisRuler outerRect={outerRect} innerRect={innerRect} />
         </div>
         {/* 绘制标尺 end */}
         <div className="editor-module-canvas-inner" ref={outerRectRef}>
           <div className="module-canvas" ref={innerRectRef}>
-            {moduleDatas.map((moduleData) => {
+            {moduleDataList.map((moduleData) => {
               return (
                 <RndModule moduleData={moduleData} key={moduleData.id} rndRefMap={rndRefMap} />
               );

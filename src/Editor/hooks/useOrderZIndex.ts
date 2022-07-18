@@ -1,18 +1,18 @@
 import { useMemo } from 'react';
 import { INIT_Z_INDEX } from '../config';
 import { StoreState } from '../store/module';
-import { sortModuleDatasByZIndex } from '../utils/utils';
+import { sortModuleDataListByZIndex } from '../utils/utils';
 
-export function useOrderZIndex(moduleDatasMap: StoreState['moduleDatasMap']) {
+export function useOrderZIndex(moduleDataListMap: StoreState['moduleDataListMap']) {
   return useMemo(() => {
-    const moduleDataIdsOrderByZIndex = sortModuleDatasByZIndex(moduleDatasMap);
+    const moduleDataIdsOrderByZIndex = sortModuleDataListByZIndex(moduleDataListMap);
     const componentsLength = moduleDataIdsOrderByZIndex.length;
     const currentMaxZIndexComponentId = moduleDataIdsOrderByZIndex[componentsLength - 1];
     return {
       moduleDataIdsOrderByZIndex,
       currentMaxZIndex: currentMaxZIndexComponentId
-        ? moduleDatasMap[currentMaxZIndexComponentId].props.zIndex
+        ? moduleDataListMap[currentMaxZIndexComponentId].props.zIndex
         : INIT_Z_INDEX,
     };
-  }, [moduleDatasMap]);
+  }, [moduleDataListMap]);
 }

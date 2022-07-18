@@ -1,10 +1,10 @@
 import { StoreModuleData } from '../modules/TypeConstraints';
 
-export default function mergeModuleDataByGroupType(moduleDatas: StoreModuleData[], propsKeys: string[]) {
-  const moduleDatasProps = moduleDatas.map(data => data.props) as any[];
+export default function mergeModuleDataByGroupType(moduleDataList: StoreModuleData[], propsKeys: string[]) {
+  const moduleDataListProps = moduleDataList.map(data => data.props) as any[];
   return propsKeys.reduce((prevResult, currentKey) => {
-    const commonValue = moduleDatasProps[0][currentKey];
-    const useFlag = moduleDatasProps.every((props) => {
+    const commonValue = moduleDataListProps[0][currentKey];
+    const useFlag = moduleDataListProps.every((props) => {
       return props[currentKey] === commonValue;
     });
 

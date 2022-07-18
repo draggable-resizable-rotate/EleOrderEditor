@@ -26,10 +26,10 @@ export const TabTypeMap = {
 
 const ModuleStyle: React.FC = () => {
   const { storeState, dispatch } = useContext(EditorContext);
-  const { selectModuleDataIds, moduleDatasMap } = storeState;
+  const { selectModuleDataIds, moduleDataListMap } = storeState;
 
   // 当前被选中的module的数组
-  const selectModuleData = selectModuleDataIds.map((id) => moduleDatasMap[id]);
+  const selectModuleData = selectModuleDataIds.map((id) => moduleDataListMap[id]);
 
   // 要渲染的所有的module的配置组件
   const selectModuleDataConfigComponentList: JSX.Element[] = [];
@@ -51,24 +51,24 @@ const ModuleStyle: React.FC = () => {
         />,
       );
     }
-    let groupTypeSelectModuleDatas = selectModuleDataGroupTypeMap[groupType];
-    if (!groupTypeSelectModuleDatas) {
-      selectModuleDataGroupTypeMap[groupType] = groupTypeSelectModuleDatas = [];
+    let groupTypeSelectModuleDataList = selectModuleDataGroupTypeMap[groupType];
+    if (!groupTypeSelectModuleDataList) {
+      selectModuleDataGroupTypeMap[groupType] = groupTypeSelectModuleDataList = [];
     }
-    groupTypeSelectModuleDatas.push(moduleData);
+    groupTypeSelectModuleDataList.push(moduleData);
   });
 
-  const selectModuleDataStyleComponentList = Object.keys(selectModuleDataGroupTypeMap).map(
+  const selectModuleDataListStyleComponentList = Object.keys(selectModuleDataGroupTypeMap).map(
     (groupType) => {
-      const moduleDatasByGroupType = selectModuleDataGroupTypeMap[
+      const moduleDataListByGroupType = selectModuleDataGroupTypeMap[
         groupType as GroupModuleType
       ] as StoreModuleData[];
-      const moduleType = moduleDatasByGroupType[0].type;
+      const moduleType = moduleDataListByGroupType[0].type;
       const moduleClass = ModuleTypeClassMap[moduleType];
       const StyleFormComponent = moduleClass.styleFormComponent;
       const propsKeys = moduleClass.propsKeys;
 
-      const commonProps = mergeModuleDataByGroupType(moduleDatasByGroupType, propsKeys);
+      const commonProps = mergeModuleDataByGroupType(moduleDataListByGroupType, propsKeys);
       return (
         <StyleFormComponent
           key={groupType}
@@ -81,9 +81,9 @@ const ModuleStyle: React.FC = () => {
 
   // 表单onChange
   function onStyleFormChange(changeValues: { [key in GroupModuleType]: StoreModuleData['props'] }) {
-    const toUpdateModuleDatas: StoreModuleData[] = [];
+    const toUpdateModuleDataList: StoreModuleData[] = [];
     for (const [groupType, groupTypeUpdateProps] of Object.entries(changeValues)) {
-      const moduleDatasByGroupType = selectModuleDataGroupTypeMap[
+      const moduleDataListByGroupType = selectModuleDataGroupTypeMap[
         groupType as GroupModuleType
       ] as StoreModuleData[];
 
@@ -93,14 +93,14 @@ const ModuleStyle: React.FC = () => {
         (groupTypeUpdateProps as Partial<LineModuleData['props']>).lineWidth
       ) {
         const newUpdateProps = { ...groupTypeUpdateProps } as Partial<LineModuleData['props']>;
-        moduleDatasByGroupType.forEach((moduleData) => {
+        moduleDataListByGroupType.forEach((moduleData) => {
           if (moduleData.type === ModuleType.HLine) {
             newUpdateProps.height = newUpdateProps.lineWidth;
           }
           if (moduleData.type === ModuleType.VLine) {
             newUpdateProps.width = newUpdateProps.lineWidth;
           }
-          toUpdateModuleDatas.push({
+          toUpdateModuleDataList.push({
             ...moduleData,
             props: {
               ...newUpdateProps,
@@ -108,8 +108,8 @@ const ModuleStyle: React.FC = () => {
           } as StoreModuleData);
         });
       } else {
-        moduleDatasByGroupType.forEach((moduleData) => {
-          toUpdateModuleDatas.push({
+        moduleDataListByGroupType.forEach((moduleData) => {
+          toUpdateModuleDataList.push({
             ...moduleData,
             props: {
               ...groupTypeUpdateProps,
@@ -119,9 +119,9 @@ const ModuleStyle: React.FC = () => {
       }
     }
     dispatch({
-      type: StoreActionType.UpdateModuleDatas,
+      type: StoreActionType.UpdateModuleDataList,
       payload: {
-        moduleDatas: toUpdateModuleDatas,
+        moduleDataList: toUpdateModuleDataList,
         merge: true,
       },
     });
@@ -130,12 +130,12 @@ const ModuleStyle: React.FC = () => {
   // 配置表单更新
   function onConfigFormChange(changedValues: { [key: string]: StoreModuleData['props'] }) {
     dispatch({
-      type: StoreActionType.UpdateModuleDatas,
+      type: StoreActionType.UpdateModuleDataList,
       payload: {
-        moduleDatas: Object.keys(changedValues).map((id) => {
+        moduleDataList: Object.keys(changedValues).map((id) => {
           return {
             id,
-            type: moduleDatasMap[id].type,
+            type: moduleDataListMap[id].type,
             props: {
               ...changedValues[id],
             },
@@ -158,7 +158,7 @@ const ModuleStyle: React.FC = () => {
           }
           key={TabType.STYLE}
         >
-          {selectModuleDataStyleComponentList}
+          {selectModuleDataListStyleComponentList}
         </Tabs.TabPane>
         <Tabs.TabPane
           tab={

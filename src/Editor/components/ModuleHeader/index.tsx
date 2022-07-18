@@ -12,22 +12,24 @@ const AlignLeftSvgConfig = {
 
 const ModuleHeader = () => {
   const {
-    storeState: { selectModuleDataIds, moduleDatasMap },
+    storeState: { selectModuleDataIds, moduleDataListMap },
     dispatch,
   } = useContext(EditorContext);
 
   // 多选module对齐
   function handleMultipleModuleAlgin(direction: 'left' | 'top' | 'right' | 'bottom') {
-    const moduleDatas = selectModuleDataIds.map((moduleDataId) => moduleDatasMap[moduleDataId]);
+    const moduleDataList = selectModuleDataIds.map(
+      (moduleDataId) => moduleDataListMap[moduleDataId],
+    );
     switch (direction) {
       case 'left': {
         const minLeft = Math.min(
-          ...moduleDatas.map((moduleData) => moduleData.props.left as number),
+          ...moduleDataList.map((moduleData) => moduleData.props.left as number),
         );
         dispatch?.({
-          type: StoreActionType.UpdateModuleDatas,
+          type: StoreActionType.UpdateModuleDataList,
           payload: {
-            moduleDatas: moduleDatas.map((moduleData) => ({
+            moduleDataList: moduleDataList.map((moduleData) => ({
               id: moduleData.id,
               props: {
                 ['left']: minLeft,
@@ -39,11 +41,13 @@ const ModuleHeader = () => {
         break;
       }
       case 'top': {
-        const minTop = Math.min(...moduleDatas.map((moduleData) => moduleData.props.top as number));
+        const minTop = Math.min(
+          ...moduleDataList.map((moduleData) => moduleData.props.top as number),
+        );
         dispatch?.({
-          type: StoreActionType.UpdateModuleDatas,
+          type: StoreActionType.UpdateModuleDataList,
           payload: {
-            moduleDatas: moduleDatas.map((moduleData) => ({
+            moduleDataList: moduleDataList.map((moduleData) => ({
               id: moduleData.id,
               props: {
                 ['top']: minTop,
@@ -55,14 +59,14 @@ const ModuleHeader = () => {
         break;
       }
       case 'right': {
-        const rightArr = moduleDatas.map(
+        const rightArr = moduleDataList.map(
           (moduleData) => (moduleData.props.left + moduleData.props.width) as number,
         );
         const maxRight = Math.max(...rightArr);
         dispatch?.({
-          type: StoreActionType.UpdateModuleDatas,
+          type: StoreActionType.UpdateModuleDataList,
           payload: {
-            moduleDatas: moduleDatas.map((moduleData) => ({
+            moduleDataList: moduleDataList.map((moduleData) => ({
               id: moduleData.id,
               props: {
                 ['left']: maxRight - moduleData.props.width,
@@ -74,14 +78,14 @@ const ModuleHeader = () => {
         break;
       }
       case 'bottom': {
-        const bottomArr = moduleDatas.map(
+        const bottomArr = moduleDataList.map(
           (moduleData) => (moduleData.props.top + moduleData.props.height) as number,
         );
         const maxBottom = Math.max(...bottomArr);
         dispatch?.({
-          type: StoreActionType.UpdateModuleDatas,
+          type: StoreActionType.UpdateModuleDataList,
           payload: {
-            moduleDatas: moduleDatas.map((moduleData) => ({
+            moduleDataList: moduleDataList.map((moduleData) => ({
               id: moduleData.id,
               props: {
                 ['top']: maxBottom - moduleData.props.height,

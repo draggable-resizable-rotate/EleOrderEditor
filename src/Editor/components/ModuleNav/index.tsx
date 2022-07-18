@@ -20,9 +20,9 @@ const ModuleNav: React.FC<ModuleNavProps> = ({ dispatch, cacheData }) => {
   function addModule(type: ModuleType) {
     const moduleClass = ModuleTypeClassMap[type];
     dispatch({
-      type: StoreActionType.AddModuleDatas,
+      type: StoreActionType.AddModuleDataList,
       payload: {
-        moduleDatas: [
+        moduleDataList: [
           {
             id: uniqueId(),
             type: type,

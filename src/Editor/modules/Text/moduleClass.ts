@@ -64,7 +64,7 @@ export const TextInitProps = {
 // 线的props
 type TextProps = typeof TextInitProps;
 type TextModuleClassType = ModuleClass<ModuleType.HText | ModuleType.VText, TextProps>
-// 横线的moudle data类型
+// 横线的module data类型
 export type TextModuleData = ModuleData<ModuleType.HText | ModuleType.VText, TextProps>;
 
 const TextModuleClass: TextModuleClassType = {

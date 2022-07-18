@@ -65,7 +65,7 @@ const TableView: React.FC<TableViewProps> = ({ moduleData }) => {
       }, newSize);
 
       dispatch?.({
-        type: StoreActionType.UpdateModuleDatas,
+        type: StoreActionType.UpdateModuleDataList,
         payload: {
           components: [
             {
@@ -106,9 +106,9 @@ const TableView: React.FC<TableViewProps> = ({ moduleData }) => {
       });
 
       dispatch?.({
-        type: StoreActionType.UpdateModuleDatas,
+        type: StoreActionType.UpdateModuleDataList,
         payload: {
-          moduleDatas: [
+          moduleDataList: [
             {
               id: moduleData.id,
               props: {

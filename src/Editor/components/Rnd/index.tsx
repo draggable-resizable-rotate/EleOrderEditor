@@ -134,7 +134,7 @@ const getEnableResizingByFlag = (flag: boolean): Enable => ({
   topRight: flag,
 });
 
-export interface GroupMoveCahce {
+export interface groupMoveCache {
   bounds: DraggableBounds | null;
   size: Size;
   validPosition: Position;
@@ -145,7 +145,7 @@ export class Rnd extends React.PureComponent<Props, State> {
   resizableElementRef: React.RefObject<HTMLElement>;
   draggableRef: React.RefObject<Draggable>;
   resizableRef: React.RefObject<Resizable>;
-  groupMoveCahce: Partial<GroupMoveCahce>;
+  groupMoveCache: Partial<groupMoveCache>;
 
   constructor(props: Props) {
     super(props);
@@ -159,7 +159,7 @@ export class Rnd extends React.PureComponent<Props, State> {
     this.resizableElementRef = React.createRef<HTMLElement>();
     this.draggableRef = React.createRef<Draggable>();
     this.resizableRef = React.createRef<Resizable>();
-    this.groupMoveCahce = {};
+    this.groupMoveCache = {};
   }
 
   onDragStart(e: React.MouseEvent, delta: DraggableDelta, position: Position) {
@@ -239,8 +239,8 @@ export class Rnd extends React.PureComponent<Props, State> {
     const resizable: Resizable = this.resizableRef.current as Resizable;
     const element = draggable.draggableProvider.current?.elementRef as HTMLElement;
 
-    this.groupMoveCahce.bounds = draggable.getValidBounds(this.props.position);
-    this.groupMoveCahce.size = {
+    this.groupMoveCache.bounds = draggable.getValidBounds(this.props.position);
+    this.groupMoveCache.size = {
       width: element.offsetWidth,
       height: element.offsetHeight,
     };
@@ -257,12 +257,12 @@ export class Rnd extends React.PureComponent<Props, State> {
     });
   }
 
-  // 当前位置是增量 postion
+  // 当前位置是增量 position
   groupMove(deltaPosition: { changeX: number; changeY: number }) {
     const draggable: Draggable = this.draggableRef.current as Draggable;
     const { position: oldPosition } = draggable.state;
     const resizable: Resizable = this.resizableRef.current as Resizable;
-    const { bounds, size } = this.groupMoveCahce as GroupMoveCahce;
+    const { bounds, size } = this.groupMoveCache as groupMoveCache;
     const newPosition = {
       left: (oldPosition?.left || 0) + deltaPosition.changeX,
       top: (oldPosition?.top || 0) + deltaPosition.changeY,
@@ -283,14 +283,14 @@ export class Rnd extends React.PureComponent<Props, State> {
     resizable.setState({
       position: { ...validPosition },
     });
-    this.groupMoveCahce.validPosition = { ...validPosition };
+    this.groupMoveCache.validPosition = { ...validPosition };
     return { ...validPosition };
   }
 
   groupMoveEnd() {
     const draggable: Draggable = this.draggableRef.current as Draggable;
     const resizable: Resizable = this.resizableRef.current as Resizable;
-    const endPosition = this.groupMoveCahce.validPosition as Position;
+    const endPosition = this.groupMoveCache.validPosition as Position;
     draggable.setState({
       dragging: false,
       position: { ...this.props.position },

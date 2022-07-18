@@ -29,7 +29,7 @@ export const QRCodeInitProps = {
 };
 
 type QRCodeProps = typeof QRCodeInitProps;
-// 横线的moudle data类型
+// 横线的module data类型
 export type QRCodeModuleData = ModuleData<ModuleType.QRCode, QRCodeProps>;
 
 
