@@ -11,7 +11,11 @@ import StyleModule from './../../style.module.less';
 import { DefaultInnerRect, DefaultOuterRect } from './config';
 
 const ModuleCanvas: React.FC = () => {
-  const { moduleDataList, dispatch } = useContext(EditorContext);
+  const {
+    moduleDataList,
+    dispatch,
+    storeState: { selectModuleDataIds },
+  } = useContext(EditorContext);
   // 防止调用findNode
   const editorModuleCanvasRef = React.createRef<HTMLDivElement>();
   const outerRectRef = useRef<HTMLDivElement>(null);
@@ -86,7 +90,24 @@ const ModuleCanvas: React.FC = () => {
         </div>
         {/* 绘制标尺 end */}
         <div className="editor-module-canvas-inner" ref={outerRectRef}>
-          <div className="module-canvas" ref={innerRectRef}>
+          <div
+            className="module-canvas"
+            ref={innerRectRef}
+            tabIndex={0}
+            style={{ outline: 'none' }}
+            onKeyDown={(event) => {
+              const { key } = event;
+              // 删除 所有选中元素
+              if (key === 'Backspace' || key === 'Delete') {
+                dispatch?.({
+                  type: StoreActionType.DeleteModuleDataList,
+                  payload: {
+                    moduleDataIds: selectModuleDataIds,
+                  },
+                });
+              }
+            }}
+          >
             {moduleDataList.map((moduleData) => {
               return (
                 <RndModule moduleData={moduleData} key={moduleData.id} rndRefMap={rndRefMap} />
