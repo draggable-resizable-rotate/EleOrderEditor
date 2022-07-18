@@ -1,6 +1,6 @@
 import { Empty, message, notification, Upload, Modal } from 'antd';
 import { RcFile } from 'rc-upload/lib/interface';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { MutableRefObject, useContext, useEffect, useState } from 'react';
 import { AddSvg, DeleteSvg } from '../../assets/icon';
 import StyleModule from './style.module.less';
 import ImageModuleClass from '../../modules/Image/moduleClass';
@@ -38,7 +38,13 @@ export interface ImageAction {
   maxCountImage?: number;
 }
 
-const ModuleImageNav: React.FC = () => {
+interface ModuleImageNavProps {
+  cacheData: MutableRefObject<{
+    maxZIndex: number;
+  }>;
+}
+
+const ModuleImageNav: React.FC<ModuleImageNavProps> = ({ cacheData }) => {
   const { imageAction, dispatch } = useContext(EditorContext);
   const [file, setFile] = useState<RcFile>();
   const [imageList, setImageList] = useState<ImageInfo[]>([]);
@@ -80,6 +86,7 @@ const ModuleImageNav: React.FC = () => {
               height: newImageHeight,
               width: newImageWidth,
               src,
+              zIndex: cacheData.current.maxZIndex + 1,
             },
           },
         ],

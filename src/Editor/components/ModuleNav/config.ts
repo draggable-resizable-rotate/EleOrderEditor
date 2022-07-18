@@ -1,4 +1,4 @@
-import { GraphicSvg, HLineSvg, HTextSvg, TextSvg, VLineSvg, VTextSvg, RectSvg, ImageSvg, CodeSvg, QRCodeSvg } from '@/Editor/assets/icon';
+import { GraphicSvg, HLineSvg, HTextSvg, TextSvg, VLineSvg, VTextSvg, RectSvg, ImageSvg, CodeSvg, QRCodeSvg, TableSvg } from '@/Editor/assets/icon';
 import { ModuleType } from '@/Editor/modules/TypeConstraints';
 import React from 'react';
 
@@ -66,11 +66,11 @@ export const GraphicCategory: Category = {
       key: ModuleType.Rect,
       icon: RectSvg,
     },
-    // {
-    //   title: '表格',
-    //   key: 'table',
-    //   icon: TableSvg,
-    // },
+    {
+      title: '表格',
+      key: ModuleType.Table,
+      icon: TableSvg,
+    },
   ],
 };
 

@@ -1,0 +1,27 @@
+.table {
+  display: block;
+
+  :global {
+    td,
+    tbody {
+      display: block;
+    }
+
+    tr {
+      display: flex;
+      flex-flow: row nowrap;
+
+      td {
+        flex-grow: 0;
+        flex-shrink: 0;
+        padding: 0;
+
+        .text-box {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+        }
+      }
+    }
+  }
+}

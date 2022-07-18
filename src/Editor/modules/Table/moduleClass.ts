@@ -6,7 +6,7 @@ import TableViewComponent from './ViewComponent';
 // 一个文字大概是 3 mm
 export const FONT_SIZE = 14;
 export const MARGIN_SPACE = 1.5;
-export const TD_HEIGHT = 5;
+export const TD_HEIGHT = 20;
 
 export interface TableModuleCol {
   value: string;

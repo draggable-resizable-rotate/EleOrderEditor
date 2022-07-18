@@ -50,7 +50,7 @@ const ModuleNav: React.FC<ModuleNavProps> = ({ dispatch, cacheData }) => {
                 {(() => {
                   switch (navKey) {
                     case MainCategoryName.Image: {
-                      return <ModuleImageNav />;
+                      return <ModuleImageNav cacheData={cacheData} />;
                     }
                     default: {
                       return (

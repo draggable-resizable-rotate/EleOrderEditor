@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from 'react';
 import { EditorContext } from '../../index';
 import Resizable, { ResizableDelta } from '@draggable-resizable-rotate/react-resizable-pro';
-import styleModule from './index.less';
+import StyleModule from './style.module.less';
 import { TableModuleCol, TableModuleData } from './moduleClass';
 import { StoreActionType } from '@/Editor/store/module';
 
@@ -10,7 +10,11 @@ export interface TableViewProps {
 }
 // 需要注意的是，re-resizable 是 记录点击down时的位置， 再记录up对比，所有move的中间过程的值都是相对于 原始的 down 的数据
 const TableView: React.FC<TableViewProps> = ({ moduleData }) => {
-  const { dispatch } = useContext(EditorContext);
+  const { dispatch, storeState } = useContext(EditorContext);
+
+  const { selectModuleDataIds } = storeState;
+
+  const isActive = selectModuleDataIds.includes(moduleData.id);
 
   const moduleDataProps = moduleData.props;
   const { cols, width, height } = moduleDataProps;
@@ -67,7 +71,7 @@ const TableView: React.FC<TableViewProps> = ({ moduleData }) => {
       dispatch?.({
         type: StoreActionType.UpdateModuleDataList,
         payload: {
-          components: [
+          moduleDataList: [
             {
               id: moduleData.id,
               props: {
@@ -77,7 +81,7 @@ const TableView: React.FC<TableViewProps> = ({ moduleData }) => {
               },
             },
           ],
-          assign: true,
+          merge: true,
         },
       });
     });
@@ -149,18 +153,19 @@ const TableView: React.FC<TableViewProps> = ({ moduleData }) => {
       onResize={(event, direction, delta) => {
         handleCalculateByTable(delta);
       }}
-      style={{
-        backgroundColor: '#fff',
-      }}
       // 强制 Resizable 不动
       transform="translate(0, 0)"
       // 四角拖动
-      enable={{
-        topRight: true,
-        topLeft: true,
-        bottomLeft: true,
-        bottomRight: true,
-      }}
+      enable={
+        isActive
+          ? {
+              topRight: true,
+              topLeft: true,
+              bottomLeft: true,
+              bottomRight: true,
+            }
+          : undefined
+      }
       handleStyles={{
         topRight: {
           zIndex: 999,
@@ -176,7 +181,7 @@ const TableView: React.FC<TableViewProps> = ({ moduleData }) => {
         },
       }}
     >
-      <table style={{ width, height }} className={styleModule.table}>
+      <table style={{ width, height }} className={StyleModule.table}>
         <tbody>
           {rows.map((row, currentRow) => (
             <tr key={currentRow}>
@@ -190,20 +195,13 @@ const TableView: React.FC<TableViewProps> = ({ moduleData }) => {
                 const defaultAlias = alias && `${alias}${currentRow !== 0 ? '数据' : ''}`;
                 const textVal = `${defaultAlias || defaultValue}`;
                 return (
-                  <td
-                    key={currentCol}
-                    style={{
-                      position: 'relative',
-                      padding: 0,
-                      zIndex: rows.length - currentRow + cols.length - currentCol,
-                    }}
-                  >
+                  <td key={currentCol}>
                     <Resizable
-                      // style={{
-                      //   borderColor: '#000',
-                      //   borderStyle: 'solid',
-                      //   borderWidth: `${showTop ? 1 : 0}px 1px 1px ${showLeft ? 1 : 0}px`,
-                      // }}
+                      style={{
+                        borderColor: moduleDataProps.hasBorder ? '#000' : 'rgba(0,0,0,0)',
+                        borderStyle: 'solid',
+                        borderWidth: `${showTop ? 1 : 0}px 1px 1px ${showLeft ? 1 : 0}px`,
+                      }}
                       // 强制 Resizable 不动
                       transform="translate(0, 0)"
                       position={{
@@ -216,12 +214,16 @@ const TableView: React.FC<TableViewProps> = ({ moduleData }) => {
                       }}
                       minWidth={10}
                       minHeight={10}
-                      enable={{
-                        top: showTop,
-                        right: true,
-                        bottom: true,
-                        left: showLeft,
-                      }}
+                      enable={
+                        isActive
+                          ? {
+                              top: showTop,
+                              right: true,
+                              bottom: true,
+                              left: showLeft,
+                            }
+                          : undefined
+                      }
                       onResizeStart={(event) => {
                         event.stopPropagation();
                         event.nativeEvent.stopPropagation();

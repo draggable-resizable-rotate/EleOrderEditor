@@ -2,6 +2,7 @@ import ImageModuleClass from './Image/moduleClass';
 import { HLineModuleClass, VLineModuleClass } from './LIne/moduleClass';
 import QRCodeModuleClass from './QRCode/moduleClass';
 import RectModuleClass from './Rect/moduleClass';
+import TableModuleClass from './Table/moduleClass';
 import { HTextModuleClass, VTextModuleClass } from './Text/moduleClass';
 import { ModuleType } from './TypeConstraints';
 
@@ -13,4 +14,5 @@ export const ModuleTypeClassMap = {
   [ModuleType.Rect]: RectModuleClass,
   [ModuleType.Image]: ImageModuleClass,
   [ModuleType.QRCode]: QRCodeModuleClass,
+  [ModuleType.Table]: TableModuleClass,
 };
