@@ -1,5 +1,6 @@
 import { Size } from '@/Editor/components/Rnd';
 import { GroupModuleType, ModuleClass, ModuleData, ModuleType } from '../TypeConstraints';
+import TableConfigForm from './ConfigForm';
 import TableStyleForm from './StyleForm';
 import TableViewComponent from './ViewComponent';
 
@@ -47,7 +48,7 @@ export const TableInitProps = {
 
 
 // 表格的props
-type TableProps = typeof TableInitProps;
+export type TableProps = typeof TableInitProps;
 
 
 // 横线的module data类型
@@ -60,17 +61,16 @@ const TableModuleClass: ModuleClass<ModuleType.Table, TableProps> = {
   propsKeys: Object.keys(TableInitProps) as Array<keyof TableProps>,
   viewComponent: TableViewComponent,
   styleFormComponent: TableStyleForm,
+  configFormComponent: TableConfigForm,
   resizeAxis: 'none',
 };
 
 export default TableModuleClass;
 
-
 // 获取td应该展示的宽度，根据
 export function getTdWidthByFontCount(count: number) {
   return FONT_SIZE * count + MARGIN_SPACE * 2;
 }
-
 
 // 通过cols计算table的size
 export function calculateTableSizeByCols(cols: TableModuleCol[], rowLength: number) {

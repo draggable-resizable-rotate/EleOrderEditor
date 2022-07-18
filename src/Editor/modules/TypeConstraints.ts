@@ -76,10 +76,10 @@ export type StoreModuleData = LineModuleData | TextModuleData | RectModuleData |
 
 
 export type StyleFormValue = {
-  [key in GroupModuleType]: StoreModuleData['props']
+  [key in GroupModuleType]: Partial<StoreModuleData['props']>;
 }
 
 
 export type ConfigFormValue = {
-  [key: string]: StoreModuleData['props']
+  [key: string]: Partial<StoreModuleData['props']>;
 }

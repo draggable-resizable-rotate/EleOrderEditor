@@ -80,7 +80,9 @@ const ModuleStyle: React.FC = () => {
   );
 
   // 表单onChange
-  function onStyleFormChange(changeValues: { [key in GroupModuleType]: StoreModuleData['props'] }) {
+  function onStyleFormChange(changeValues: {
+    [key in GroupModuleType]: Partial<StoreModuleData['props']>;
+  }) {
     const toUpdateModuleDataList: StoreModuleData[] = [];
     for (const [groupType, groupTypeUpdateProps] of Object.entries(changeValues)) {
       const moduleDataListByGroupType = selectModuleDataGroupTypeMap[
@@ -128,7 +130,7 @@ const ModuleStyle: React.FC = () => {
   }
 
   // 配置表单更新
-  function onConfigFormChange(changedValues: { [key: string]: StoreModuleData['props'] }) {
+  function onConfigFormChange(changedValues: { [key: string]: Partial<StoreModuleData['props']> }) {
     dispatch({
       type: StoreActionType.UpdateModuleDataList,
       payload: {
