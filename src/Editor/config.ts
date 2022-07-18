@@ -1,6 +1,6 @@
 import { FormProps } from 'antd';
 
-export const MAIN_COLOR = 'rgba(0, 0, 0, 0.75)';
+export const MAIN_COLOR = '#1890ff';
 
 // 确定画拖拽选择框的面积
 export const SURE_DRAG_SELECT_AREA = 4;
