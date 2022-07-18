@@ -59,6 +59,7 @@ export enum ModuleType {
   Rect = 'rect',
   Image = 'image',
   QRCode = 'QR-code',
+  Table = 'table',
 };
 
 // 分组的type
@@ -68,6 +69,7 @@ export enum GroupModuleType {
   Rect = 'rect',
   Image = 'image',
   QRCode = 'QR-code',
+  Table = 'table',
 }
 
 export type StoreModuleData = LineModuleData | TextModuleData | RectModuleData | QRCodeModuleData | ImageModuleData;
