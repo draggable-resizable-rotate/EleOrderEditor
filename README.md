@@ -9,3 +9,5 @@
 - v1.2: 接入图片组件
 - v1.3: 接入二维码组件
 - v1.4: resize 之后，标尺改变
+
+<img src="./story/module-rotate.gif">
