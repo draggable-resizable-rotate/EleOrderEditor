@@ -238,11 +238,13 @@ export class Rnd extends React.PureComponent<Props, State> {
     const draggable: Draggable = this.draggableRef.current as Draggable;
     const resizable: Resizable = this.resizableRef.current as Resizable;
     const element = draggable.draggableProvider.current?.elementRef as HTMLElement;
-
     this.groupMoveCache.bounds = draggable.getValidBounds(this.props.position);
     this.groupMoveCache.size = {
       width: element.offsetWidth,
       height: element.offsetHeight,
+    };
+    this.groupMoveCache.validPosition = {
+      ...this.props.position
     };
     draggable.setState({
       dragging: true,
