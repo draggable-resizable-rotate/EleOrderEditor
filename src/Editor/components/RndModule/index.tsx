@@ -85,9 +85,12 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
       // 激活的样式
       style={{
         zIndex: propsData.zIndex,
-        borderWidth: 1,
-        borderStyle: 'dashed',
-        borderColor: isActive ? MAIN_COLOR : 'transparent',
+        outlineWidth: 1,
+        outlineStyle: 'dashed',
+        outlineColor: isActive ? MAIN_COLOR : 'transparent',
+        // borderWidth: 1,
+        // borderStyle: 'dashed',
+        // borderColor: isActive ? MAIN_COLOR : 'transparent',
       }}
       resizeHandleStyles={resizeHandleStyles}
       // 可操控的点位，只有在激活的时候才显示
