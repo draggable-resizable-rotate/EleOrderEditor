@@ -1,12 +1,14 @@
-import { SURE_DRAG_SELECT_AREA } from '@/Editor/config';
+import { MAIN_COLOR, SURE_DRAG_SELECT_AREA } from '@/Editor/config';
 import { StoreActionType } from '@/Editor/store/module';
+import { findGuideLines, GuideLineMap, H_POSITION_KEYS } from '@/Editor/utils/findGuideLines';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { EditorContext } from '../../index';
 import AxisRuler, { AxisRulerRect } from '../AxisRuler';
 import DragToSelectContainer, { DragToSelectContainerProps } from '../DragToSelect';
 import { boxesIntersect, createBox } from '../DragToSelect/utils';
 import ModuleOption from '../ModuleOption';
-import RndModule, { RndRefMap } from '../RndModule';
+import { Position, Size } from '../Rnd';
+import RndModule, { BaseModuleProps, RndRefMap } from '../RndModule';
 import StyleModule from './../../style.module.less';
 import { DefaultInnerRect, DefaultOuterRect } from './config';
 
@@ -81,6 +83,36 @@ const ModuleCanvas: React.FC = () => {
     }
   }, []);
 
+  const [guideLineMap, setGuideLineMap] = useState<GuideLineMap>();
+
+  const onDrag: BaseModuleProps['onDrag'] = (onDragModuleDataList, dragModuleDataId) => {
+    if (!innerRectRef.current) return;
+    const domRect = innerRectRef.current?.getBoundingClientRect();
+    let currentData: Position & Size = { left: 0, top: 0, width: 0, height: 0 };
+    const contrastDataList: Array<Position & Size> = [
+      {
+        width: domRect.width,
+        height: domRect.height,
+        left: 0,
+        top: 0,
+      },
+    ];
+    onDragModuleDataList.forEach((moduleData) => {
+      if (moduleData.id === dragModuleDataId) {
+        currentData = moduleData.props;
+      } else {
+        contrastDataList.push(moduleData.props);
+      }
+    });
+
+    const guideLineMap = findGuideLines(currentData, contrastDataList);
+    setGuideLineMap(guideLineMap);
+  };
+
+  function onDragEnd() {
+    setGuideLineMap(undefined);
+  }
+
   return (
     <DragToSelectContainer nodeRef={editorModuleCanvasRef} onMouseUp={handleSelectModule}>
       <div id={StyleModule['editor-module-canvas']} ref={editorModuleCanvasRef}>
@@ -108,12 +140,65 @@ const ModuleCanvas: React.FC = () => {
               }
             }}
           >
+            {/* 绘制所有的组件 start */}
             {moduleDataList.map((moduleData) => {
               return (
-                <RndModule moduleData={moduleData} key={moduleData.id} rndRefMap={rndRefMap} />
+                <RndModule
+                  onDragStart={onDrag}
+                  onDrag={onDrag}
+                  onDragEnd={onDragEnd}
+                  moduleData={moduleData}
+                  key={moduleData.id}
+                  rndRefMap={rndRefMap}
+                />
               );
             })}
+            {/* 绘制所有的组件 end */}
+
+            {/* 绘制操作选项 start */}
             <ModuleOption />
+            {/* 绘制操作选项 end */}
+
+            {/* 绘制辅助线 start */}
+            {guideLineMap &&
+              Object.entries(guideLineMap)
+                .filter(([, guideLine]) => guideLine)
+                .map(([guideLineDirection, guideLine]) => {
+                  if (!guideLine) return null;
+                  const isH = H_POSITION_KEYS.includes(guideLineDirection as any);
+                  if (isH) {
+                    return (
+                      <div
+                        key={guideLineDirection}
+                        className="guide-line h"
+                        style={{
+                          position: 'absolute',
+                          width: guideLine.end - guideLine.start,
+                          borderTop: `1px dashed ${MAIN_COLOR}`,
+                          left: guideLine.start,
+                          top: guideLine.distance,
+                          zIndex: 99999,
+                        }}
+                      ></div>
+                    );
+                  }
+
+                  return (
+                    <div
+                      key={guideLineDirection}
+                      className="guide-line v"
+                      style={{
+                        position: 'absolute',
+                        height: guideLine.end - guideLine.start,
+                        borderLeft: `1px dashed ${MAIN_COLOR}`,
+                        top: guideLine.start,
+                        left: guideLine.distance,
+                        zIndex: 99999,
+                      }}
+                    ></div>
+                  );
+                })}
+            {/* 绘制辅助线 end */}
           </div>
         </div>
       </div>

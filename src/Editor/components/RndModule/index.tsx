@@ -18,14 +18,23 @@ import { EditorContext } from '@/Editor';
 export interface RndRefMap {
   [key: string]: Rnd | null;
 }
-interface BaseModuleProps {
+export interface BaseModuleProps {
   // module 数据
   moduleData: StoreModuleData;
   rndRefMap: React.MutableRefObject<RndRefMap>;
+  onDragStart?: (onDragModuleDataList: StoreModuleData[], dragModuleDataId: string) => void;
+  onDrag?: (onDragModuleDataList: StoreModuleData[], dragModuleDataId: string) => void;
+  onDragEnd?: () => void;
 }
 
-const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
-  const { storeState, dispatch } = useContext(EditorContext);
+const RndModule: React.FC<BaseModuleProps> = ({
+  moduleData,
+  rndRefMap,
+  onDragStart,
+  onDrag,
+  onDragEnd,
+}) => {
+  const { storeState, dispatch, moduleDataList } = useContext(EditorContext);
   const { selectModuleDataIds, moduleDataListMap } = storeState;
   const isActive = selectModuleDataIds.includes(moduleData.id);
 
@@ -137,19 +146,33 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
         selectModuleDataIds.forEach((selectModuleDataId) => {
           rndRefMap.current?.[selectModuleDataId]?.groupMoveStart();
         });
+        onDragStart?.(moduleDataList, moduleData.id);
       }}
       // 其它组件也需要更新
       onDrag={(event, delta, position) => {
         setRealTimePosition({ ...position });
         // x 上的变化量, y 上的变化量
         const { changeX, changeY } = delta;
-        selectModuleDataIds.forEach((selectModuleDataId) => {
-          moduleDataListMap[selectModuleDataId].props;
-          rndRefMap.current?.[selectModuleDataId]?.groupMove({
+        const onDragModuleDataList = selectModuleDataIds.map((selectModuleDataId) => {
+          const newPosition = rndRefMap.current?.[selectModuleDataId]?.groupMove({
             changeX,
             changeY,
           });
+          return {
+            ...moduleDataListMap[selectModuleDataId],
+            props: {
+              ...moduleDataListMap[selectModuleDataId].props,
+              ...newPosition,
+            },
+          } as StoreModuleData;
         });
+        onDrag?.(
+          [
+            ...onDragModuleDataList,
+            ...moduleDataList.filter((moduleData) => !selectModuleDataIds.includes(moduleData.id)),
+          ],
+          moduleData.id,
+        );
       }}
       // 更新所有的数据
       onDragStop={() => {
@@ -171,6 +194,7 @@ const RndModule: React.FC<BaseModuleProps> = ({ moduleData, rndRefMap }) => {
             merge: true,
           },
         });
+        onDragEnd?.();
       }}
       /* 处理移动 end */
       // 收集module的rnd实例
