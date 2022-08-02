@@ -18,6 +18,7 @@ export type GuideLineMap = {
 export function findGuideLines(
   currentData: Position & Size,
   contrastDataList: Array<Position & Size>,
+  threshold = 0.5,
 ): GuideLineMap {
   const currentDataGuidePosition = formatPropsToGuidePosition(currentData);
 
@@ -55,8 +56,13 @@ export function findGuideLines(
         maxValueProperty = 'bottom';
       }
 
-      // 能和 direction 重合
-      if (directionData.includes(currentDataGuidePosition[direction])) {
+      // 能和 direction 重合，或者相差的阈值为1
+      if (
+        directionData.some(contrastValue => {
+          const delta = contrastValue - currentDataGuidePosition[direction];
+          return Math.abs(delta) <= threshold;
+        })
+      ) {
         const guideLineMapDirectionData = guideLineMap[direction];
         if (guideLineMapDirectionData !== undefined) {
           // 水平方向的直线求最小left，和最大right
